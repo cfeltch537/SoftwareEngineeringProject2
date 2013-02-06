@@ -1,3 +1,4 @@
+package edu.ycp.cs320.fokemon;
 
 class main {
 
