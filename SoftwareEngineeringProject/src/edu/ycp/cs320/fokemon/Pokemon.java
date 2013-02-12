@@ -18,7 +18,6 @@ public class Pokemon {
 	private int idNum;
 	private String name;
 	
-	
 	public Pokemon(int nCurHp, int nBaseHp, int nCurAtk, int nBaseAtk, int nCurDef, int nBaseDef, int nCurSpAtk, int nBaseSpAtk, int nCurSpDef, int nBaseSpDef, int nCurSpd, int nBaseSpd, int nPokeNum, int nIdNum, String nName) {
 		setCurHp(nCurHp);
 		setBaseHp(nBaseHp);
