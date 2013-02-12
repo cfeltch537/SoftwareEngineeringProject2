@@ -18,7 +18,7 @@ public class Player {
 		this.setGender(gender);
 		
 		team=new ArrayList<Pokemon>();
-		setPlayerLocation(new Location(1, 5, 5));
+		setPlayerLocation(new Location(1, 6, 5));
 		
 		
 		
