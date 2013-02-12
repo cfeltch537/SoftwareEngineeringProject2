@@ -6,6 +6,8 @@ public class Player {
 	
 	
 	public Player(String name, boolean gender){
+		this.name=name;
+		this.gender=gender;
 		
 		
 	}
