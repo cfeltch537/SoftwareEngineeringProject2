@@ -19,6 +19,7 @@ public class Player {
 		
 		team=new ArrayList<Pokemon>();
 		setPlayerLocation(new Location(1, 6, 5));
+		//team.add(new Pokemon())
 		
 		
 		

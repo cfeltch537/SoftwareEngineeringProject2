@@ -16,25 +16,35 @@ public class Pokemon {
 	private int baseSpd;
 	private int pokeNum;
 	private int idNum;
+	private int lvl;
 	private String name;
 	
 	
-	public Pokemon(int nCurHp, int nBaseHp, int nCurAtk, int nBaseAtk, int nCurDef, int nBaseDef, int nCurSpAtk, int nBaseSpAtk, int nCurSpDef, int nBaseSpDef, int nCurSpd, int nBaseSpd, int nPokeNum, int nIdNum, String nName) {
-		setCurHp(nCurHp);
-		setBaseHp(nBaseHp);
-		setCurAtk(nCurAtk);
-		setBaseAtk(nBaseAtk);
-		setCurDef(nCurDef);
-		setBaseDef(nBaseDef);
-		setCurSpAtk(nCurSpAtk);
-		setBaseSpAtk(nBaseSpAtk);
-		setCurSpDef(nCurSpDef);
-		setBaseSpDef(nBaseSpDef);
-		setCurSpd(nCurSpd);
-		setBaseSpd(nBaseSpd);
-		setPokeNum(nPokeNum);
-		setIdNum(nIdNum);
-		setName(nName);
+	public Pokemon(int nPokeNum, int lvl) {
+		this.setPokeNum(nPokeNum);
+		this.setLvl(lvl);
+		
+		
+		//setBaseHp(nBaseHp);
+		
+		//setBaseAtk(nBaseAtk);
+		
+		//setBaseDef(nBaseDef);
+		
+		//setBaseSpAtk(nBaseSpAtk);
+		
+		//setBaseSpDef(nBaseSpDef);
+		
+		//setBaseSpd(nBaseSpd);
+		//setPokeNum(nPokeNum);
+		//setIdNum(nIdNum);
+		//setName(nName);
+		setCurHp(baseHp);
+		setCurDef(baseDef);
+		setCurSpAtk(baseSpAtk);
+		setCurSpDef(baseSpDef);
+		setCurSpd(baseSpd);
+		setCurAtk(baseAtk);
 	}
 	//getter for curHp
 	public int getCurHp() {
@@ -155,5 +165,41 @@ public class Pokemon {
 	//setter for name
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getLvl() {
+		return lvl;
+	}
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
+	public static Pokemon GeneratePokemon(int ID, int lvl){
+		Pokemon poke= new Pokemon(ID, lvl);
+		
+		switch (ID) {
+        case 1: 
+        	poke.setName("Test1");
+        	poke.setBaseHp(10+poke.getLvl()*10);
+        	poke.setBaseAtk(10+poke.getLvl()*10);
+        	poke.setBaseDef(10+poke.getLvl()*10);
+        	poke.setBaseSpAtk(10+poke.getLvl()*10);
+        	poke.setBaseSpDef(10+poke.getLvl()*10);
+        	
+                 break;
+        case 2:  
+	        poke.setName("Test2");
+	    	poke.setBaseHp(10+poke.getLvl()*20);
+	    	poke.setBaseAtk(10+poke.getLvl()*20);
+	    	poke.setBaseDef(10+poke.getLvl()*20);
+	    	poke.setBaseSpAtk(10+poke.getLvl()*20);
+	    	poke.setBaseSpDef(10+poke.getLvl()*20);
+                 break;
+
+        default: poke.setName("Error");
+                 break;
+    }
+		
+		return null;
+		
+		
 	}
 }
