@@ -16,6 +16,7 @@ public class Pokemon {
 	private int baseSpd;
 	private int pokeNum;
 	private int idNum;
+
 	private int lvl;
 	private String name;
 	
@@ -201,5 +202,6 @@ public class Pokemon {
 		return null;
 		
 		
+
 	}
 }
