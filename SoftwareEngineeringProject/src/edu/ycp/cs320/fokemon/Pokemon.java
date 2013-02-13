@@ -16,6 +16,9 @@ public class Pokemon {
 	private int baseSpd;
 	private int pokeNum;
 	private int idNum;
+	private int curAcc; //TMP: Pokemon's current accuracy modifier, integer from 0 to 1 to affect chance to hit
+	private int statusHard; //TMP: Pokemon's status: SLP, PSN, PRZ, FRZ, BRN
+	private int statusSoft; //TMP: Pokemon's status: Confusion, Bind, etc.
 	private String name;
 	
 	
@@ -36,124 +39,202 @@ public class Pokemon {
 		setIdNum(nIdNum);
 		setName(nName);
 	}
+	//TMP: Enter battle - sets the current battle stats to the base battle stats pre-battle
+	public void enterBattle() {
+		this.setCurAtk(this.getBaseAtk());
+		this.setCurDef(this.getBaseDef());
+		this.setCurSpAtk(this.getBaseSpAtk());
+		this.setCurSpDef(this.getBaseSpDef());
+		this.setCurSpd(this.getBaseSpd());
+		this.setCurAcc(1);
+	}
+	//TMP: Exit Battle - sets the current battle stats to the base battle stats post-battle
+	public void exitBattle() {
+		this.setCurAtk(this.getBaseAtk());
+		this.setCurDef(this.getBaseDef());
+		this.setCurSpAtk(this.getBaseSpAtk());
+		this.setCurSpDef(this.getBaseSpDef());
+		this.setCurSpd(this.getBaseSpd());
+		this.setCurAcc(1);
+	}
+	
 	//getter for curHp
 	public int getCurHp() {
 		return curHp;
 	}
+	
 	//setter for curHp
 	public void setCurHp(int curHp) {
 		this.curHp = curHp;
 	}
+	
 	//getter for baseHp
 	public int getBaseHp() {
 		return baseHp;
 	}
+	
 	//setter for baseHp
 	public void setBaseHp(int baseHp) {
 		this.baseHp = baseHp;
 	}
+	
 	//getter for curAtk
 	public int getCurAtk() {
 		return curAtk;
 	}
+	
 	//setter for curAtk
 	public void setCurAtk(int curAtk) {
 		this.curAtk = curAtk;
 	}
+	
 	//getter for baseAtk
 	public int getBaseAtk() {
 		return baseAtk;
 	}
+	
 	//setter for baseAtk
 	public void setBaseAtk(int baseAtk) {
 		this.baseAtk = baseAtk;
 	}
+	
 	//getter for curDef
 	public int getCurDef() {
 		return curDef;
 	}
+	
 	//setter for curDef
 	public void setCurDef(int curDef) {
 		this.curDef = curDef;
 	}
+	
 	//getter for baseDef
 	public int getBaseDef() {
 		return baseDef;
 	}
+	
 	//setter for baseDef
 	public void setBaseDef(int baseDef) {
 		this.baseDef = baseDef;
 	}
+	
 	//getter for curSpAtk
 	public int getCurSpAtk() {
 		return curSpAtk;
 	}
+	
 	//setter for curSpAtk
 	public void setCurSpAtk(int curSpAtk) {
 		this.curSpAtk = curSpAtk;
 	}
+	
 	//getter for baseSpAtk
 	public int getBaseSpAtk() {
 		return baseSpAtk;
 	}
+	
 	//setter for baseSpAtk
 	public void setBaseSpAtk(int baseSpAtk) {
 		this.baseSpAtk = baseSpAtk;
 	}
+	
 	//getter for curSpDef
 	public int getCurSpDef() {
 		return curSpDef;
 	}
+	
 	//setter for curSpDef
 	public void setCurSpDef(int curSpDef) {
 		this.curSpDef = curSpDef;
 	}
+	
 	//getter for baseSpDef
 	public int getBaseSpDef() {
 		return baseSpDef;
 	}
+	
 	//setter for curSpDef
 	public void setBaseSpDef(int baseSpDef) {
 		this.baseSpDef = baseSpDef;
 	}
+	
 	//getter for curSpd
 	public int getCurSpd() {
 		return curSpd;
 	}
+	
 	//setter for curSpd
 	public void setCurSpd(int curSpd) {
 		this.curSpd = curSpd;
 	}
+	
 	//getter for baseSpd
 	public int getBaseSpd() {
 		return baseSpd;
 	}
+	
 	//setter for baseSpd
 	public void setBaseSpd(int baseSpd) {
 		this.baseSpd = baseSpd;
 	}
+	
 	//getter for pokeNum
 	public int getPokeNum() {
 		return pokeNum;
 	}
+	
 	//setter for PokeNum
 	public void setPokeNum(int pokeNum) {
 		this.pokeNum = pokeNum;
 	}
+	
 	//getter for idNum
 	public int getIdNum() {
 		return idNum;
 	}
+	
 	//setter for idNum
 	public void setIdNum(int idNum) {
 		this.idNum = idNum;
 	}
+	
 	//getter for name
 	public String getName() {
 		return name;
 	}
+	
 	//setter for name
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	//getter for accuracy
+	public int getCurAcc() {
+		return curAcc;
+	}
+	
+	//setter for accuracy
+	public void setCurAcc(int _curAcc) {
+		this.curAcc = _curAcc;
+	}
+	
+	//getter for Hard Status
+	public int getStatusHard() {
+		return statusHard;
+	}
+	
+	//setter for Hard Status
+	public void setStatusHard(int _statusHard) {
+		this.statusHard = _statusHard;
+	}
+	
+	//getter for Soft Status
+	public int getStatusSoft() {
+		return statusSoft;
+	}
+	
+	//setter for Soft Status
+	public void setStatusSoft(int _statusSoft) {
+		this.statusSoft = _statusSoft;
+	}	
 }
