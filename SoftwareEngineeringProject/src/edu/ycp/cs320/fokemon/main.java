@@ -1,11 +1,14 @@
+
 package edu.ycp.cs320.fokemon;
 
 import java.io.IOException;
 
+import GUI.TempGUI;
+import GUI.TempMapPanel;
+
 class main {
 
 	public static void main(String[] args){
-		System.out.println("hello");
 		try {
 			new TempGUI();
 		} catch (IOException e) {
@@ -18,3 +21,4 @@ class main {
 	}
 
 }
+

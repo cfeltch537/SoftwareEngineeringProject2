@@ -1,4 +1,6 @@
-package edu.ycp.cs320.fokemon;
+package GUI;
+
+import edu.ycp.cs320.fokemon.Terrain;
 
 public class Area {
 	int HEIGHT = 30;

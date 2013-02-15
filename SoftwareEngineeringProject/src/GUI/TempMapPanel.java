@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package GUI;
 
 public enum Stuff {
 		TallGrass,
