@@ -16,6 +16,8 @@ public class Pokemon {
 	private int baseSpd;
 	private int pokeNum;
 	private int idNum;
+	private BattleStats stats;
+	private PokeInfo info;
 
 	private int lvl;
 	private String name;
@@ -203,5 +205,17 @@ public class Pokemon {
 		
 		
 
+	}
+	public BattleStats getStats() {
+		return stats;
+	}
+	public void setStats(BattleStats stats) {
+		this.stats = stats;
+	}
+	public PokeInfo getInfo() {
+		return info;
+	}
+	public void setInfo(PokeInfo info) {
+		this.info = info;
 	}
 }
