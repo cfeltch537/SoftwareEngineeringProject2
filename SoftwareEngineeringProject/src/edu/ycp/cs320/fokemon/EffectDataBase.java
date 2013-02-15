@@ -7,7 +7,7 @@ public class EffectDataBase {
 	private static int randomNum=0;
 	
 	
-	public static void moveEffect(Pokemon Attacker, Pokemon Defender, int EffectIndex, int EffectChance, int Magnitude){
+	public static void moveEffect(Pokemon Attacker, Pokemon Defender, Effect EffectIndex, int EffectChance, int Magnitude){
 		
 		
 		// nextInt is normally exclusive of the top value,
@@ -15,33 +15,33 @@ public class EffectDataBase {
 		randomNum = rand.nextInt(100);
 		
 		switch (EffectIndex) {
-        case 1: //no effect
+        case NONE: //no effect
                  break;
-        case 2:  //Paralyzed
+        case PARALYZE:  //Paralyzed
         	if(EffectChance>=randomNum && Defender.getStats().getStatus()==Status.NRM)
 	        Defender.getStats().setStatus(Status.PRL);
                  break;
-        case 3:  //Poisoned
+        case POISON:  //Poisoned
         	if(EffectChance>=randomNum && Defender.getStats().getStatus()==Status.NRM)
 	        Defender.getStats().setStatus(Status.PSN);
                  break;
-        case 4:  //Sleep
+        case SLEEP:  //Sleep
         	if(EffectChance>=randomNum && Defender.getStats().getStatus()==Status.NRM)
 	        Defender.getStats().setStatus(Status.SLP);
                  break;	
-        case 5:  //Burn
+        case BURN:  //Burn
         	if(EffectChance>=randomNum && Defender.getStats().getStatus()==Status.NRM)
 	        Defender.getStats().setStatus(Status.BRN);
                  break;
-        case 6:  //Freeze
+        case FREEZE:  //Freeze
         	if(EffectChance>=randomNum && Defender.getStats().getStatus()==Status.NRM)
 	        Defender.getStats().setStatus(Status.FRZ);
                  break;
-        case 7:  //Death
+        case KO:  //Death
         	if(EffectChance>=randomNum)
 	        Defender.getStats().setCurHp(0);
                  break;
-        case 8:  //Recover
+        case RECOVER:  //Recover
         	if(EffectChance>=randomNum)
 	        Defender.getStats().setCurHp(0);
                  break;
