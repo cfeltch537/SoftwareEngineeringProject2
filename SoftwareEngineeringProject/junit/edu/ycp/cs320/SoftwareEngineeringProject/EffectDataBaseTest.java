@@ -1,7 +1,7 @@
 package edu.ycp.cs320.SoftwareEngineeringProject;
 
+import MoveClasses.EffectDataBase;
 import junit.framework.TestCase;
-import edu.ycp.cs320.fokemon.EffectDataBase;
 import edu.ycp.cs320.fokemon.Pokemon;
 
 public class EffectDataBaseTest extends TestCase {
