@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 public class TempMapPanel extends JPanel {
 	
+	Area area1 = new Area();
 	public int[][] map = new int[40][20];
 	public static Integer playerX = 20;
 	public static Integer playerY = 10;
@@ -33,31 +34,32 @@ public class TempMapPanel extends JPanel {
 	        setSize(size);
 	        setLayout(null);
 	        
+	        
 	       
-	        for (int i = 0; i < map.length; i++) {
-	            for (int j = 0; j < map[0].length; j++) {
-	               
-//	            	if(i+j<37){    
+//	        for (int i = 0; i < map.length; i++) {
+//	            for (int j = 0; j < map[0].length; j++) {
+//	               
+////	            	if(i+j<37){    
+////	            	map[i][j] = 1; //Grass
+////	                }else if(i+j<39){
+////		                map[i][j] = 0;//Dirt
+////		            }else if(i+j<42){
+////		                map[i][j] = 2;//Sand
+////		            }else if(i+j>=42){
+////	                map[i][j] = 3;//Water
+////	                }
+//	                
+//	                if(i<30){    
 //	            	map[i][j] = 1; //Grass
-//	                }else if(i+j<39){
+//	                }else if(i<32){
 //		                map[i][j] = 0;//Dirt
-//		            }else if(i+j<42){
+//		            }else if(i<35){
 //		                map[i][j] = 2;//Sand
-//		            }else if(i+j>=42){
+//		            }else if(i>=35){
 //	                map[i][j] = 3;//Water
 //	                }
-	                
-	                if(i<30){    
-	            	map[i][j] = 1; //Grass
-	                }else if(i<32){
-		                map[i][j] = 0;//Dirt
-		            }else if(i<35){
-		                map[i][j] = 2;//Sand
-		            }else if(i>=35){
-	                map[i][j] = 3;//Water
-	                }
-	            }
-	        }
+//	            }
+//	        }
 	        
 	        this.addKeyListener(new KeyListener() {
 
@@ -79,25 +81,19 @@ public class TempMapPanel extends JPanel {
 		super.paint(g);
 		// Paint the window background
 		g.setColor(Color.BLACK); // Draws outline of shape as mouse moves
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-            	if(map[i][j]==1){
-            		img = new ImageIcon(".\\src\\16x16_TerrainImages/Grass.png").getImage();
-            	}else if(map[i][j]==0){
-            		img = new ImageIcon(".\\src\\16x16_TerrainImages/Grass.png").getImage();
-            	}else if(map[i][j]==2){
-            		img = new ImageIcon(".\\src\\16x16_TerrainImages/Grass.png").getImage();
-            	}else if(map[i][j]==3){
-            		img = new ImageIcon(".\\src\\16x16_TerrainImages/Grass.png").getImage();
-            	}
-            	g.drawImage(img, 16*i, 16*j, null);
+        
+		//LAYER !
+		for (int height = 0; height < area1.terrain.length; height++) {
+            for (int width = 0; width < area1.terrain[height].length; width++) {
+            	img = area1.terrain[height][width].getFlooringImage();
+            	g.drawImage(img, 16*height, 16*width, null);
             	//g.draw3DRect(25*i, 25*j, 25, 25, true);
             }
         }
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
+        for (int height = 0; height < area1.terrain.length; height++) {
+            for (int width = 0; width < area1.terrain[height].length; width++) {
             	
-            	if(i==playerX&&j==playerY){
+            	if(height==playerX&&width==playerY){
             		if(step_count==0){
             			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_LeftFootForeward.png").getImage();
             		}else if(step_count==1){
@@ -116,11 +112,6 @@ public class TempMapPanel extends JPanel {
                 	if(step_count!=4){
                     	step_count++;
                     }
-            	}
-            	
-            	if(map[i][j]==3){
-            		img = new ImageIcon(".\\src\\16x16_TerrainImages/TallGrass.png").getImage();
-            		g.drawImage(img, 16*i, 16*j, null);
             	}
             }
         }
