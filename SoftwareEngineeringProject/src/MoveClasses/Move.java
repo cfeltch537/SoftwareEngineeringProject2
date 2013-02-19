@@ -12,8 +12,9 @@ public class Move {
 	private MoveName moveName;
 	private int damage;
 	private PokeType pokeType;
+	private boolean physical;
 	
-	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType) {
+	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType, boolean physical) {
 		this.curPP = curPP;
 		this.maxPP = maxPP;
 		this.effect = effect;
@@ -21,6 +22,7 @@ public class Move {
 		this.moveName = moveName;
 		this.damage = damage;
 		this.pokeType = pokeType;
+		this.physical=physical;
 	}
 
 	public int getCurPP() {
@@ -77,6 +79,14 @@ public class Move {
 
 	public void setPokeType(PokeType pokeType) {
 		this.pokeType = pokeType;
+	}
+
+	public boolean isPhysical() {
+		return physical;
+	}
+
+	public void setPhysical(boolean physical) {
+		this.physical = physical;
 	}
 }
 
