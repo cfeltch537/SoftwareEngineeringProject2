@@ -5,12 +5,14 @@ public class Effect {
 	private EffectType EffectIndex;
 	private int EffectChance; 
 	private int Magnitude;
+	private String EffectText;
 	
 
 	public Effect(EffectType EffectIndex, int EffectChance, int Magnitude) {
 		this.setEffectIndex(EffectIndex);
 		this.setEffectChance(EffectChance);
 		this.setMagnitude(Magnitude);
+		EffectText="";
 	}
 
 
@@ -41,5 +43,15 @@ public class Effect {
 
 	public void setMagnitude(int magnitude) {
 		Magnitude = magnitude;
+	}
+
+
+	public String getEffectText() {
+		return EffectText;
+	}
+
+
+	public void setEffectText(String effectText) {
+		EffectText = effectText;
 	}
 }

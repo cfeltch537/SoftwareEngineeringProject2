@@ -4,7 +4,7 @@ public enum MoveName {
 	Tackle,
 	Bite,
 	Ember,
-	Recover,
+	Heal,
 	Spore,
 	Blizzard,
 	Acid,

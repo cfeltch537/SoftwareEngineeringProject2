@@ -12,5 +12,6 @@ public enum PokeType {
 	GHOST,
 	GROUND,
 	DRAGON,
-	FLYING
+	FLYING,
+	ICE
 }
