@@ -12,6 +12,7 @@ public class Move {
 	private MoveName moveName;
 	private int damage;
 	private PokeType pokeType;
+	private int mynumber;
 	
 	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType) {
 		this.curPP = curPP;
@@ -77,6 +78,14 @@ public class Move {
 
 	public void setPokeType(PokeType pokeType) {
 		this.pokeType = pokeType;
+	}
+
+	public int getMynumber() {
+		return mynumber;
+	}
+
+	public void setMynumber(int mynumber) {
+		this.mynumber = mynumber;
 	}
 }
 
