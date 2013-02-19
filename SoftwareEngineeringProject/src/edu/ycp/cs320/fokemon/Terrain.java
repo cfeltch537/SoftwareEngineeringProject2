@@ -4,6 +4,11 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import GUI.Flooring;
+import GUI.InteractionSpace;
+import GUI.Structure;
+import GUI.Stuff;
+
 public class Terrain{
 	
 	//Object[] layer = new Object[4];

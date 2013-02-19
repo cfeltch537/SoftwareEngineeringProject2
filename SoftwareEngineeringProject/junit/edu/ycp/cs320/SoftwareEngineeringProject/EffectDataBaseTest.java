@@ -1,7 +1,7 @@
 package edu.ycp.cs320.SoftwareEngineeringProject;
 
+import MoveClasses.EffectDataBase;
 import junit.framework.TestCase;
-import edu.ycp.cs320.fokemon.EffectDataBase;
 import edu.ycp.cs320.fokemon.Pokemon;
 
 public class EffectDataBaseTest extends TestCase {
@@ -14,8 +14,8 @@ public class EffectDataBaseTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		// TODO - create test fixture objects
-		A=new Pokemon(1, 1, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, "A");
-		B=new Pokemon(1,1, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, EffectIndex, "B");
+		A=new Pokemon(1, 1);
+		B=new Pokemon(1,1);
 		EffectIndex=1;
 		A.setBaseAtk(12);
 	}

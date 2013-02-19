@@ -9,5 +9,8 @@ public enum PokeType {
 	ELECTRIC,
 	ROCK,
 	PSYHIC,
-	GHOST
+	GHOST,
+	GROUND,
+	DRAGON,
+	FLYING
 }

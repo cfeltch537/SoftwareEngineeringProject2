@@ -16,14 +16,39 @@ public class Pokemon {
 	private int baseSpd;
 	private int pokeNum;
 	private int idNum;
-	private int curAcc; //TMP: Pokemon's current accuracy modifier, integer from 0 to 1 to affect chance to hit
-	private int statusHard; //TMP: Pokemon's status: SLP, PSN, PRZ, FRZ, BRN
-	private int statusSoft; //TMP: Pokemon's status: Confusion, Bind, etc.
 	private BattleStats stats;
 	private PokeInfo info;
+
 	private int lvl;
-	private static String name;
+	private String name;
 	
+	
+	public Pokemon(int nPokeNum, int lvl) {
+		this.setPokeNum(nPokeNum);
+		this.setLvl(lvl);
+		
+		
+		//setBaseHp(nBaseHp);
+		
+		//setBaseAtk(nBaseAtk);
+		
+		//setBaseDef(nBaseDef);
+		
+		//setBaseSpAtk(nBaseSpAtk);
+		
+		//setBaseSpDef(nBaseSpDef);
+		
+		//setBaseSpd(nBaseSpd);
+		//setPokeNum(nPokeNum);
+		//setIdNum(nIdNum);
+		//setName(nName);
+		setCurHp(baseHp);
+		setCurDef(baseDef);
+		setCurSpAtk(baseSpAtk);
+		setCurSpDef(baseSpDef);
+		setCurSpd(baseSpd);
+		setCurAtk(baseAtk);
+	}
 	//getter for curHp
 	public int getCurHp() {
 		return curHp;
@@ -151,7 +176,7 @@ public class Pokemon {
 		this.lvl = lvl;
 	}
 	public static Pokemon GeneratePokemon(int ID, int lvl){
-		Pokemon poke= new Pokemon(ID, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, name);
+		Pokemon poke= new Pokemon(ID, lvl);
 		
 		switch (ID) {
         case 1: 
@@ -193,74 +218,4 @@ public class Pokemon {
 	public void setInfo(PokeInfo info) {
 		this.info = info;
 	}
-	
-	
-	
-	public Pokemon(int nCurHp, int nBaseHp, int nCurAtk, int nBaseAtk, int nCurDef, int nBaseDef, int nCurSpAtk, int nBaseSpAtk, int nCurSpDef, int nBaseSpDef, int nCurSpd, int nBaseSpd, int nPokeNum, int nIdNum, String nName) {
-		setCurHp(nCurHp);
-		setBaseHp(nBaseHp);
-		setCurAtk(nCurAtk);
-		setBaseAtk(nBaseAtk);
-		setCurDef(nCurDef);
-		setBaseDef(nBaseDef);
-		setCurSpAtk(nCurSpAtk);
-		setBaseSpAtk(nBaseSpAtk);
-		setCurSpDef(nCurSpDef);
-		setBaseSpDef(nBaseSpDef);
-		setCurSpd(nCurSpd);
-		setBaseSpd(nBaseSpd);
-		setPokeNum(nPokeNum);
-		setIdNum(nIdNum);
-		setName(nName);
-	}
-	//TMP: Enter battle - sets the current battle stats to the base battle stats pre-battle
-	public void enterBattle() {
-		this.setCurAtk(this.getBaseAtk());
-		this.setCurDef(this.getBaseDef());
-		this.setCurSpAtk(this.getBaseSpAtk());
-		this.setCurSpDef(this.getBaseSpDef());
-		this.setCurSpd(this.getBaseSpd());
-		this.setCurAcc(1);
-	}
-	//TMP: Exit Battle - sets the current battle stats to the base battle stats post-battle
-	public void exitBattle() {
-		this.setCurAtk(this.getBaseAtk());
-		this.setCurDef(this.getBaseDef());
-		this.setCurSpAtk(this.getBaseSpAtk());
-		this.setCurSpDef(this.getBaseSpDef());
-		this.setCurSpd(this.getBaseSpd());
-		this.setCurAcc(1);
-	}
-	
-	
-	//getter for accuracy
-	public int getCurAcc() {
-		return curAcc;
-	}
-	
-	//setter for accuracy
-	public void setCurAcc(int _curAcc) {
-		this.curAcc = _curAcc;
-	}
-	
-	//getter for Hard Status
-	public int getStatusHard() {
-		return statusHard;
-	}
-	
-	//setter for Hard Status
-	public void setStatusHard(int _statusHard) {
-		this.statusHard = _statusHard;
-	}
-	
-	//getter for Soft Status
-	public int getStatusSoft() {
-		return statusSoft;
-	}
-	
-	//setter for Soft Status
-	public void setStatusSoft(int _statusSoft) {
-		this.statusSoft = _statusSoft;
-	}	
-
 }
