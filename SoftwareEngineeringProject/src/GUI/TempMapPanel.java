@@ -27,39 +27,13 @@ public class TempMapPanel extends JPanel {
 	
 	public TempMapPanel(){
 			
+			area1.createTallGrassSquare(5, 5, 10, 20);
 	        Dimension size = new Dimension(25*map.length, 25*map[0].length);
 	        setPreferredSize(size);
 	        setMinimumSize(size);
 	        setMaximumSize(size);
 	        setSize(size);
 	        setLayout(null);
-	        
-	        
-	       
-//	        for (int i = 0; i < map.length; i++) {
-//	            for (int j = 0; j < map[0].length; j++) {
-//	               
-////	            	if(i+j<37){    
-////	            	map[i][j] = 1; //Grass
-////	                }else if(i+j<39){
-////		                map[i][j] = 0;//Dirt
-////		            }else if(i+j<42){
-////		                map[i][j] = 2;//Sand
-////		            }else if(i+j>=42){
-////	                map[i][j] = 3;//Water
-////	                }
-//	                
-//	                if(i<30){    
-//	            	map[i][j] = 1; //Grass
-//	                }else if(i<32){
-//		                map[i][j] = 0;//Dirt
-//		            }else if(i<35){
-//		                map[i][j] = 2;//Sand
-//		            }else if(i>=35){
-//	                map[i][j] = 3;//Water
-//	                }
-//	            }
-//	        }
 	        
 	        this.addKeyListener(new KeyListener() {
 
@@ -82,10 +56,18 @@ public class TempMapPanel extends JPanel {
 		// Paint the window background
 		g.setColor(Color.BLACK); // Draws outline of shape as mouse moves
         
-		//LAYER !
+		//Flooring Layer
 		for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
             	img = area1.terrain[height][width].getFlooringImage();
+            	g.drawImage(img, 16*height, 16*width, null);
+            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+            }
+        }
+		// GrassORobject Layer
+		for (int height = 0; height < area1.terrain.length; height++) {
+            for (int width = 0; width < area1.terrain[height].length; width++) {
+            	img = area1.terrain[height][width].getGrassORobjectImage();
             	g.drawImage(img, 16*height, 16*width, null);
             	//g.draw3DRect(25*i, 25*j, 25, 25, true);
             }
@@ -95,15 +77,15 @@ public class TempMapPanel extends JPanel {
             	
             	if(height==playerX&&width==playerY){
             		if(step_count==0){
-            			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_LeftFootForeward.png").getImage();
+            			img = new ImageIcon(".\\src\\TerrainImages/Dawn_LeftFootForeward.png").getImage();
             		}else if(step_count==1){
-            			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_RightFootForeward.png").getImage();
+            			img = new ImageIcon(".\\src\\TerrainImages/Dawn_RightFootForeward.png").getImage();
             		}else if(step_count==2){
-            			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_LeftFootForeward.png").getImage();
+            			img = new ImageIcon(".\\src\\TerrainImages/Dawn_LeftFootForeward.png").getImage();
             		}else if(step_count==3){
-            			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_RightFootForeward.png").getImage();
+            			img = new ImageIcon(".\\src\\TerrainImages/Dawn_RightFootForeward.png").getImage();
             		}else if(step_count==4){
-            			img = new ImageIcon(".\\src\\16x16_TerrainImages/Dawn_StandingForeward.png").getImage();
+            			img = new ImageIcon(".\\src\\TerrainImages/Dawn_StandingForeward.png").getImage();
             		}
             		
             		g.draw3DRect(16*playerX, 16*playerY+2*step_count, 21, 25, true);

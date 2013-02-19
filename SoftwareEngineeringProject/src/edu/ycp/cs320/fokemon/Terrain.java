@@ -14,7 +14,7 @@ public class Terrain{
 	//Object[] layer = new Object[4];
 	Flooring flooring;
 	Structure structure;
-	Stuff grassORobject;
+	Stuff grassOrObject;
 	InteractionSpace interactionspaces;
 	
 	public Terrain(Flooring flooring, Structure structure, Stuff grassORobject, Stuff trainer, InteractionSpace interactionspaces, Object eventID){
@@ -22,15 +22,18 @@ public class Terrain{
 		
 		this.flooring = flooring;
 		this.structure = structure;
-		this.grassORobject = grassORobject;
+		this.grassOrObject = grassORobject;
 		this.interactionspaces = interactionspaces;
 		
 		
 	}
+	
 	public Image getFlooringImage(){ // Returns the image for each flooring type
-		
+		if(flooring==null){
+			return null;
+		}
 		switch(flooring){
-			case Grass: return new ImageIcon(".\\src\\16x16_TerrainImages/Grass.png").getImage();
+			case Grass: return new ImageIcon(".\\src\\TerrainImages/Grass.png").getImage();
 			case Water: return null;
 			case Ground: return null;
 			case Sand: return null;		
@@ -38,4 +41,27 @@ public class Terrain{
 		return null;
 	}
 	
+	public Image getGrassORobjectImage(){ // Returns the image for each grass or object type
+		if(grassOrObject==null){
+			return null;
+		}
+		switch(grassOrObject){
+			case TallGrass: return new ImageIcon(".\\src/TerrainImages/TallGrass.png").getImage();
+			case TallGrassLeftEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_LeftEdge.png").getImage();
+			case TallGrassRightEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_RightEdge.png").getImage();
+			case TallGrassLowerEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_LowerEdge.png").getImage();
+			case TallGrassUpperEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_UpperEdge.png").getImage();
+			case TallGrassUpperRightEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_UpperRightEdge.png").getImage();
+			case TallGrassLowerRightEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_LowerRightEdge.png").getImage();
+			case TallGrassLowerLeftEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_LowerLeftEdge.png").getImage();
+			case TallGrassUpperLeftEdge: return new ImageIcon(".\\src/TerrainImages/TallGrass_UpperLeftEdge.png").getImage();
+		default:
+			break;	
+		}
+		return null;
+	}
+	
+	public void setGrassORobject(Stuff stuff){
+		grassOrObject = stuff;
+	}
 }
