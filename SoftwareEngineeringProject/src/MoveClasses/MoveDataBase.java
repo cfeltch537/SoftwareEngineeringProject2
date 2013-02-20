@@ -10,7 +10,7 @@ public class MoveDataBase {
 	
 	public static Move generateMove(MoveName moveName){
 		ArrayList <Effect> effectList = new ArrayList<Effect>();
-		Effect effect=new Effect(EffectType.NONE,0,0);
+		Effect effect=new Effect(EffectType.NONE,0,0,"");
 		effectList.add(effect);
 		//Moves are Have no effect, no damage, are physical, type Normal, and have accuracy of 100 by default
 		Move move=new Move(0, 0, effectList, 100, moveName, 0, PokeType.NORMAL,true);

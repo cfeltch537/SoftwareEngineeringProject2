@@ -1,4 +1,4 @@
-package edu.ycp.cs320.SoftwareEngineeringProject;
+package edu.ycp.cs320.fokemonTests;
 
 import edu.ycp.cs320.fokemon.PokeInfo;
 import edu.ycp.cs320.fokemon.PokeType;

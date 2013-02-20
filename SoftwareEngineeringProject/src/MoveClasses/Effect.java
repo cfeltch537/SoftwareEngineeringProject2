@@ -8,11 +8,11 @@ public class Effect {
 	private String EffectText;
 	
 
-	public Effect(EffectType EffectIndex, int EffectChance, int Magnitude) {
+	public Effect(EffectType EffectIndex, int EffectChance, int Magnitude, String EffectText) {
 		this.setEffectIndex(EffectIndex);
 		this.setEffectChance(EffectChance);
 		this.setMagnitude(Magnitude);
-		EffectText="";
+		this.EffectText = EffectText;
 	}
 
 

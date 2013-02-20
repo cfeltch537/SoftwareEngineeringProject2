@@ -1,4 +1,4 @@
-package edu.ycp.cs320.SoftwareEngineeringProject;
+package edu.ycp.cs320.moveTests;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class MoveTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		testEffect = new Effect(EffectType.ATTRACT, 0, 0);
+		testEffect = new Effect(EffectType.ATTRACT, 0, 0, "");
 		testEffectList.add(testEffect);
 		moveA = MoveDataBase.generateMove(MoveName.Tackle);
 		moveB = MoveDataBase.generateMove(MoveName.Bite);
