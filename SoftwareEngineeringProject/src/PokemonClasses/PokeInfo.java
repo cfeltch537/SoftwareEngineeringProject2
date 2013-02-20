@@ -1,4 +1,7 @@
-package edu.ycp.cs320.fokemon;
+package PokemonClasses;
+
+import java.util.ArrayList;
+
 
 
 
@@ -8,11 +11,11 @@ public class PokeInfo {
 	private String PokeName;
 	private String Nickname;
 	private Boolean Gender;
-	private PokeType type;
+	private ArrayList <PokeType> type;
 	private int lvl;
 	private int xp;
 	
-	public PokeInfo(int PokeID, int PlayerID, String PokeName, String Nickname, Boolean Gender, PokeType type, int lvl, int xp){
+	public PokeInfo(int PokeID, int PlayerID, String PokeName, String Nickname, Boolean Gender, ArrayList <PokeType> type, int lvl, int xp){
 		this.PokeID=PokeID;
 		this.PlayerID=PlayerID;
 		this.PokeName=PokeName;
@@ -63,11 +66,11 @@ public class PokeInfo {
 		Gender = gender;
 	}
 
-	public PokeType getType() {
+	public ArrayList<PokeType> getType() {
 		return type;
 	}
 
-	public void setType(PokeType type) {
+	public void setType(ArrayList<PokeType> type) {
 		this.type = type;
 	}
 

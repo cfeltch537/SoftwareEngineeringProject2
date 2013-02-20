@@ -5,8 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import PokemonClasses.Status;
+
 import edu.ycp.cs320.fokemon.BattleStats;
-import edu.ycp.cs320.fokemon.Status;
+
 
 public class BattleStatsTest {
 	private BattleStats squirtle;

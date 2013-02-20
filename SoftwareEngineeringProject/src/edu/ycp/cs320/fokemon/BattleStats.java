@@ -1,5 +1,7 @@
 package edu.ycp.cs320.fokemon;
 
+import PokemonClasses.Status;
+
 public class BattleStats {
 	private int curHp;
 	private int maxHp;

@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.fokemon.PokeType;
 
 import MoveClasses.Effect;
 import MoveClasses.EffectType;
 import MoveClasses.Move;
 import MoveClasses.MoveDataBase;
 import MoveClasses.MoveName;
+import PokemonClasses.PokeType;
 
 public class MoveTest {
 	private Move moveA;

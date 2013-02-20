@@ -1,10 +1,12 @@
+
 package MoveClasses;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.ycp.cs320.fokemon.Pokemon;
-import edu.ycp.cs320.fokemon.Status;
+import PokemonClasses.Pokemon;
+import PokemonClasses.Status;
+
 
 
 
@@ -66,5 +68,7 @@ public class EffectDataBase {
 
 	}
 	}
+
+
 
 
