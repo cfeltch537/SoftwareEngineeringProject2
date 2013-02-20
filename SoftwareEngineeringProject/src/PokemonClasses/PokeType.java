@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package PokemonClasses;
 
 public enum PokeType {
 	NORMAL,

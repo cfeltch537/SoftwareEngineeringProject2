@@ -2,7 +2,8 @@ package MoveClasses;
 
 import java.util.ArrayList;
 
-import edu.ycp.cs320.fokemon.PokeType;
+import PokemonClasses.PokeType;
+
 
 public class Move {
 	private int curPP;

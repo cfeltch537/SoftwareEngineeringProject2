@@ -2,6 +2,8 @@ package edu.ycp.cs320.fokemon;
 
 import java.util.ArrayList;
 
+import PokemonClasses.Pokemon;
+
 
 
 public class Player {

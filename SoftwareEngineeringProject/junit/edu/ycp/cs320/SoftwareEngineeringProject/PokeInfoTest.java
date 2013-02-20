@@ -1,7 +1,10 @@
 package edu.ycp.cs320.SoftwareEngineeringProject;
 
-import edu.ycp.cs320.fokemon.PokeInfo;
-import edu.ycp.cs320.fokemon.PokeType;
+import java.util.ArrayList;
+
+import PokemonClasses.PokeInfo;
+import PokemonClasses.PokeType;
+
 import junit.framework.TestCase;
 
 
@@ -9,19 +12,24 @@ public class PokeInfoTest extends TestCase {
 	// TODO - define test fixture objects
 	private PokeInfo a;
 	private PokeInfo b;
+	private ArrayList<PokeType> type;
 	
 	
 	@Override
 	protected void setUp() throws Exception {
 		// TODO - create test fixture objects
-		a = new PokeInfo(1, 2, "Mew","a", false, PokeType.NORMAL, 10, 3);
-		b = new PokeInfo(2, 3, "Mewtwo","b", true, PokeType.FIRE, 11, 4);
+		type=new ArrayList<PokeType>();
+		type.add(PokeType.NORMAL);
+		a = new PokeInfo(1, 2, "Mew","a", false, type, 10, 3);
+		type.add(PokeType.FIRE);
+		b = new PokeInfo(2, 3, "Mewtwo","b", true, type, 11, 4);
 	}
 	
 	// TODO - add test methods
 	public void testGetType() throws Exception {
-		assertEquals(PokeType.NORMAL, a.getType());
-		assertEquals(PokeType.FIRE, b.getType());
+		assertEquals(PokeType.NORMAL, a.getType().get(0));
+		assertEquals(PokeType.NORMAL, b.getType().get(0));
+		assertEquals(PokeType.FIRE, b.getType().get(1));
 	}
 	public void testGetPokeID() throws Exception {
 		assertEquals(1, a.getPokeID());
@@ -68,8 +76,10 @@ public class PokeInfoTest extends TestCase {
 		a.setPokeID(12);
 		assertEquals(12,a.getPokeID());
 		
-		a.setType(PokeType.ROCK);
-		assertEquals(PokeType.ROCK, a.getType());
+		type.clear();
+		type.add(PokeType.ROCK);
+		a.setType(type);
+		assertEquals(PokeType.ROCK, a.getType().get(0));
 		
 		a.setLvl(5);
 		assertEquals(5,a.getLvl());
