@@ -22,7 +22,7 @@ public class Move {
 		this.moveName = moveName;
 		this.damage = damage;
 		this.pokeType = pokeType;
-		this.physical=physical;
+		this.physical = physical;
 	}
 
 	public int getCurPP() {
@@ -81,7 +81,7 @@ public class Move {
 		this.pokeType = pokeType;
 	}
 
-	public boolean isPhysical() {
+	public boolean getPhysical() {
 		return physical;
 	}
 

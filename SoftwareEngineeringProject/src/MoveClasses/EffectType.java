@@ -25,9 +25,4 @@ public enum EffectType {
 	BOOSTSPD,
 	BOOSTACCUR,
 	REST,
-	
-	
-	
-	
-
 }
