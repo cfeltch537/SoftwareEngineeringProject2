@@ -6,16 +6,15 @@ import PokemonClasses.PokeType;
 
 
 public class MoveDataBase {
-	static ArrayList <Effect> effectList;
-	static Effect effect;
+	//private static ArrayList <Effect> effectList;
+	//private static Effect effect;
 	
 	public static Move generateMove(MoveName moveName){
-		effectList.clear();
-		effect=new Effect(EffectType.NONE,0,0);
+		ArrayList <Effect> effectList = new ArrayList<Effect>();
+		Effect effect=new Effect(EffectType.NONE,0,0,"");
 		effectList.add(effect);
 		//Moves are Have no effect, no damage, are physical, type Normal, and have accuracy of 100 by default
 		Move move=new Move(0, 0, effectList, 100, moveName, 0, PokeType.NORMAL,true);
-		effectList.clear();
 		
 		
 		switch (moveName) {
@@ -39,7 +38,7 @@ public class MoveDataBase {
         	effect.setEffectIndex(EffectType.BURN);
         	effect.setEffectChance(15);
         	effect.setMagnitude(0);
-        	effectList.add(effect);
+        	effectList.add(0, effect);
         	
         	move.setEffect(effectList);
         		break;
@@ -89,7 +88,7 @@ public class MoveDataBase {
         	effect.setEffectIndex(EffectType.POISON);
         	effect.setEffectChance(50);
         	effect.setMagnitude(0);
-        	effectList.add(effect);
+        	effectList.add(0, effect);
         	
         	move.setEffect(effectList);
         		break;

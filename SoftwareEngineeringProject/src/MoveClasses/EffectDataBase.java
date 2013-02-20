@@ -1,3 +1,4 @@
+
 package MoveClasses;
 
 import java.util.ArrayList;
@@ -67,5 +68,7 @@ public class EffectDataBase {
 
 	}
 	}
+
+
 
 

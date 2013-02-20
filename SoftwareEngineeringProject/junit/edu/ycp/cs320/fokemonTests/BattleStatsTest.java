@@ -1,4 +1,4 @@
-package edu.ycp.cs320.SoftwareEngineeringProject;
+package edu.ycp.cs320.fokemonTests;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import org.junit.Test;
 import PokemonClasses.Status;
 
 import edu.ycp.cs320.fokemon.BattleStats;
+
 
 public class BattleStatsTest {
 	private BattleStats squirtle;
