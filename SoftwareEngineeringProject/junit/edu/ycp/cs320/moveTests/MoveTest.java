@@ -24,9 +24,10 @@ public class MoveTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		testEffect = new Effect(EffectType.ATTRACT, 0, 0, "");
+		testEffect = new Effect(EffectType.POISON, 0, 0, "");
 		testEffectList.add(testEffect);
-		moveA = MoveDataBase.generateMove(MoveName.Tackle);
+		//moveA=new Move(0, 0, testEffectList, 0, null, 0, null, false);
+		moveA=MoveDataBase.generateMove(MoveName.Tackle);
 		moveB = MoveDataBase.generateMove(MoveName.Bite);
 		moveC = MoveDataBase.generateMove(MoveName.Ember);
 	}
@@ -102,7 +103,7 @@ public class MoveTest {
 	@Test
 	public void testSetEffect() {
 		moveA.setEffect(testEffectList);
-		assertEquals(EffectType.ATTRACT, moveA.getEffect().get(0).getEffectIndex());
+		assertEquals(EffectType.POISON, moveA.getEffect().get(0).getEffectIndex());
 	}
 	
 	@Test

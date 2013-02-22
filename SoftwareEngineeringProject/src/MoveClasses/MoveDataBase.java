@@ -15,6 +15,7 @@ public class MoveDataBase {
 		effectList.add(effect);
 		//Moves are Have no effect, no damage, are physical, type Normal, and have accuracy of 100 by default
 		Move move=new Move(0, 0, effectList, 100, moveName, 0, PokeType.NORMAL,true);
+		effectList.clear();
 		
 		
 		switch (moveName) {
@@ -22,11 +23,17 @@ public class MoveDataBase {
         	move.setDamage(20);
         	move.setMaxPP(30);
         	move.setAccuracy(90);
+        	
+        	effectList.add(effect);
+        	move.setEffect(effectList);
             	break;
         case Bite:
         	move.setDamage(60);
         	move.setMaxPP(15);
         	move.setAccuracy(85);
+        	
+        	effectList.add(effect);
+        	move.setEffect(effectList);
         		break;
         case Ember:
         	move.setDamage(40);
