@@ -1,8 +1,8 @@
-package edu.ycp.cs320.SoftwareEngineeringProject;
+package edu.ycp.cs320.moveTests;
 
+import MoveClasses.EffectDataBase;
+import PokemonClasses.Pokemon;
 import junit.framework.TestCase;
-import edu.ycp.cs320.fokemon.EffectDataBase;
-import edu.ycp.cs320.fokemon.Pokemon;
 
 public class EffectDataBaseTest extends TestCase {
 	// TODO - define test fixture objects

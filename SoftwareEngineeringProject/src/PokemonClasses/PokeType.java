@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package PokemonClasses;
 
 public enum PokeType {
 	NORMAL,
@@ -9,5 +9,9 @@ public enum PokeType {
 	ELECTRIC,
 	ROCK,
 	PSYHIC,
-	GHOST
+	GHOST,
+	GROUND,
+	DRAGON,
+	FLYING,
+	ICE
 }

@@ -1,4 +1,6 @@
-package edu.ycp.cs320.fokemon;
+package PokemonClasses;
+
+import edu.ycp.cs320.fokemon.BattleStats;
 
 public class Pokemon {
 	//create parameters for each pokemon

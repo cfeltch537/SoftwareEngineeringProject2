@@ -2,6 +2,7 @@
 package edu.ycp.cs320.fokemon;
 
 import java.io.IOException;
+import edu.ycp.cs320.fokemon.Pokedex;
 
 import GUI.TempGUI;
 import GUI.TempMapPanel;
@@ -15,9 +16,12 @@ class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		TempGUI.main(null);
-		TempMapPanel tmp = new TempMapPanel();
+		Pokedex test = new Pokedex();
+		//test.toString();
+		//TempGUI.main(null);
+		//TempMapPanel tmp = new TempMapPanel();
 		//tmp.repaint();
+		test.pokeMap.get(34).printEntry();
 	}
 
 }

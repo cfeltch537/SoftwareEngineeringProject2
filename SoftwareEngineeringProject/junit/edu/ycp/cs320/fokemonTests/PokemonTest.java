@@ -1,11 +1,13 @@
-package edu.ycp.cs320.SoftwareEngineeringProject;
+package edu.ycp.cs320.fokemonTests;
 
 import static junit.framework.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.fokemon.Pokemon;
+import PokemonClasses.Pokemon;
+
+
 
 public class PokemonTest {
 	private Pokemon squirtle;

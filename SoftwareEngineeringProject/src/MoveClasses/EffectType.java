@@ -1,13 +1,14 @@
-package edu.ycp.cs320.fokemon;
+package MoveClasses;
 
-public enum Effect {
+public enum EffectType {
 	POISON,
 	PARALYZE,
 	FREEZE,
 	BURN,
 	SLEEP,
 	KO,
-	RECOVER,
+	RECOVERCONST,
+	RECOVERPERCENT,
 	NONE,
 	CONFUSION,
 	LEECHLIFE,
@@ -24,9 +25,4 @@ public enum Effect {
 	BOOSTSPD,
 	BOOSTACCUR,
 	REST,
-	
-	
-	
-	
-
 }
