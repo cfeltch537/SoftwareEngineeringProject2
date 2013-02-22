@@ -1,8 +1,11 @@
+
+
 package edu.ycp.cs320.moveTests;
 
 import MoveClasses.EffectDataBase;
 import PokemonClasses.Pokemon;
 import junit.framework.TestCase;
+
 
 public class EffectDataBaseTest extends TestCase {
 	// TODO - define test fixture objects
@@ -26,3 +29,4 @@ public class EffectDataBaseTest extends TestCase {
 		assertEquals(10,A.getBaseAtk());
 	}
 }
+

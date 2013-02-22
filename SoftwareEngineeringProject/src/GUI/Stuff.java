@@ -1,3 +1,4 @@
+
 package GUI;
 
 public enum Stuff {
@@ -13,3 +14,4 @@ public enum Stuff {
 		TallGrassLowerRightEdge,
 		Trainer;
 }
+

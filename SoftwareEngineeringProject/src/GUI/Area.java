@@ -1,3 +1,4 @@
+
 package GUI;
 
 import edu.ycp.cs320.fokemon.Terrain;
@@ -49,4 +50,5 @@ public class Area {
 	
 	
 }
+
 

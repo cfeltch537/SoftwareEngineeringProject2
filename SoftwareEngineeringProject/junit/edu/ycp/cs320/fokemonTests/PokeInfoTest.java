@@ -1,3 +1,4 @@
+
 package edu.ycp.cs320.fokemonTests;
 
 import java.util.ArrayList;
@@ -90,3 +91,4 @@ public class PokeInfoTest extends TestCase {
 
 	
 }
+

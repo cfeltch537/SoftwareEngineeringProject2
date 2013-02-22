@@ -14,65 +14,53 @@ public class Player {
 	private ArrayList <Pokemon> team;
 	
 	
-	public Player(int PlayerID, String name, boolean gender){
-		this.setPlayerID(PlayerID);
-		this.setName(name);
-		this.setGender(gender);
-		
-		team=new ArrayList<Pokemon>();
-		setPlayerLocation(new Location(1, 6, 5));
-		//team.add(new Pokemon())
-		
-		
-		
+	public Player(String name, boolean gender, Location PlayerLocation, int PlayerID, ArrayList<Pokemon> team){
+		this.name = name;
+		this.gender = gender;
+		this.PlayerLocation = PlayerLocation;
+		this.PlayerID = PlayerID;
+		this.team = team;
+//		team=new ArrayList<Pokemon>();
+//		setPlayerLocation(new Location(1, 6, 5));	
 	}
 
 	public int getTeamSize() {
-		return team.size();
-		
+		return team.size();	
 	}
 
 	public Pokemon getTeam(int i) {
-		
 		return team.get(i);
 	}
+	
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-	public boolean isGender() {
+	public boolean getGender() {
 		return gender;
 	}
-
 
 	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
 
-
 	public Location getPlayerLocation() {
 		return PlayerLocation;
 	}
-
 
 	public void setPlayerLocation(Location playerLocation) {
 		PlayerLocation = playerLocation;
 	}
 
-
 	public int getPlayerID() {
 		return PlayerID;
 	}
 
-
 	public void setPlayerID(int playerID) {
 		PlayerID = playerID;
 	}
-
 }
