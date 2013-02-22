@@ -64,12 +64,14 @@ public class TempMapPanel extends JPanel {
             	//g.draw3DRect(25*i, 25*j, 25, 25, true);
             }
         }
-		// GrassORobject Layer
+		//InteractableObject
 		for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
-            	img = area1.terrain[height][width].getGrassORobjectImage();
+            	if(area1.terrain[height][width].interactableObject!=null){
+            	img = area1.terrain[height][width].interactableObject.objectName.img;
             	g.drawImage(img, 16*height, 16*width, null);
             	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+            	}
             }
         }
         for (int height = 0; height < area1.terrain.length; height++) {

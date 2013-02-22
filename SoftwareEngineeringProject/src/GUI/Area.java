@@ -25,23 +25,23 @@ public class Area {
 		for(int i=0; i<width; i++){
 			for(int j=0; j<height; j++){
 				if(i==0&&j==0){ //Upper Left Corner
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassUpperLeftEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassUpperLeftEdge, Interaction.Battle_Wild);
 				}else if(i==width-1&&j==height-1){ // Lower Right Corner
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassLowerRightEdge);
-				}else if(i==0&&j==height-1){ // Upper Right Corner
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassLowerLeftEdge);
-				}else if(i==width-1&&j==0){ // Lower Left Corner
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassUpperRightEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassLowerRightEdge, Interaction.Battle_Wild);
+				}else if(i==0&&j==height-1){ // Lower Left Corner
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassLowerLeftEdge, Interaction.Battle_Wild);
+				}else if(i==width-1&&j==0){ // Upper Right Corner Corner
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassUpperRightEdge, Interaction.Battle_Wild);
 				}else if(i==0){ //Left Edge
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassLeftEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassLeftEdge, Interaction.Battle_Wild);
 				}else if(j==0){ // Upper Edge
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassUpperEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassUpperEdge, Interaction.Battle_Wild);
 				}else if(i==width-1){ // Right Edge
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassRightEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassRightEdge, Interaction.Battle_Wild);
 				}else if(j==height-1){ // Lower Edge
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrassLowerEdge);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrassLowerEdge, Interaction.Battle_Wild);
 				}else{ // Central Grass
-					terrain[x_start+i][y_start+j].setGrassORobject(Stuff.TallGrass);
+					terrain[x_start+i][y_start+j].interactableObject = new InteractableObject(InteractableObjectName.TallGrass, Interaction.Battle_Wild);
 				}
 			}
 		}
