@@ -18,7 +18,7 @@ public class Move {
 	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType, boolean physical) {
 		this.curPP = curPP;
 		this.maxPP = maxPP;
-		this.effect = effect;
+		this.effect = new ArrayList<Effect>(effect); // make a copy of the list
 		this.accuracy = accuracy;
 		this.moveName = moveName;
 		this.damage = damage;
