@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,7 +23,6 @@ public class TempMapPanel extends JPanel {
 	Area area1 = new Area(); // For now only one area will exist
 	Player player = new Player(00004, "Cody", true, new Location(0, 20, 10)); // Player Cody
 	public static boolean allowMove = false;		 // Boolean used to 
-	public int[][] map = new int[40][20];
 	public static Integer step_count = 0;
 		
 	Graphics g = this.getGraphics();
@@ -30,8 +30,11 @@ public class TempMapPanel extends JPanel {
 	
 	public TempMapPanel(){
 			
-			area1.createTallGrassSquare(5, 5, 10, 10);
-	        Dimension size = new Dimension(25*map.length, 25*map[0].length);
+			area1.createTallGrassSquare(5, 5, 10, 4);
+			area1.createTallGrassSquare(5, 10, 10, 4);
+			area1.createTallGrassSquare(5, 15, 10, 4);
+			area1.placeStructure(25, 5, InteractableObject.PokeCenter);
+	        Dimension size = new Dimension(16*area1.terrain.length, 16*area1.terrain[0].length);
 	        setPreferredSize(size);
 	        setMinimumSize(size);
 	        setMaximumSize(size);
@@ -100,9 +103,23 @@ public class TempMapPanel extends JPanel {
             		}else if(step_count==4){
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_StandingForeward.png").getImage();
             		}
-            		
-            		g.draw3DRect(16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()+2*step_count, 21, 25, true);
+            		if(area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
+            			g.drawImage(img,
+            				       16*player.getPlayerLocation().getX(),
+            				       16*player.getPlayerLocation().getY(),
+            				       16*player.getPlayerLocation().getX()+22,
+            				       16*player.getPlayerLocation().getY()+19,
+            				       0, 0, 22, 19, new ImageObserver() {
+									@Override
+									public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,int arg4, int arg5) {
+										// TODO Auto-generated method stub...Nah
+										return false;
+									}
+								});
+            		}else{
             		g.drawImage(img, 16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()-10+2*step_count, null);
+            		}
+            		//g.draw3DRect(16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()+2*step_count, 21, 25, true);
 	
                 	if(step_count!=4){
                     	step_count++;
@@ -113,16 +130,16 @@ public class TempMapPanel extends JPanel {
     		
 	}
 	public void MovePlayer(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove) {
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()) {
 		            //Right arrow key code
 		    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
-		    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove) {
+		    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
 		            //Left arrow key code
 		    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
-		    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove) {
+		    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove&&area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
 		            //Up arrow key code
 		    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
-		    } else if (e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove) {
+		    } else if (e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove&&area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable()) {
 		            //Down arrow key code
 		    	step_count = 0;
 		    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
