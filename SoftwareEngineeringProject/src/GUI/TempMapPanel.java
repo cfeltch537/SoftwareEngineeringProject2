@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 public class TempMapPanel extends JPanel {
 	
 	Area area1 = new Area();
+
+	public static boolean allowMove = false;
 	public int[][] map = new int[40][20];
 	public static Integer playerX = 20;
 	public static Integer playerY = 10;
@@ -27,7 +29,7 @@ public class TempMapPanel extends JPanel {
 	
 	public TempMapPanel(){
 			
-			area1.createTallGrassSquare(5, 5, 10, 20);
+			area1.createTallGrassSquare(5, 5, 10, 10);
 	        Dimension size = new Dimension(25*map.length, 25*map[0].length);
 	        setPreferredSize(size);
 	        setMinimumSize(size);
@@ -59,21 +61,29 @@ public class TempMapPanel extends JPanel {
 		//Flooring Layer
 		for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
-            	img = area1.terrain[height][width].getFlooringImage();
+            	if(area1.terrain[height][width].flooring.img!=null){
+            	img = area1.terrain[height][width].flooring.img;
             	g.drawImage(img, 16*height, 16*width, null);
-            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
-            }
-        }
-		//InteractableObject
-		for (int height = 0; height < area1.terrain.length; height++) {
-            for (int width = 0; width < area1.terrain[height].length; width++) {
-            	if(area1.terrain[height][width].interactableObject!=null){
-            	img = area1.terrain[height][width].interactableObject.objectName.img;
-            	g.drawImage(img, 16*height, 16*width, null);
-            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+            	//g.draw3DRect(16*i, 16*j, 16, 16, true);
             	}
             }
         }
+		//InteractableObjects
+		for (int height = 0; height < area1.terrain.length; height++) {
+            for (int width = 0; width < area1.terrain[height].length; width++) {
+            //^Iterate through each terrain in the area
+            	for(int objectIndex = 0; objectIndex<area1.terrain[height][width].interactableObjectList.size(); objectIndex++){
+	            	if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		img = area1.terrain[height][width].interactableObjectList.get(objectIndex).img;
+		            	g.drawImage(img, 16*height, 16*width, null);
+		            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+	            		}
+	            	}	
+            	}	
+            }
+        }
+		//Player
         for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
             	
@@ -102,21 +112,21 @@ public class TempMapPanel extends JPanel {
     		
 	}
 	public void MovePlayer(KeyEvent e) {
-	    if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-	            //Right arrow key code
-	    	TempMapPanel.playerX++;
-	    } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
-	            //Left arrow key code
-	    	TempMapPanel.playerX--;
-	    } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-	            //Up arrow key code
-	    	TempMapPanel.playerY--;
-	    } else if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
-	            //Down arrow key code
-	    	step_count = 0;
-	    	TempMapPanel.playerY++;
-	    }
-	   // repaint();
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove) {
+		            //Right arrow key code
+		    	TempMapPanel.playerX++;
+		    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove) {
+		            //Left arrow key code
+		    	TempMapPanel.playerX--;
+		    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove) {
+		            //Up arrow key code
+		    	TempMapPanel.playerY--;
+		    } else if (e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove) {
+		            //Down arrow key code
+		    	step_count = 0;
+		    	TempMapPanel.playerY++;
+		    }
+			allowMove=false;
 	}
 	
 }
