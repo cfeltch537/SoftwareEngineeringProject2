@@ -1,51 +1,41 @@
 package edu.ycp.cs320.fokemon;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
+import java.util.LinkedList;
 import GUI.Flooring;
 import GUI.InteractableObject;
-import GUI.InteractableObjectName;
 import GUI.Interaction;
-import GUI.Structure;
 
 public class Terrain{
 	
-	public Flooring flooring;
-	public Structure structure;
-	public InteractableObject interactableObject;
+	public Flooring flooring; //The lowest level of each terrain. Not interactable.
+	public LinkedList<InteractableObject> interactableObjectList = new LinkedList<InteractableObject>();;
+	//^InteractableObjects can include everything from Trainers, TallGrass, Structures etc.
+	//Each interactableObject contains a list of interactions and associated image (if applicable)
 	
-	
-	public Terrain(Flooring flooring, Structure structure, InteractableObject grassORobject, InteractableObject trainer, InteractableObject interactableObject, Object eventID){
-		// This class will all of the necessary information for printing the map and reacting to event on spaces (i.e. trainer battles, grass, tall grass, buildings, rocks, etc.)
-		
+	public Terrain(Flooring flooring, InteractableObject[] interactableObjects){
 		this.flooring = flooring;
-		this.structure = structure;
-		this.interactableObject = interactableObject;
-		
-	}
-	
-	public Image getFlooringImage(){ // Returns the image for each flooring type
-		if(flooring==null){
-			return null;
+		//^Sets Flooring
+		if(interactableObjects!=null){
+			for(int i=0; i<interactableObjects.length;i++){
+				if(interactableObjects[i]!=null){
+					this.interactableObjectList.add(interactableObjects[i]);
+				}
+			}
 		}
-		switch(flooring){
-			case Grass: return new ImageIcon(".\\src\\TerrainImages/Grass.png").getImage();
-			case Water: return null;
-			case Ground: return null;
-			case Sand: return null;		
-		}
-		return null;
+		//^Try to set object image; catch null pointer exceptions
 	}
-	
+	//^Constructor. Sets flooring of each terrain space in the area
+	//Interactable objects can be added here too, but don't need to be
 	public boolean isMovable(InteractableObject interactableObject){
-		switch(interactableObject.interaction){
-		case MovementAllowed: return true;
-		case MovementBlocked: return false;
-		default:
-			return false;
+		for(int i=0; i<this.interactableObjectList.size();i++){
+			for(int j=0; i<this.interactableObjectList.get(i).interactionList.size();i++){
+				if(this.interactableObjectList.get(i).interactionList.get(j).equals(Interaction.MovementBlocked)){
+					return false;
+				}
+			}
 		}
+		return true;
 	}
-	
+	//^isMovable returns true when the player can move to the terrain location
+	//i.e. it does not contain a 'MovementBlocked' Interaction
 }
