@@ -2,8 +2,9 @@ package GUI;
 
 public enum Interaction {
 	Battle_Wild,
+	TallGrass,
 	MovementBlocked,
-	MovementAllowed,
+	MovementAllowed, // <-- Probably doesn't need to be used
 	TriggerTrainerBattle,
 	TriggerChangeArea;
 }

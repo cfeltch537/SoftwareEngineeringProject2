@@ -5,18 +5,23 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 public enum InteractableObject {
-	TallGrass(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass.png"),
-	TallGrassLeftEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_LeftEdge.png"),
-	TallGrassRightEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_RightEdge.png"),
-	TallGrassLowerEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_LowerEdge.png"),
-	TallGrassUpperEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_UpperEdge.png"),
-	TallGrassUpperLeftEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_UpperLeftEdge.png"),
-	TallGrassUpperRightEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_UpperRightEdge.png"),
-	TallGrassLowerLeftEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_LowerLeftEdge.png"),
-	TallGrassLowerRightEdge(new Interaction[] {Interaction.Battle_Wild}, ".\\src/TerrainImages/TallGrass_LowerRightEdge.png"),
+	//Tall Grass Types********************************
+	TallGrass(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass.png"),
+	TallGrassLeftEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_LeftEdge.png"),
+	TallGrassRightEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_RightEdge.png"),
+	TallGrassLowerEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_LowerEdge.png"),
+	TallGrassUpperEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_UpperEdge.png"),
+	TallGrassUpperLeftEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_UpperLeftEdge.png"),
+	TallGrassUpperRightEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_UpperRightEdge.png"),
+	TallGrassLowerLeftEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_LowerLeftEdge.png"),
+	TallGrassLowerRightEdge(new Interaction[] {Interaction.Battle_Wild, Interaction.TallGrass}, ".\\src/TerrainImages/TallGrass_LowerRightEdge.png"),
+	//Water Types**************************************
+	FreshWater(new Interaction[] {Interaction.MovementBlocked}, ".\\src/TerrainImages/FreshWater.png"),
+	SaltWater(new Interaction[] {Interaction.MovementBlocked}, ".\\src/TerrainImages/SaltWater.png"),
+	PokeCenter(new Interaction[] {Interaction.MovementBlocked}, ".\\src/TerrainImages/PokeCenter.png"),
 	Trainer(new Interaction[] {Interaction.Battle_Wild}, null);
 	
-	public LinkedList<Interaction> interactionList;
+	public LinkedList<Interaction> interactionList = new LinkedList<Interaction>();
 	public Image img;
 	
 	private InteractableObject(Interaction[] defaultInteraction, String imageSource) {
@@ -29,10 +34,8 @@ public enum InteractableObject {
 			}
 		}
 		//^ As long as the default interaction is not 'null' add to interactionList
-		try{
+		if(imageSource!=null){
 			this.img = new ImageIcon(imageSource).getImage();
-		}catch(NullPointerException e){
-			System.out.println("NullPointerException for:" + imageSource + "..." + e);
 		}
 		//^Try to set object image; catch null pointer exceptions
 	}

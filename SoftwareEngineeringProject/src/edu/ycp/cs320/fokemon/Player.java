@@ -12,16 +12,14 @@ public class Player {
 	private ArrayList <Pokemon> team;
 	
 	
-	public Player(int PlayerID, String name, boolean gender){
+	public Player(int PlayerID, String name, boolean gender, Location playerLocation){
 		this.setPlayerID(PlayerID);
 		this.setName(name);
 		this.setGender(gender);
 		
 		team=new ArrayList<Pokemon>();
-		setPlayerLocation(new Location(1, 6, 5));
+		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
 		//team.add(new Pokemon())
-		
-		
 		
 	}
 
