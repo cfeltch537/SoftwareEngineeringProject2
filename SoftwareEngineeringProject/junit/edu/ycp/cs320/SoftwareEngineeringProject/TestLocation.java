@@ -20,47 +20,47 @@ public class TestLocation {
 	}
 	
 	@Test
-	public void testGetX() throws Exception {
-		assertEquals(8, pos1.GetX());
-		assertEquals(17, pos2.GetX());
-		assertEquals(410, pos3.GetX());
+	public void testgetX() throws Exception {
+		assertEquals(8, pos1.getX());
+		assertEquals(17, pos2.getX());
+		assertEquals(410, pos3.getX());
 	}
 	
 	@Test
-	public void testGetY() throws Exception {
-		assertEquals(10, pos1.GetY());
-		assertEquals(2, pos2.GetY());
-		assertEquals(67, pos3.GetY());
+	public void testgetY() throws Exception {
+		assertEquals(10, pos1.getY());
+		assertEquals(2, pos2.getY());
+		assertEquals(67, pos3.getY());
 	}
 	
 	@Test
-	public void testGetAreaArrayIndex() throws Exception {
-		assertEquals(5, pos1.GetAreaArrayIndex());
-		assertEquals(4, pos2.GetAreaArrayIndex());
-		assertEquals(9, pos3.GetAreaArrayIndex());
+	public void testgetAreaArrayIndex() throws Exception {
+		assertEquals(5, pos1.getAreaArrayIndex());
+		assertEquals(4, pos2.getAreaArrayIndex());
+		assertEquals(9, pos3.getAreaArrayIndex());
 	}
 	
 	@Test
-	public void testSetX() throws Exception {
-		pos1.SetX(11);
-		assertEquals(11, pos1.GetX());
-		pos2.SetX(22);
-		assertEquals(22, pos2.GetX());
+	public void testsetX() throws Exception {
+		pos1.setX(11);
+		assertEquals(11, pos1.getX());
+		pos2.setX(22);
+		assertEquals(22, pos2.getX());
 	}
 	
 	@Test
-	public void testSetY() throws Exception {
-		pos1.SetY(88);
-		assertEquals(88, pos1.GetY());
-		pos2.SetY(64);
-		assertEquals(64, pos2.GetY());
+	public void testsetY() throws Exception {
+		pos1.setY(88);
+		assertEquals(88, pos1.getY());
+		pos2.setY(64);
+		assertEquals(64, pos2.getY());
 	}
 	
 	@Test
-	public void testSetAreaArrayIndex() throws Exception {
-		pos1.SetAreaArrayIndex(115);
-		assertEquals(115, pos1.GetAreaArrayIndex());
-		pos2.SetAreaArrayIndex(48361);
-		assertEquals(48361, pos2.GetAreaArrayIndex());
+	public void testsetAreaArrayIndex() throws Exception {
+		pos1.setAreaArrayIndex(115);
+		assertEquals(115, pos1.getAreaArrayIndex());
+		pos2.setAreaArrayIndex(48361);
+		assertEquals(48361, pos2.getAreaArrayIndex());
 	}
 }
