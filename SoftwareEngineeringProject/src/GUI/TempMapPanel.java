@@ -14,14 +14,15 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import edu.ycp.cs320.fokemon.Location;
+import edu.ycp.cs320.fokemon.Player;
+
 public class TempMapPanel extends JPanel {
 	
-	Area area1 = new Area();
-
-	public static boolean allowMove = false;
+	Area area1 = new Area(); // For now only one area will exist
+	Player player = new Player(00004, "Cody", true, new Location(0, 20, 10)); // Player Cody
+	public static boolean allowMove = false;		 // Boolean used to 
 	public int[][] map = new int[40][20];
-	public static Integer playerX = 20;
-	public static Integer playerY = 10;
 	public static Integer step_count = 0;
 		
 	Graphics g = this.getGraphics();
@@ -87,7 +88,7 @@ public class TempMapPanel extends JPanel {
         for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
             	
-            	if(height==playerX&&width==playerY){
+            	if(height==player.getPlayerLocation().getX()&&width==player.getPlayerLocation().getY()){
             		if(step_count==0){
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_LeftFootForeward.png").getImage();
             		}else if(step_count==1){
@@ -100,8 +101,8 @@ public class TempMapPanel extends JPanel {
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_StandingForeward.png").getImage();
             		}
             		
-            		g.draw3DRect(16*playerX, 16*playerY+2*step_count, 21, 25, true);
-            		g.drawImage(img, 16*playerX, 16*playerY-10+2*step_count, null);
+            		g.draw3DRect(16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()+2*step_count, 21, 25, true);
+            		g.drawImage(img, 16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()-10+2*step_count, null);
 	
                 	if(step_count!=4){
                     	step_count++;
@@ -114,17 +115,17 @@ public class TempMapPanel extends JPanel {
 	public void MovePlayer(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove) {
 		            //Right arrow key code
-		    	TempMapPanel.playerX++;
+		    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
 		    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove) {
 		            //Left arrow key code
-		    	TempMapPanel.playerX--;
+		    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
 		    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove) {
 		            //Up arrow key code
-		    	TempMapPanel.playerY--;
+		    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
 		    } else if (e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove) {
 		            //Down arrow key code
 		    	step_count = 0;
-		    	TempMapPanel.playerY++;
+		    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
 		    }
 			allowMove=false;
 	}
