@@ -23,15 +23,25 @@ public class Terrain{
 	}
 	//^Constructor. Sets flooring of each terrain space in the area
 	//Interactable objects can be added here too, but don't need to be
-	public boolean isMovable(InteractableObject interactableObject){
+	public boolean isMovable(){
 		for(int i=0; i<this.interactableObjectList.size();i++){
-			for(int j=0; i<this.interactableObjectList.get(i).interactionList.size();i++){
+			for(int j=0; j<this.interactableObjectList.get(i).interactionList.size();j++){
 				if(this.interactableObjectList.get(i).interactionList.get(j).equals(Interaction.MovementBlocked)){
 					return false;
 				}
 			}
 		}
 		return true;
+	}
+	public boolean isTallGrassPresent(){
+		for(int i=0; i<this.interactableObjectList.size();i++){
+			for(int j=0; j<this.interactableObjectList.get(i).interactionList.size();j++){
+				if(this.interactableObjectList.get(i).interactionList.get(j).equals(Interaction.TallGrass)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	//^isMovable returns true when the player can move to the terrain location
 	//i.e. it does not contain a 'MovementBlocked' Interaction
