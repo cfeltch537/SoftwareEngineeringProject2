@@ -53,7 +53,8 @@ public class TempGUI extends JFrame {
 		
 		new javax.swing.Timer(70, new ActionListener() {
 		     public void actionPerformed(ActionEvent e) {
-		        repaint();
+		        TempMapPanel.allowMove=true;
+		    	repaint();
 		     }
 		  }).start();
 		

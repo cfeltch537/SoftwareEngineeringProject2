@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,12 +16,14 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import edu.ycp.cs320.fokemon.Location;
+import edu.ycp.cs320.fokemon.Player;
+
 public class TempMapPanel extends JPanel {
 	
-	Area area1 = new Area();
-	public int[][] map = new int[40][20];
-	public static Integer playerX = 20;
-	public static Integer playerY = 10;
+	Area area1 = new Area(); // For now only one area will exist
+	Player player = new Player(00004, "Cody", true, new Location(0, 10, 10)); // Player Cody
+	public static boolean allowMove = false;		 // Boolean used to 
 	public static Integer step_count = 0;
 		
 	Graphics g = this.getGraphics();
@@ -28,8 +31,11 @@ public class TempMapPanel extends JPanel {
 	
 	public TempMapPanel(){
 			
-			area1.createTallGrassSquare(5, 5, 10, 20);
-	        Dimension size = new Dimension(25*map.length, 25*map[0].length);
+			area1.createTallGrassSquare(5, 5, 10, 4);
+			area1.createTallGrassSquare(5, 10, 10, 4);
+			area1.createTallGrassSquare(5, 15, 10, 4);
+			area1.placeStructure(25, 10, InteractableObject.PokeCenter);
+	        Dimension size = new Dimension(16*area1.terrain.length, 16*area1.terrain[0].length);
 	        setPreferredSize(size);
 	        setMinimumSize(size);
 	        setMaximumSize(size);
@@ -60,23 +66,33 @@ public class TempMapPanel extends JPanel {
 		//Flooring Layer
 		for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
-            	img = area1.terrain[height][width].getFlooringImage();
+            	if(area1.terrain[height][width].flooring.img!=null){
+            	img = area1.terrain[height][width].flooring.img;
             	g.drawImage(img, 16*height, 16*width, null);
-            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+            	//g.draw3DRect(16*i, 16*j, 16, 16, true);
+            	}
             }
         }
-		// GrassORobject Layer
+		//InteractableObjects
 		for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
-            	img = area1.terrain[height][width].getGrassORobjectImage();
-            	g.drawImage(img, 16*height, 16*width, null);
-            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+            //^Iterate through each terrain in the area
+            	for(int objectIndex = 0; objectIndex<area1.terrain[height][width].interactableObjectList.size(); objectIndex++){
+	            	if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		img = area1.terrain[height][width].interactableObjectList.get(objectIndex).img;
+		            	g.drawImage(img, 16*height, 16*width, null);
+		            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
+	            		}
+	            	}	
+            	}	
             }
         }
+		//Player
         for (int height = 0; height < area1.terrain.length; height++) {
             for (int width = 0; width < area1.terrain[height].length; width++) {
             	
-            	if(height==playerX&&width==playerY){
+            	if(height==player.getPlayerLocation().getX()&&width==player.getPlayerLocation().getY()){
             		if(step_count==0){
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_LeftFootForeward.png").getImage();
             		}else if(step_count==1){
@@ -88,9 +104,23 @@ public class TempMapPanel extends JPanel {
             		}else if(step_count==4){
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_StandingForeward.png").getImage();
             		}
-            		
-            		g.draw3DRect(16*playerX, 16*playerY+2*step_count, 21, 25, true);
-            		g.drawImage(img, 16*playerX, 16*playerY-10+2*step_count, null);
+            		if(area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
+            			g.drawImage(img,
+            				       16*player.getPlayerLocation().getX()-3,
+            				       16*player.getPlayerLocation().getY()-7,
+            				       16*player.getPlayerLocation().getX()+22-3,
+            				       16*player.getPlayerLocation().getY()+19-7,
+            				       0, 0, 22, 19, new ImageObserver() {
+									@Override
+									public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,int arg4, int arg5) {
+										// TODO Auto-generated method stub...Nah
+										return false;
+									}
+								});
+            		}else{
+            		g.drawImage(img, 16*player.getPlayerLocation().getX()-3, 16*player.getPlayerLocation().getY()-15+2*step_count, null);
+            		}
+            		//g.draw3DRect(16*player.getPlayerLocation().getX(), 16*player.getPlayerLocation().getY()+2*step_count, 21, 25, true);
 	
                 	if(step_count!=4){
                     	step_count++;
@@ -101,21 +131,22 @@ public class TempMapPanel extends JPanel {
     		
 	}
 	public void MovePlayer(KeyEvent e) {
-	    if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()) {
 	            //Right arrow key code
-	    	TempMapPanel.playerX++;
-	    } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
+	    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
+	    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
 	            //Left arrow key code
-	    	TempMapPanel.playerX--;
-	    } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
+	    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
+	    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove&&area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
 	            //Up arrow key code
-	    	TempMapPanel.playerY--;
-	    } else if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
+	    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
+	    } else if ((e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove)
+		    		&&(area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable())){
 	            //Down arrow key code
 	    	step_count = 0;
-	    	TempMapPanel.playerY++;
+	    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
 	    }
-	   // repaint();
+		allowMove=false;
 	}
 	
 }
