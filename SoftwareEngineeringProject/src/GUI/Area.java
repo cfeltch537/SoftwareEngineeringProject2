@@ -16,7 +16,7 @@ public class Area {
 	
 	Terrain[][] terrain = new Terrain[WIDTH][HEIGHT];
 	
-	public Area(){ //
+	public Area(){
 		for(int width = 0; width<WIDTH; width++){
 			for(int height = 0; height<HEIGHT; height++){
 				if(width<40){
