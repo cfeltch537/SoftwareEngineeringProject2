@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,7 +21,7 @@ import edu.ycp.cs320.fokemon.Player;
 
 public class TempMapPanel extends JPanel {
 	
-	Area area1 = new Area(); // For now only one area will exist
+	Area[] areaList = new Area[2];
 	Player player = new Player(00004, "Cody", true, new Location(0, 10, 10)); // Player Cody
 	public static boolean allowMove = false;		 // Boolean used to 
 	public static Integer step_count = 0;
@@ -30,11 +31,13 @@ public class TempMapPanel extends JPanel {
 	
 	public TempMapPanel(){
 			
-			area1.createTallGrassSquare(5, 5, 10, 4);
-			area1.createTallGrassSquare(5, 10, 10, 4);
-			area1.createTallGrassSquare(5, 15, 10, 4);
-			area1.placeStructure(25, 10, InteractableObject.PokeCenter);
-	        Dimension size = new Dimension(16*area1.terrain.length, 16*area1.terrain[0].length);
+			areaList[0] = new Area();
+			areaList[0].createTallGrassSquare(5, 5, 10, 4);
+			areaList[0].createTallGrassSquare(5, 10, 10, 4);
+			areaList[0].createTallGrassSquare(5, 15, 10, 4);
+			areaList[0].placeStructure(25, 10, InteractableObject.PokeCenter);
+			areaList[1] = new Area();
+	        Dimension size = new Dimension(16*areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length, 16*areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[0].length);
 	        setPreferredSize(size);
 	        setMinimumSize(size);
 	        setMaximumSize(size);
@@ -63,23 +66,23 @@ public class TempMapPanel extends JPanel {
 		g.setColor(Color.BLACK); // Draws outline of shape as mouse moves
         
 		//Flooring Layer
-		for (int height = 0; height < area1.terrain.length; height++) {
-            for (int width = 0; width < area1.terrain[height].length; width++) {
-            	if(area1.terrain[height][width].flooring.img!=null){
-            	img = area1.terrain[height][width].flooring.img;
+		for (int height = 0; height < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length; height++) {
+            for (int width = 0; width < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height].length; width++) {
+            	if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img!=null){
+            	img = areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img;
             	g.drawImage(img, 16*height, 16*width, null);
             	//g.draw3DRect(16*i, 16*j, 16, 16, true);
             	}
             }
         }
 		//InteractableObjects
-		for (int height = 0; height < area1.terrain.length; height++) {
-            for (int width = 0; width < area1.terrain[height].length; width++) {
+		for (int height = 0; height < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length; height++) {
+            for (int width = 0; width < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height].length; width++) {
             //^Iterate through each terrain in the area
-            	for(int objectIndex = 0; objectIndex<area1.terrain[height][width].interactableObjectList.size(); objectIndex++){
-	            	if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
-	            		if(area1.terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
-	            		img = area1.terrain[height][width].interactableObjectList.get(objectIndex).img;
+            	for(int objectIndex = 0; objectIndex<areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList.size(); objectIndex++){
+	            	if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList.get(objectIndex).img!=null){
+	            		img = areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList.get(objectIndex).img;
 		            	g.drawImage(img, 16*height, 16*width, null);
 		            	//g.draw3DRect(25*i, 25*j, 25, 25, true);
 	            		}
@@ -88,8 +91,8 @@ public class TempMapPanel extends JPanel {
             }
         }
 		//Player
-        for (int height = 0; height < area1.terrain.length; height++) {
-            for (int width = 0; width < area1.terrain[height].length; width++) {
+        for (int height = 0; height < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length; height++) {
+            for (int width = 0; width < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height].length; width++) {
             	
             	if(height==player.getPlayerLocation().getX()&&width==player.getPlayerLocation().getY()){
             		if(step_count==0){
@@ -103,7 +106,7 @@ public class TempMapPanel extends JPanel {
             		}else if(step_count==4){
             			img = new ImageIcon(".\\src\\TerrainImages/Dawn_StandingForeward.png").getImage();
             		}
-            		if(area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
+            		if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
             			g.drawImage(img,
             				       16*player.getPlayerLocation().getX()-3,
             				       16*player.getPlayerLocation().getY()-7,
@@ -124,23 +127,28 @@ public class TempMapPanel extends JPanel {
                 	if(step_count!=4){
                     	step_count++;
                     }
+                	if(player.getPlayerLocation().getX()==0&&player.getPlayerLocation().getY()==0){
+                		player.getPlayerLocation().setAreaArrayIndex(player.getPlayerLocation().getAreaArrayIndex()+1);
+                		player.getPlayerLocation().setX(20);
+                	}
+                	
             	}
             }
         }
     		
 	}
 	public void MovePlayer(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT&&allowMove&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()) {
 	            //Right arrow key code
 	    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
-	    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove&&area1.terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
+	    } else if (e.getKeyCode() == KeyEvent.VK_LEFT&&allowMove&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
 	            //Left arrow key code
 	    	player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
-	    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove&&area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
+	    } else if (e.getKeyCode() == KeyEvent.VK_UP&&allowMove&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
 	            //Up arrow key code
 	    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
 	    } else if ((e.getKeyCode() == KeyEvent.VK_DOWN&&allowMove)
-		    		&&(area1.terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable())){
+		    		&&(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable())){
 	            //Down arrow key code
 	    	step_count = 0;
 	    	player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
