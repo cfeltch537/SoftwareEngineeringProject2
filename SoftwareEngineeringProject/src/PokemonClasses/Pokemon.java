@@ -20,6 +20,7 @@ public class Pokemon {
 	private int idNum;
 	private BattleStats stats;
 	private PokeInfo info;
+	private TempBattleStats tempBattleStats;
 
 	private int lvl;
 	private String name;
@@ -219,5 +220,11 @@ public class Pokemon {
 	}
 	public void setInfo(PokeInfo info) {
 		this.info = info;
+	}
+	public TempBattleStats getTempBattleStats() {
+		return tempBattleStats;
+	}
+	public void setTempBattleStats(TempBattleStats tempBattleStats) {
+		this.tempBattleStats = tempBattleStats;
 	}
 }
