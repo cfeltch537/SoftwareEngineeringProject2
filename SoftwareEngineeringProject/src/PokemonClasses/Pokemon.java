@@ -1,7 +1,5 @@
 package PokemonClasses;
 
-import edu.ycp.cs320.fokemon.BattleStats;
-
 public class Pokemon {
 	//create parameters for each pokemon
 	private int curHp;

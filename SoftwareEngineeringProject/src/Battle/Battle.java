@@ -1,7 +1,7 @@
 package Battle;
 
+import PlayerClasses.Player;
 import PokemonClasses.Pokemon;
-import edu.ycp.cs320.fokemon.Player;
 
 public class Battle {
 	private Player user;
@@ -9,10 +9,30 @@ public class Battle {
 	
 	
 	public Battle(Player user, Player opponent){
-		this.user=user;
-		this.opponent=opponent;
+		this.setUser(user);
+		this.setOpponent(opponent);
 		
 		
+	}
+
+
+	public Player getUser() {
+		return user;
+	}
+
+
+	public void setUser(Player user) {
+		this.user = user;
+	}
+
+
+	public Player getOpponent() {
+		return opponent;
+	}
+
+
+	public void setOpponent(Player opponent) {
+		this.opponent = opponent;
 	}
 
 }

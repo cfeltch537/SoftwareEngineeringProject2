@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package PlayerClasses;
 
 public class Location {
 		private int AreaArrayIndex;
