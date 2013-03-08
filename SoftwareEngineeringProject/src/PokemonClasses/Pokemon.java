@@ -1,5 +1,9 @@
 package PokemonClasses;
 
+import java.util.ArrayList;
+
+import MoveClasses.Move;
+
 public class Pokemon {
 	//create parameters for each pokemon
 	private int curHp;
@@ -19,6 +23,7 @@ public class Pokemon {
 	private BattleStats stats;
 	private PokeInfo info;
 	private TempBattleStats tempBattleStats;
+	private ArrayList <Move> moves;
 
 	private int lvl;
 	private String name;
@@ -224,5 +229,14 @@ public class Pokemon {
 	}
 	public void setTempBattleStats(TempBattleStats tempBattleStats) {
 		this.tempBattleStats = tempBattleStats;
+	}
+	public ArrayList <Move> getMoves() {
+		return moves;
+	}
+	public void setMoves(ArrayList <Move> moves) {
+		this.moves = moves;
+	}
+	public Move getMove(int index){
+		return moves.get(index);
 	}
 }

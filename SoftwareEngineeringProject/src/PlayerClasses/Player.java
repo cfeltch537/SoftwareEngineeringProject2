@@ -2,7 +2,9 @@ package PlayerClasses;
 
 import java.util.ArrayList;
 
+import Battle.TurnChoice;
 import PokemonClasses.Pokemon;
+import PokemonClasses.Status;
 
 
 
@@ -12,6 +14,10 @@ public class Player {
 	private Location PlayerLocation;
 	private int PlayerID;
 	private ArrayList <Pokemon> team;
+	private int currentPokemonIndex;
+	private TurnChoice choice;
+	private int moveIndex;
+	private int itemIndex;
 	
 	
 
@@ -19,6 +25,7 @@ public class Player {
 		this.setPlayerID(PlayerID);
 		this.setName(name);
 		this.setGender(gender);
+		this.currentPokemonIndex=0;
 		
 		team=new ArrayList<Pokemon>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
@@ -65,5 +72,41 @@ public class Player {
 
 	public void setPlayerID(int playerID) {
 		PlayerID = playerID;
+	}
+
+	public int getCurrentPokemonIndex() {
+		return currentPokemonIndex;
+	}
+
+	public void setCurrentPokemonIndex(int currentPokemonIndex) {
+		if (currentPokemonIndex<getTeamSize()){
+			if(team.get(currentPokemonIndex).getStats().getStatus()!=Status.FNT){
+				this.currentPokemonIndex = currentPokemonIndex;
+			}
+		}
+	}
+
+	public TurnChoice getChoice() {
+		return choice;
+	}
+
+	public void setChoice(TurnChoice choice) {
+		this.choice = choice;
+	}
+
+	public int getMoveIndex() {
+		return moveIndex;
+	}
+
+	public void setMoveIndex(int moveIndex) {
+		this.moveIndex = moveIndex;
+	}
+
+	public int getItemIndex() {
+		return itemIndex;
+	}
+
+	public void setItemIndex(int itemIndex) {
+		this.itemIndex = itemIndex;
 	}
 }

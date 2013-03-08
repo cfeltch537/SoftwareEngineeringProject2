@@ -15,8 +15,9 @@ public class Move {
 	private int damage;
 	private PokeType pokeType;
 	private boolean physical;
+	private int movePriority;
 	
-	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType, boolean physical) {
+	public Move(int curPP, int maxPP, ArrayList<Effect> effect, int accuracy, MoveName moveName, int damage, PokeType pokeType, boolean physical,int movePriority) {
 		this.curPP = curPP;
 		this.maxPP = maxPP;
 		this.effect = new ArrayList<Effect>(effect); // make a copy of the list
@@ -25,6 +26,7 @@ public class Move {
 		this.damage = damage;
 		this.pokeType = pokeType;
 		this.physical = physical;
+		this.movePriority=movePriority;
 	}
 
 	
@@ -91,6 +93,18 @@ public class Move {
 
 	public void setPhysical(boolean physical) {
 		this.physical = physical;
+	}
+
+
+
+	public int getMovePriority() {
+		return movePriority;
+	}
+
+
+
+	public void setMovePriority(int movePriority) {
+		this.movePriority = movePriority;
 	}
 }
 

@@ -7,6 +7,9 @@ public class TempBattleStats {
 	private int SPATKBoost;
 	private int SPDEFBoost;
 	private int SPDBoost;
+	private int ACCBoost;
+	private int EVABoost;
+	private int CRITBoost;
 	private boolean confused;
 	private boolean skipTurn;
 	private boolean skipNextTurn;
@@ -19,6 +22,9 @@ public class TempBattleStats {
 		SPATKBoost=0;
 		SPDEFBoost=0;
 		SPDBoost=0;
+		setACCBoost(0);
+		setEVABoost(0);
+		setCRITBoost(0);
 		setConfused(false);
 		setSkipTurn(false);
 		setSkipNextTurn(false);
@@ -116,6 +122,36 @@ public class TempBattleStats {
 
 	public void setSPDBoost(int sPDBoost) {
 		SPDBoost = sPDBoost;
+	}
+
+
+	public int getCRITBoost() {
+		return CRITBoost;
+	}
+
+
+	public void setCRITBoost(int cRITBoost) {
+		CRITBoost = cRITBoost;
+	}
+
+
+	public int getEVABoost() {
+		return EVABoost;
+	}
+
+
+	public void setEVABoost(int eVABoost) {
+		EVABoost = eVABoost;
+	}
+
+
+	public int getACCBoost() {
+		return ACCBoost;
+	}
+
+
+	public void setACCBoost(int aCCBoost) {
+		ACCBoost = aCCBoost;
 	}
 	
 	
