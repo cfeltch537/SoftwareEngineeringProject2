@@ -21,7 +21,7 @@ public class Battle {
 		setInitialCurrentPokemon(user,0);
 		setInitialCurrentPokemon(opponent,0);
 	}
-	void Turn(){
+	public void Turn(){
 		Pokemon userPoke=user.getTeam(user.getCurrentPokemonIndex());
 		Pokemon oppPoke=opponent.getTeam(user.getCurrentPokemonIndex());
 		switch(user.getChoice()){
@@ -39,10 +39,10 @@ public class Battle {
 				 
 				 if(userSpeed>=oppSpeed){
 					 attack(userPoke,oppPoke,userPoke.getMove(user.getMoveIndex()));
-					 attack(oppPoke,userPoke,oppPoke.getMove(opponent.getMoveIndex()));
+					 if(oppPoke.getStats().getStatus()!=Status.FNT)attack(oppPoke,userPoke,oppPoke.getMove(opponent.getMoveIndex()));
 				 }else{
 					 attack(oppPoke,userPoke,oppPoke.getMove(opponent.getMoveIndex()));
-					 attack(userPoke,oppPoke,userPoke.getMove(user.getMoveIndex()));
+					 if(userPoke.getStats().getStatus()!=Status.FNT)attack(userPoke,oppPoke,userPoke.getMove(user.getMoveIndex()));
 				 }
 				 
 				 
@@ -55,13 +55,15 @@ public class Battle {
 	    	 	
 		}
 	}
-	int CalcDamage(Pokemon attacker, Pokemon defender, Move move){
+	public int CalcDamage(Pokemon attacker, Pokemon defender, Move move){
+		Random rand=new Random();
 		int atk=0, def=0, R=100, CH=1, basePower=0;
 		double mod1=1, mod2=1, mod3=1, stab=1, type=1;
+		int Num=rand.nextInt(100);
 		if(attacker.getInfo().getType().contains(move.getPokeType()))stab=1.5;
-		int randomNum = rand.nextInt(100);
-		if(randomNum>=100-Math.pow(6.25, attacker.getTempBattleStats().getCRITBoost())) CH=2;
+		if(Num>=100-Math.pow(6.25, attacker.getTempBattleStats().getCRITBoost())) CH=2;
 		R-=rand.nextInt(15);
+		type=CalcSuperEffective(defender,move);
 		basePower=move.getDamage();//times itemmultiplier,user and foe ability
 		if(attacker.getStats().getStatus()==Status.BRN)mod1*=.5;
 		if((move.getPokeType()==PokeType.FIRE && weather==Weather.SUNNY)|| (move.getPokeType()==PokeType.WATER && weather==Weather.RAINY))mod1*=1.5;
@@ -80,15 +82,27 @@ public class Battle {
 		damage=(int) (damage*CH*mod2*R/100*stab*type*mod3);
 		return damage;
 	}
-	void attack(Pokemon attacker, Pokemon defender, Move move){
+	public void attack(Pokemon attacker, Pokemon defender, Move move){
 		double accuracy, evasion;
 		int damage=0;
-		if(attacker.getTempBattleStats().getACCBoost()>=0)accuracy=(attacker.getTempBattleStats().getACCBoost()+3)/3;
-		else accuracy=3/(-1*attacker.getTempBattleStats().getACCBoost()+3);
-		if(defender.getTempBattleStats().getEVABoost()>=0)evasion=(defender.getTempBattleStats().getEVABoost()+3)/3;
-		else evasion=3/(-1*defender.getTempBattleStats().getEVABoost()+3);
+		Random rand=new Random();
+		if(attacker.getTempBattleStats().getACCBoost()>=0){
+			if(attacker.getTempBattleStats().getACCBoost()>6)attacker.getTempBattleStats().setACCBoost(6);
+			accuracy=(attacker.getTempBattleStats().getACCBoost()+3)/3;
+		}else{
+			if(attacker.getTempBattleStats().getACCBoost()<-6)attacker.getTempBattleStats().setACCBoost(-6);
+			accuracy=3/(-1*attacker.getTempBattleStats().getACCBoost()+3);
+		}
+		if(defender.getTempBattleStats().getEVABoost()>=0){
+			if(defender.getTempBattleStats().getEVABoost()>6)defender.getTempBattleStats().setEVABoost(6);
+			evasion=(defender.getTempBattleStats().getEVABoost()+3)/3;
+		}
+		else{
+			if(defender.getTempBattleStats().getEVABoost()<-6)defender.getTempBattleStats().setEVABoost(-6);
+			evasion=3/(-1*defender.getTempBattleStats().getEVABoost()+3);
+		}
 		
-		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100)){//move hits
+		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100) || move.getAccuracy()<0){//move hits
 			damage=CalcDamage(attacker, defender, move);
 			defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
 			//effect
@@ -99,10 +113,10 @@ public class Battle {
 				
 		}
 	}
-	double CalcSuperEffective(Pokemon defender, Move move){
+	public double CalcSuperEffective(Pokemon defender, Move move){
 		return 1;
 	}
-	double getStatMod(int modLevel){
+	public double getStatMod(int modLevel){
 		if (modLevel>=0){
 			if(modLevel>6)modLevel=6;
 			return (modLevel+2)/2;
@@ -110,7 +124,7 @@ public class Battle {
 			if(modLevel<-6)modLevel=-6;
 			return 2/(-1*modLevel+2);
 	}
-	void setInitialCurrentPokemon(Player player, int index){
+	public void setInitialCurrentPokemon(Player player, int index){
 		if(player.getTeam(index).getStats().getStatus()==Status.FNT){
 			setInitialCurrentPokemon(player, index++);
 		}else{

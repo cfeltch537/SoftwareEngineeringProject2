@@ -30,8 +30,14 @@ public class Pokemon {
 	
 	
 	public Pokemon(int nPokeNum, int lvl) {
+		ArrayList <PokeType> type= new ArrayList<PokeType>();
+		type.add(PokeType.NORMAL);
 		this.setPokeNum(nPokeNum);
 		this.setLvl(lvl);
+		stats=new BattleStats(lvl, lvl, lvl, lvl, lvl, lvl, lvl, Status.NRM);
+		info=new PokeInfo(nPokeNum, nPokeNum, "test", "test", true, type, lvl, lvl);
+		tempBattleStats= new TempBattleStats();
+		moves= new ArrayList<Move>();
 		
 		
 		//setBaseHp(nBaseHp);
@@ -48,12 +54,12 @@ public class Pokemon {
 		//setPokeNum(nPokeNum);
 		//setIdNum(nIdNum);
 		//setName(nName);
-		setCurHp(baseHp);
+		/*setCurHp(baseHp);
 		setCurDef(baseDef);
 		setCurSpAtk(baseSpAtk);
 		setCurSpDef(baseSpDef);
 		setCurSpd(baseSpd);
-		setCurAtk(baseAtk);
+		setCurAtk(baseAtk);*/
 	}
 	//getter for curHp
 	public int getCurHp() {

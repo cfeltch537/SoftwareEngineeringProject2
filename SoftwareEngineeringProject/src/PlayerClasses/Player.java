@@ -26,6 +26,9 @@ public class Player {
 		this.setName(name);
 		this.setGender(gender);
 		this.currentPokemonIndex=0;
+		this.moveIndex=0;
+		this.itemIndex=0;
+		this.choice=TurnChoice.MOVE;
 		
 		team=new ArrayList<Pokemon>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
@@ -40,6 +43,10 @@ public class Player {
 
 	public Pokemon getTeam(int i) {
 		return team.get(i);
+	}
+	
+	public ArrayList<Pokemon> getTeam() {
+		return team;
 	}
 	
 	public String getName() {
