@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 public class TempGUI extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 
 	/**
 	 * Launch the application.

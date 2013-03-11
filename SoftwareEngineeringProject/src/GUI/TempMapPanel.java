@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 
 import edu.ycp.cs320.fokemon.Location;
 import edu.ycp.cs320.fokemon.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.Area;
+import edu.ycp.cs320.fokemon_webApp.shared.InteractableObject;
 
 public class TempMapPanel extends JPanel {
 	

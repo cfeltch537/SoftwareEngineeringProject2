@@ -7,7 +7,7 @@ import edu.ycp.cs320.fokemon.Pokedex;
 import GUI.TempGUI;
 import GUI.TempMapPanel;
 
-class main {
+public class main {
 
 	public static void main(String[] args){
 		try {
