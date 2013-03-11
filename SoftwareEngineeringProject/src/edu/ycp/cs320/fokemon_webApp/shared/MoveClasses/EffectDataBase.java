@@ -1,11 +1,12 @@
 
-package MoveClasses;
+package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import PokemonClasses.Pokemon;
-import PokemonClasses.Status;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
+
 
 
 

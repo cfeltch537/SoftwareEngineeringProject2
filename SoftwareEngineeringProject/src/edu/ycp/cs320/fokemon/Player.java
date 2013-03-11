@@ -2,7 +2,8 @@ package edu.ycp.cs320.fokemon;
 
 import java.util.ArrayList;
 
-import PokemonClasses.Pokemon;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
+
 
 
 

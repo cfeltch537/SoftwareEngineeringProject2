@@ -1,4 +1,4 @@
-package PokemonClasses;
+package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
 import edu.ycp.cs320.fokemon.BattleStats;
 

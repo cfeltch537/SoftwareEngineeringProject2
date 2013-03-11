@@ -1,6 +1,6 @@
 package edu.ycp.cs320.fokemon;
 
-import PokemonClasses.Status;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleStats {
 	private int curHp;

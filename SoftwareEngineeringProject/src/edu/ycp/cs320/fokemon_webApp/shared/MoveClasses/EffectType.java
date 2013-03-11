@@ -1,4 +1,4 @@
-package MoveClasses;
+package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
 public enum EffectType {
 	POISON,

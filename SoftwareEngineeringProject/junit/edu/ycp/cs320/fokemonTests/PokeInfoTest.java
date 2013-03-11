@@ -3,8 +3,9 @@ package edu.ycp.cs320.fokemonTests;
 
 import java.util.ArrayList;
 
-import PokemonClasses.PokeInfo;
-import PokemonClasses.PokeType;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeInfo;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
+
 
 import junit.framework.TestCase;
 

@@ -5,8 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import MoveClasses.Effect;
-import MoveClasses.EffectType;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
+
 
 public class EffectTest {
 	private Effect sleep;

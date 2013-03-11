@@ -2,8 +2,8 @@
 
 package edu.ycp.cs320.moveTests;
 
-import MoveClasses.EffectDataBase;
-import PokemonClasses.Pokemon;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectDataBase;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import junit.framework.TestCase;
 
 

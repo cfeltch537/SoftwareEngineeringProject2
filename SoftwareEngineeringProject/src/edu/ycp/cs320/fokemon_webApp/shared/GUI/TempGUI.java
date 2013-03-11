@@ -1,4 +1,4 @@
-package GUI;
+package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

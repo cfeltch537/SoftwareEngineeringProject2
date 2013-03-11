@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 
-import MoveClasses.Effect;
-import MoveClasses.EffectType;
-import MoveClasses.Move;
-import MoveClasses.MoveDataBase;
-import MoveClasses.MoveName;
-import PokemonClasses.PokeType;
+
 
 public class MoveTest {
 	private Move moveA;

@@ -1,9 +1,10 @@
 
-package MoveClasses;
+package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
 import java.util.ArrayList;
 
-import PokemonClasses.PokeType;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
+
 
 
 public class Move {

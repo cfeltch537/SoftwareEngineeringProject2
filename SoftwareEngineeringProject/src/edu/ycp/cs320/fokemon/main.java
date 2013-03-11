@@ -3,9 +3,9 @@ package edu.ycp.cs320.fokemon;
 
 import java.io.IOException;
 import edu.ycp.cs320.fokemon.Pokedex;
+import edu.ycp.cs320.fokemon_webApp.shared.GUI.TempGUI;
+import edu.ycp.cs320.fokemon_webApp.shared.GUI.TempMapPanel;
 
-import GUI.TempGUI;
-import GUI.TempMapPanel;
 
 public class main {
 
