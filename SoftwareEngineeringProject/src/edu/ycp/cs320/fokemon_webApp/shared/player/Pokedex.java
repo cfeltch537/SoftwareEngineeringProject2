@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package edu.ycp.cs320.fokemon_webApp.shared.player;
 
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 
-import edu.ycp.cs320.fokemon.PokedexEntry;
+import edu.ycp.cs320.fokemon_webApp.shared.player.PokedexEntry;
 
 
 public class Pokedex {

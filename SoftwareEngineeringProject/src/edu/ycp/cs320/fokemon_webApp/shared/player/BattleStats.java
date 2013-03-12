@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package edu.ycp.cs320.fokemon_webApp.shared.player;
 
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 

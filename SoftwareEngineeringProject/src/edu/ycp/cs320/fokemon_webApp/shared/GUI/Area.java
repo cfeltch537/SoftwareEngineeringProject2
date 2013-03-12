@@ -1,9 +1,6 @@
 
 package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,27 +52,27 @@ public class Area {
 			}
 		}
 	}
-	public void placeStructure(int x_start, int y_start, InteractableObject structure){
-		terrain[x_start][y_start].interactableObjectList.add(structure); 
-		//^add structure to map; Top left corder at (x_start,y_start)
-		BufferedImage bimg;
-		int pixelWidth=0;
-		int pixelHeight=0;
-		try {
-			bimg = ImageIO.read(new File(structure.imageSource));
-			pixelWidth = bimg.getWidth();
-			pixelHeight = bimg.getHeight();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//^Defines the height and width of the structure; in pixels
-		for(int i=0; i<pixelWidth/16; i++){
-			for(int j=0; j<pixelHeight/16; j++){
-				terrain[x_start+i][y_start+j].blockMovement();
-			}
-		}
-	}
+//	public void placeStructure(int x_start, int y_start, InteractableObject structure){
+//		terrain[x_start][y_start].interactableObjectList.add(structure); 
+//		//^add structure to map; Top left corder at (x_start,y_start)
+//		BufferedImage bimg;
+//		int pixelWidth=0;
+//		int pixelHeight=0;
+//		try {
+//			bimg = ImageIO.read(new File(structure.imageSource));
+//			pixelWidth = bimg.getWidth();
+//			pixelHeight = bimg.getHeight();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		//^Defines the height and width of the structure; in pixels
+//		for(int i=0; i<pixelWidth/16; i++){
+//			for(int j=0; j<pixelHeight/16; j++){
+//				terrain[x_start+i][y_start+j].blockMovement();
+//			}
+//		}
+//	}
 	
 }
 

@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon;
+package edu.ycp.cs320.fokemon_webApp.shared.player;
 
 import java.awt.Image;
 

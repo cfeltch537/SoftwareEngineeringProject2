@@ -14,7 +14,10 @@
  *******************************************************************************/
 package edu.ycp.cs320.fokemon_webApp.client;
 
+import com.google.gwt.canvas.dom.client.CanvasPixelArray;
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.canvas.dom.client.ImageData;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
@@ -93,5 +96,9 @@ public class LogoGroup {
     for (int i = numLogos - 1; i >= 0; i--) {
       logos[i].draw(context);
     }
+  }
+  
+  public void draw(Context2d back, Context2d front) {
+	    front.drawImage(back.getCanvas(), 0, 0);
   }
 }

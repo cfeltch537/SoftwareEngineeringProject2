@@ -1,23 +1,22 @@
 package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
-import java.awt.Image;
 import java.util.LinkedList;
 
-import javax.swing.ImageIcon;
+import com.google.gwt.user.client.ui.Image;
 
 
 public enum Flooring {
 	//Flooring Unblocked*******************************
-	Grass(new Interaction[]{Interaction.MovementAllowed},".\\src\\TerrainImages/Grass.png"),
+	Grass(new Interaction[]{Interaction.MovementAllowed},"Grass.png"),
 	Ground(new Interaction[]{Interaction.MovementAllowed},null),
-	Sand(new Interaction[]{Interaction.MovementAllowed},".\\src\\TerrainImages/Sand.png"),
+	Sand(new Interaction[]{Interaction.MovementAllowed},"Sand.png"),
 	//Flooring Blocked*********************************
-	Blocked_Grass(new Interaction[]{Interaction.MovementBlocked},".\\src\\TerrainImages/Grass.png"),
+	Blocked_Grass(new Interaction[]{Interaction.MovementBlocked},"Grass.png"),
 	Blocked_Ground(new Interaction[]{Interaction.MovementBlocked},null),
-	Blocked_Sand(new Interaction[]{Interaction.MovementBlocked},".\\src\\TerrainImages/Sand.png"),
+	Blocked_Sand(new Interaction[]{Interaction.MovementBlocked},"Sand.png"),
 	//Water Types**************************************
-	FreshWater(new Interaction[] {Interaction.MovementBlocked}, ".\\src/TerrainImages/FreshWater.png"),
-	SaltWater(new Interaction[] {Interaction.MovementBlocked}, ".\\src/TerrainImages/SaltWater.png");
+	FreshWater(new Interaction[] {Interaction.MovementBlocked}, "FreshWater.png"),
+	SaltWater(new Interaction[] {Interaction.MovementBlocked}, "SaltWater.png");
 	
 	public LinkedList<Interaction> interactionList = new LinkedList<Interaction>();
 	public String imageSource;
@@ -35,7 +34,7 @@ public enum Flooring {
 		//^ As long as the default interaction is not 'null' add to interactionList
 		if(imageSource!=null){
 			this.imageSource = imageSource;
-			this.img = new ImageIcon(imageSource).getImage();
+			this.img = new Image("TerrainImages/" + imageSource);
 		}
 		//^Try to set object image; catch null pointer exceptions
 	}
