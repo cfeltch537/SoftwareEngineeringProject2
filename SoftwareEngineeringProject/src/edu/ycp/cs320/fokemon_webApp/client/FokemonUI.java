@@ -54,7 +54,7 @@ public class FokemonUI implements EntryPoint {
 	  CanvasImage canvasImage;
 	  public static Area[] areaList = new Area[2];
 
-	  public static Player player = new Player(00004, "Cody", true, new Location(0, 10, 10)); // Player Cody
+	  public static Player player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player Cody
 	  public static boolean allowMove = false;
 	  public static Integer step_count = 0;
 	  
