@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.BattleStats;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
-import edu.ycp.cs320.fokemon_webApp.shared.player.BattleStats;
 
 
 public class BattleStatsTest {

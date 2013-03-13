@@ -2,7 +2,9 @@ package edu.ycp.cs320.fokemon_webApp.shared.player;
 
 import java.util.ArrayList;
 
+import edu.ycp.cs320.fokemon_webApp.Battle.TurnChoice;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 
 
@@ -13,6 +15,10 @@ public class Player {
 	private Location PlayerLocation;
 	private int PlayerID;
 	private ArrayList <Pokemon> team;
+	private int currentPokemonIndex;
+	private TurnChoice choice;
+	private int moveIndex;
+	private int itemIndex;
 	
 	
 
@@ -20,6 +26,10 @@ public class Player {
 		this.setPlayerID(PlayerID);
 		this.setName(name);
 		this.setGender(gender);
+		this.currentPokemonIndex=0;
+		this.moveIndex=0;
+		this.itemIndex=0;
+		this.choice=TurnChoice.MOVE;
 		
 		team=new ArrayList<Pokemon>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
@@ -34,6 +44,10 @@ public class Player {
 
 	public Pokemon getTeam(int i) {
 		return team.get(i);
+	}
+	
+	public ArrayList<Pokemon> getTeam() {
+		return team;
 	}
 	
 	public String getName() {
@@ -66,5 +80,41 @@ public class Player {
 
 	public void setPlayerID(int playerID) {
 		PlayerID = playerID;
+	}
+
+	public int getCurrentPokemonIndex() {
+		return currentPokemonIndex;
+	}
+
+	public void setCurrentPokemonIndex(int currentPokemonIndex) {
+		if (currentPokemonIndex<getTeamSize()){
+			if(team.get(currentPokemonIndex).getStats().getStatus()!=Status.FNT){
+				this.currentPokemonIndex = currentPokemonIndex;
+			}
+		}
+	}
+
+	public TurnChoice getChoice() {
+		return choice;
+	}
+
+	public void setChoice(TurnChoice choice) {
+		this.choice = choice;
+	}
+
+	public int getMoveIndex() {
+		return moveIndex;
+	}
+
+	public void setMoveIndex(int moveIndex) {
+		this.moveIndex = moveIndex;
+	}
+
+	public int getItemIndex() {
+		return itemIndex;
+	}
+
+	public void setItemIndex(int itemIndex) {
+		this.itemIndex = itemIndex;
 	}
 }

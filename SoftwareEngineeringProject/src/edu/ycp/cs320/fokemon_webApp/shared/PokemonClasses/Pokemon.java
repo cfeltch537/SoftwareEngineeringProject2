@@ -1,6 +1,9 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
-import edu.ycp.cs320.fokemon_webApp.shared.player.BattleStats;
+import java.util.ArrayList;
+
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
+
 
 public class Pokemon {
 	//create parameters for each pokemon
@@ -20,14 +23,22 @@ public class Pokemon {
 	private int idNum;
 	private BattleStats stats;
 	private PokeInfo info;
+	private TempBattleStats tempBattleStats;
+	private ArrayList <Move> moves;
 
 	private int lvl;
 	private String name;
 	
 	
 	public Pokemon(int nPokeNum, int lvl) {
+		ArrayList <PokeType> type= new ArrayList<PokeType>();
+		type.add(PokeType.NORMAL);
 		this.setPokeNum(nPokeNum);
 		this.setLvl(lvl);
+		stats=new BattleStats(lvl, lvl, lvl, lvl, lvl, lvl, lvl, Status.NRM);
+		info=new PokeInfo(nPokeNum, nPokeNum, "test", "test", true, type, lvl, lvl);
+		tempBattleStats= new TempBattleStats();
+		moves= new ArrayList<Move>();
 		
 		
 		//setBaseHp(nBaseHp);
@@ -44,12 +55,12 @@ public class Pokemon {
 		//setPokeNum(nPokeNum);
 		//setIdNum(nIdNum);
 		//setName(nName);
-		setCurHp(baseHp);
+		/*setCurHp(baseHp);
 		setCurDef(baseDef);
 		setCurSpAtk(baseSpAtk);
 		setCurSpDef(baseSpDef);
 		setCurSpd(baseSpd);
-		setCurAtk(baseAtk);
+		setCurAtk(baseAtk);*/
 	}
 	//getter for curHp
 	public int getCurHp() {
@@ -219,5 +230,20 @@ public class Pokemon {
 	}
 	public void setInfo(PokeInfo info) {
 		this.info = info;
+	}
+	public TempBattleStats getTempBattleStats() {
+		return tempBattleStats;
+	}
+	public void setTempBattleStats(TempBattleStats tempBattleStats) {
+		this.tempBattleStats = tempBattleStats;
+	}
+	public ArrayList <Move> getMoves() {
+		return moves;
+	}
+	public void setMoves(ArrayList <Move> moves) {
+		this.moves = moves;
+	}
+	public Move getMove(int index){
+		return moves.get(index);
 	}
 }
