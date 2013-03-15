@@ -10,6 +10,7 @@ public class BattleStats {
 	private int spAtk;
 	private int spDef;
 	private int spd;
+	private int SLPCount;
 	private Status status;
 	
 	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk, int spDef, int spd, Status status) {
@@ -21,6 +22,7 @@ public class BattleStats {
 		this.setSpDef(spDef);
 		this.setSpd(spd);
 		this.setStatus(status);
+		SLPCount=0;
 	}
 
 	public int getCurHp() {
@@ -90,6 +92,7 @@ public class BattleStats {
 	public void fullHeal() {
 		curHp = maxHp;
 		status = Status.NRM;
+		SLPCount=0;
 	}
 	
 	public void partialHeal(int x) {
@@ -98,5 +101,13 @@ public class BattleStats {
 	
 	public void changeStatus(Status x) {
 		status = x;
+	}
+
+	public int getSLPCount() {
+		return SLPCount;
+	}
+
+	public void setSLPCount(int sLPCount) {
+		SLPCount = sLPCount;
 	}
 }

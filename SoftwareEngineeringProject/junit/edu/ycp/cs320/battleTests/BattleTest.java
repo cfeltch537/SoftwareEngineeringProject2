@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import edu.ycp.cs320.fokemon_webApp.Battle.Battle;
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;

@@ -2,7 +2,7 @@ package edu.ycp.cs320.fokemon_webApp.shared.player;
 
 import java.util.ArrayList;
 
-import edu.ycp.cs320.fokemon_webApp.Battle.TurnChoice;
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 

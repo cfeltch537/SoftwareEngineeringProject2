@@ -21,6 +21,11 @@ public class MoveDataBase {
 		
 		
 		switch (moveName) {
+		case Confused:
+			move.setDamage(40);
+			move.setMaxPP(100000);
+			move.setAccuracy(-1);
+				break;
         case Tackle: 
         	move.setDamage(20);
         	move.setMaxPP(30);

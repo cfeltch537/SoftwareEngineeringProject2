@@ -10,6 +10,9 @@ public class TempBattleStats {
 	private int ACCBoost;
 	private int EVABoost;
 	private int CRITBoost;
+	private int SLPCount;
+	private int ConfusedCount;
+	private int ConfusedTurns;
 	private boolean confused;
 	private boolean skipTurn;
 	private boolean skipNextTurn;
@@ -22,6 +25,9 @@ public class TempBattleStats {
 		SPATKBoost=0;
 		SPDEFBoost=0;
 		SPDBoost=0;
+		SLPCount=0;
+		ConfusedCount=0;
+		ConfusedTurns=0;
 		setACCBoost(0);
 		setEVABoost(0);
 		setCRITBoost(0);
@@ -152,6 +158,36 @@ public class TempBattleStats {
 
 	public void setACCBoost(int aCCBoost) {
 		ACCBoost = aCCBoost;
+	}
+
+
+	public int getSLPCount() {
+		return SLPCount;
+	}
+
+
+	public void setSLPCount(int sLPCount) {
+		SLPCount = sLPCount;
+	}
+
+
+	public int getConfusedTurns() {
+		return ConfusedTurns;
+	}
+
+
+	public void setConfusedTurns(int confusedTurns) {
+		ConfusedTurns = confusedTurns;
+	}
+
+
+	public int getConfusedCount() {
+		return ConfusedCount;
+	}
+
+
+	public void setConfusedCount(int confusedCount) {
+		ConfusedCount = confusedCount;
 	}
 	
 	
