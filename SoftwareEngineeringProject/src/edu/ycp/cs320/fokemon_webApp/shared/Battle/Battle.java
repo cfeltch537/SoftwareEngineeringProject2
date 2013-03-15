@@ -77,9 +77,28 @@ public class Battle {
 			 }
 	        	break;
 	     default:
-	    	 	break;        
-	    	 	
+	    	 	break; 
 		}
+		applyStatusDamage(oppPoke);
+		applyStatusDamage(userPoke);
+	}
+	private void applyStatusDamage(Pokemon userPoke) {
+		int damage=0;
+		damage=userPoke.getStats().getMaxHp()/8;
+		if(damage==0)damage++;
+		if(userPoke.getStats().getStatus()==Status.BRN){
+			userPoke.getStats().setCurHp(userPoke.getStats().getCurHp()-damage);
+			battleMessage=battleMessage+ userPoke.getInfo().getNickname()+" was hurt by burn  /n";
+		}
+		if(userPoke.getStats().getStatus()==Status.PSN){
+			userPoke.getStats().setCurHp(userPoke.getStats().getCurHp()-damage);
+			battleMessage=battleMessage+ userPoke.getInfo().getNickname()+" was hurt by poison  /n";
+		}
+		if(userPoke.getStats().getCurHp()<=0){
+			userPoke.getStats().setCurHp(0);
+			userPoke.getStats().setStatus(Status.FNT);
+		}
+		
 	}
 	private boolean CheckAttackStatus(Pokemon poke) {
 		Random rand=new Random();
