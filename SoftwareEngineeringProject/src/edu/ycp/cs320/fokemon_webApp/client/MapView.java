@@ -55,6 +55,7 @@ public class MapView extends Composite{
 	    RootPanel.get(holderId).add(canvas);
 	    context = canvas.getContext2d();
 	    backBufferContext = backBuffer.getContext2d();
+	    
 		
 	    initHandlers();
 	    
