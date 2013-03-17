@@ -19,8 +19,14 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.dom.client.GestureStartEvent;
 import com.google.gwt.event.dom.client.GestureStartHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -140,18 +146,53 @@ public class FokemonUI implements EntryPoint {
 	  }
 
 	  void doUpdate() {
-	    // update the back canvas
-	    backBufferContextTemp.setFillStyle(redrawColor);
-	    backBufferContextTemp.fillRect(0, 0, widthTemp, heightTemp);
-	    logoGroup.update(mouseX, mouseY);
-	    logoGroup.draw(backBufferContextTemp);
-	    // update the front canvas
-	    logoGroup.draw(backBufferContextTemp, contextTemp);
-	    canvasImage.draw(backBufferContext, context);
+	   // update the back canvas
+	   backBufferContextTemp.setFillStyle(redrawColor);
+	   backBufferContextTemp.fillRect(0, 0, widthTemp, heightTemp);
+	   logoGroup.update(mouseX, mouseY);
+	   logoGroup.draw(backBufferContextTemp);
+	   // update the front canvas
+	   logoGroup.draw(backBufferContextTemp, contextTemp);
+	   canvasImage.draw(backBufferContext, context);
 	    
 	  }
 	  
 	  void initHandlers() {
+		KeyPressHandler wasdHandler = new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				int key = event.getUnicodeCharCode();
+				switch(key){
+				case 119: //W; UP
+					player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
+					break;
+				case 56: //8; UP
+					player.getPlayerLocation().setY(player.getPlayerLocation().getY()-1);
+					break;
+				case 115: //S; DOWN
+					player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
+					break;
+				case 50: //2; DOWN
+					player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
+					break;
+				case 97: //A, LEFT
+					player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
+					break;
+				case 52: //4; LEFT
+					player.getPlayerLocation().setX(player.getPlayerLocation().getX()-1);
+					break;
+				case 100: //D; RIGHT 
+					player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
+					break;
+				case 54: //6; RIGHT 
+					player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
+					break;
+				}
+				//System.out.println(key); //For Debug
+			}
+		};
+		canvas.addDomHandler(wasdHandler, KeyPressEvent.getType());
+		  
 	    canvasTemp.addMouseMoveHandler(new MouseMoveHandler() {
 	      public void onMouseMove(MouseMoveEvent event) {
 	        mouseX = event.getRelativeX(canvasTemp.getElement());
