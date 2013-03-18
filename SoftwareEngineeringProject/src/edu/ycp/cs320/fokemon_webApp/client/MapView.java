@@ -4,6 +4,7 @@ package edu.ycp.cs320.fokemon_webApp.client;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Timer;
@@ -26,7 +27,7 @@ public class MapView extends Composite{
 	Image img;
 	static int height;
 	static int width;
-	static final int refreshRate = 20;
+	
 	
 	public MapView(){
 		
@@ -52,21 +53,17 @@ public class MapView extends Composite{
 	    canvas.setCoordinateSpaceHeight(height);
 	    backBuffer.setCoordinateSpaceWidth(width);
 	    backBuffer.setCoordinateSpaceHeight(height);
-	    RootPanel.get(holderId).add(canvas);
+	    backBuffer.setCoordinateSpaceWidth(width);
+	    backBuffer.setCoordinateSpaceHeight(height);
 	    context = canvas.getContext2d();
 	    backBufferContext = backBuffer.getContext2d();
 	    
+	    FokemonUI.panel.setWidth(width + "px");
+	    FokemonUI.panel.setHeight(height + "px");
+	    RootPanel.get(holderId).add(FokemonUI.panel);
+	    FokemonUI.panel.add(canvas);
 		
 	    initHandlers();
-	    
-	    final Timer timer = new Timer() {
-		      @Override
-		      public void run() {
-		        doUpdate();
-		      }
-		};
-		timer.scheduleRepeating(refreshRate);
-		
 	}
 	
 	void doUpdate() {
@@ -153,7 +150,7 @@ public class MapView extends Composite{
 					player.getPlayerLocation().setX(player.getPlayerLocation().getX()+1);
 					break;
 				}
-				//System.out.println(key); //For Debug
+				System.out.println(key); //For Debug
 			}
 		};
 		canvas.addDomHandler(wasdHandler, KeyPressEvent.getType());

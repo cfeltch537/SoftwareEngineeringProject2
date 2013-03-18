@@ -15,6 +15,8 @@
 package edu.ycp.cs320.fokemon_webApp.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -24,13 +26,33 @@ public class FokemonUI implements EntryPoint {
 
 	  static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
 
-	  CirculatingImagesView tempView;
-	  MapView map;
+	  static CirculatingImagesView tempView;
+	  static MapView map;
+	  static AbsolutePanel panel;
+	  static BattleView battle;
+	  static final int refreshRate = 100;
 	  
 	  public void onModuleLoad() {
 		  
-	   //tempView = new CirculatingImagesView();
-	   map = new MapView();
-	   
+		  panel = new AbsolutePanel();
+		  map = new MapView();
+		  tempView = new CirculatingImagesView();
+		  battle = new BattleView();
+		  
+		  
+		  final Timer timer = new Timer() {
+		      @Override
+		      public void run() {
+		        doUpdate();
+		      }
+		};
+		timer.scheduleRepeating(refreshRate);
 	  }
+	  static void doUpdate() {
+		  // update the back canvas, set to front canvas
+		  
+		  map.doUpdate(); 
+		  //tempView.doUpdate();
+		  battle.doUpdate();
+		  }
 	}

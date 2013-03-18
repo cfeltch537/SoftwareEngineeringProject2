@@ -58,24 +58,23 @@ public class CirculatingImagesView extends Composite{
 		    canvasTemp.setCoordinateSpaceHeight(heightTemp);
 		    backBufferTemp.setCoordinateSpaceWidth(widthTemp);
 		    backBufferTemp.setCoordinateSpaceHeight(heightTemp);
-		    RootPanel.get(holderId).add(canvasTemp);
+		    FokemonUI.panel.add(canvasTemp,100,40);
 		    contextTemp = canvasTemp.getContext2d();
 		    backBufferContextTemp = backBufferTemp.getContext2d();
 		    
 		    // init the objects
 		    logoGroup = new LogoGroup(widthTemp, heightTemp, 18, 165);
 		
-	    initHandlers();
-	    
+		    initHandlers();
 	    
 	    // setup timer
-	    final Timer timer = new Timer() {
-	      @Override
-	      public void run() {
-	        doUpdate();
-	      }
-	    };
-	    timer.scheduleRepeating(refreshRate);
+//	    final Timer timer = new Timer() {
+//	      @Override
+//	      public void run() {
+//	        doUpdate();
+//	      }
+//	    };
+//	    timer.scheduleRepeating(refreshRate);
 	}
 	  void doUpdate() {
 		   // update the back canvas
