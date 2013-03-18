@@ -107,7 +107,29 @@ public class BattleView extends Composite{
 					System.out.println(commandOptions.getSelectedIndex());
 					handleOptionSelect(index);
 					break;
-				case 53: //5; Select
+				case 53: //2; DOWN in list
+					incrementSelectedCommandOption();
+					break;
+				case 115: //S; DOWN in list
+					incrementSelectedCommandOption();
+					break;
+				case 55: //7; BACK to setBattleOptions()
+					setBattleOptions();
+					break;
+				case 113: //Q; BACK to setBattleOptions()
+					setBattleOptions();
+					break;
+				case 56: //8; UP in list
+					decrementSelectedCommandOption();
+					break;
+				case 119: //W; UP in list
+					decrementSelectedCommandOption();
+					break;
+				case 57: //9; Select
+					System.out.println(commandOptions.getSelectedIndex());
+					handleOptionSelect(index);
+					break;
+				case 101: //E; Select
 					System.out.println(commandOptions.getSelectedIndex());
 					handleOptionSelect(index);
 					break;
@@ -138,6 +160,28 @@ public class BattleView extends Composite{
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
+	void setPokemonOptions(){ // Shows Pokemon Moves
+		commandOptions.clear();
+		commandOptionsIndex = 2;
+		commandOptions.addItem("POKeMON 1");
+		commandOptions.addItem("POKeMON 2");
+		commandOptions.addItem("POKeMON 3");
+		commandOptions.addItem("POKeMON 4");
+		commandOptions.addItem("POKeMON 5");
+		commandOptions.addItem("POKeMON 6");
+		commandOptions.setFocus(true);
+		commandOptions.setItemSelected(0, true);
+	}
+	void setItemOptions(){ // Shows Pokemon Moves
+		commandOptions.clear();
+		commandOptionsIndex = 3;
+		commandOptions.addItem("ITEMS");
+		commandOptions.addItem("POKeBALLS");
+		commandOptions.addItem("KEY ITEMS");
+		commandOptions.addItem("BERRIES");
+		commandOptions.setFocus(true);
+		commandOptions.setItemSelected(0, true);
+	}
 	 void handleOptionSelect(int index) {		 
 		switch(commandOptionsIndex){
 		case 0:
@@ -146,10 +190,10 @@ public class BattleView extends Composite{
 				setFightOptions();
 				break;
 			case 1: // POKeMON
-				//Not Yet Implemented
+				setPokemonOptions();
 				break;
 			case 2: // BAG
-				//Not Yet Implemented
+				setItemOptions();
 				break;
 			case 3: // RUN
 				//Not Yet Implemented
@@ -179,6 +223,19 @@ public class BattleView extends Composite{
 		}
 			
 		}
+	 void incrementSelectedCommandOption(){
+		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()){
+			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()+1, true);
+		 }
+	 }
+	 void decrementSelectedCommandOption(){
+		 if(commandOptions.getSelectedIndex()>0){
+			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
+		 }
+	 }
+	 public void setBattleAnnouncement(String announcement){
+		 battleAnnouncementBox.setText(announcement);
+	 }
 }
 
 
