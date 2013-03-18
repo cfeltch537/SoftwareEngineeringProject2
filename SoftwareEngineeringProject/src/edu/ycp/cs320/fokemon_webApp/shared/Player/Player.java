@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon_webApp.shared.player;
+package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class Player {
 	public Player(int PlayerID, String name, boolean gender, Location playerLocation){
 		this.setPlayerID(PlayerID);
 		this.setName(name);
-		this.setGender(gender);
+		this.setGender(gender); // True = Boy; False = Girl
 		this.currentPokemonIndex=0;
 		this.moveIndex=0;
 		this.itemIndex=0;
@@ -116,5 +116,8 @@ public class Player {
 
 	public void setItemIndex(int itemIndex) {
 		this.itemIndex = itemIndex;
+	}
+	public void addPokemonToTeam(Pokemon pokemon){
+		team.add(pokemon);
 	}
 }

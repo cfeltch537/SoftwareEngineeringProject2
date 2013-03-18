@@ -12,12 +12,12 @@ import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeInfo;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
-import edu.ycp.cs320.fokemon_webApp.shared.player.Location;
-import edu.ycp.cs320.fokemon_webApp.shared.player.Player;
 
 
 public class BattleTest extends TestCase{

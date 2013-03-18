@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.fokemon_webApp.shared.player.PokedexEntry;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.PokedexEntry;
 
 public class PokedexEntryTest {
 	private PokedexEntry dugtrio;

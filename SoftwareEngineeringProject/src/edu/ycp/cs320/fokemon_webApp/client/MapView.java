@@ -13,8 +13,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
-import edu.ycp.cs320.fokemon_webApp.shared.player.Location;
-import edu.ycp.cs320.fokemon_webApp.shared.player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class MapView extends Composite{
 	static final String holderId = "canvasholder";

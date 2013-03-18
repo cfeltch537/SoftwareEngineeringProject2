@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon_webApp.shared.player;
+package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
 public class Location {
 		private int AreaArrayIndex;

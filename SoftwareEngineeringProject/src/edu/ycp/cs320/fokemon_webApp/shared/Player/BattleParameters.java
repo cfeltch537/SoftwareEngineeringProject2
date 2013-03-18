@@ -1,4 +1,4 @@
-package edu.ycp.cs320.fokemon_webApp.shared.player;
+package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
 
