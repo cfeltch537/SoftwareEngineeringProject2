@@ -44,10 +44,23 @@ public class BattleTest extends TestCase{
 			Attacker.getMoves().add(AttackerMove);
 			Attacker.getMoves().add(DefenderMove);
 			Defender.getMoves().add(DefenderMove);
+			Pokemon Attacker2=new Pokemon(40,40);
+			Attacker2=Attacker;
+			Pokemon Attacker3=new Pokemon(40,40);
+			Attacker3=Attacker;
+			
+			Pokemon Defender2=new Pokemon(35,35);
+			Defender2=Defender;
+			Pokemon Defender3=new Pokemon(35,35);
+			Defender3=Defender;
 			user=new Player(200, "joey", false, loc);
 			user.getTeam().add(Attacker);
+			user.getTeam().add(Attacker2);
+			user.getTeam().add(Attacker3);
 			opp=new Player(100,"tony", false, loc);
 			opp.getTeam().add(Defender);
+			opp.getTeam().add(Defender2);
+			opp.getTeam().add(Defender3);
 			battle=new Battle(user, opp);
 		}
 		

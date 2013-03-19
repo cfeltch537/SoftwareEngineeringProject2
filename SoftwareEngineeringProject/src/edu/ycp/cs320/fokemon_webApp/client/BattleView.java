@@ -15,6 +15,8 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
+
 public class BattleView extends Composite{
 	static final String holderId = "canvasholder";
 	Canvas battleCanvasBackBuffer;
@@ -36,17 +38,14 @@ public class BattleView extends Composite{
 	int commandOptionsIndex = 0;
 	int index;
 	
-
+	TempBattle test;
 	
 	// Temp variables for testing until Pokemon and battle classes are ready
 	Image img1, img2, img3;
-	Double PlayerPokemonMaxHP = 200.0;
-	Double PlayerPokemonHP = 180.0;
-	Double OpponentPokemonMaxHP = 200.0;
-	Double OpponentPokemonHP = 200.0;
 	Double hpRatio;
 	//***************************************************************
-	
+	 //.getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp() = 180.0;
+
 	
 	public BattleView(){
 		
@@ -106,6 +105,9 @@ public class BattleView extends Composite{
 	    img2 = new Image("PokemonSprites/Charizard.png");
 	    img3 = new Image("PokemonSprites/Pikachu.png");
 	    
+	    //Instantiate Battle
+	    test = new TempBattle();
+	    
 	    battleBackBufferContext.setFillStyle(CssColor.make("rgba(211,211,211,0.2)"));
 
 	    
@@ -125,8 +127,8 @@ public class BattleView extends Composite{
     	context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
     	context.drawImage((ImageElement) img3.getElement().cast(), width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
     	//The following should actually be triggered off of a change in HP, or turn
-    	playerHPBar.doUpdate(PlayerPokemonHP, PlayerPokemonMaxHP);
-		opponentHPBar.doUpdate(OpponentPokemonHP, OpponentPokemonMaxHP);
+    	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
+		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
 		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
@@ -167,6 +169,7 @@ public class BattleView extends Composite{
 					handleOptionSelect(index);
 					break;
 				}
+				setBattleAnnouncement(test.getBattle().getBattleMessage());
 				//System.out.println(key); //For Debug
 			}
 		};
@@ -186,10 +189,9 @@ public class BattleView extends Composite{
 	void setFightOptions(){ // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 1;
-		commandOptions.addItem("Attack!");
-		commandOptions.addItem("MOVE 2");
-		commandOptions.addItem("MOVE 3");
-		commandOptions.addItem("MOVE 4");
+		for(int i=0; i<test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMoves().size(); i++){
+		commandOptions.addItem(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMoveName().toString());
+		}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
@@ -241,12 +243,28 @@ public class BattleView extends Composite{
 		case 1: // FIGHT Screen; showing Pokemons Moves
 			switch(index){
 			case 0: // MOVE 1
+				test.getUser().setMoveIndex(0);
+				test.getOpp().setMoveIndex(0);
+				test.getUser().setChoice(TurnChoice.MOVE);
+				test.getOpp().setChoice(TurnChoice.MOVE);
+				
+				test.getBattle().Turn();
+				
+				
+				
 				//Attack; Temporarily reduce opponents HP by 20
-				OpponentPokemonHP = OpponentPokemonHP-25;
+				
+				//(double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp() = (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp()-25;
 				setBattleOptions();
 				break;
 			case 1: // MOVE 2
 				//Not Yet Implemented
+				test.getUser().setMoveIndex(1);
+				test.getOpp().setMoveIndex(0);
+				test.getUser().setChoice(TurnChoice.MOVE);
+				test.getOpp().setChoice(TurnChoice.MOVE);
+				
+				test.getBattle().Turn();
 				break;
 			case 2: // MOVE 3
 				//Not Yet Implemented
@@ -280,7 +298,7 @@ public class BattleView extends Composite{
 			 userHPvMax = new Label();
 			 FokemonUI.panel.add(userHPvMax, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 140);
 		 }
-		 userHPvMax.setText(PlayerPokemonHP+"/"+PlayerPokemonMaxHP);
+		 userHPvMax.setText((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+(double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
 }
 
