@@ -1,10 +1,6 @@
 package edu.ycp.cs320.fokemonTests;
 
-import static junit.framework.Assert.assertEquals;
-
 import org.junit.Before;
-import org.junit.Test;
-
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 

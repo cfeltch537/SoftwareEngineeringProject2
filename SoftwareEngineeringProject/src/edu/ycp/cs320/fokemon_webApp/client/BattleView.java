@@ -1,19 +1,16 @@
 
 package edu.ycp.cs320.fokemon_webApp.client;
 
-import org.apache.tools.ant.taskdefs.condition.Equals;
-
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.canvas.dom.client.FillStrokeStyle;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -24,20 +21,38 @@ public class BattleView extends Composite{
 	Canvas battleCanvas;
 	Context2d battleContext;
 	Context2d battleBackBufferContext;
-	static int height;
-	static int width;
-	static final int refreshRate = 50;
+	// Widgets
 	ListBox commandOptions;
 	TextBox battleAnnouncementBox;
+	Label userHPvMax;
+	HealthBarWidget playerHPBar;
+	HealthBarWidget opponentHPBar;
+	// AspectRatios etc.
+	int hpBarWidth = 123; //Pixel
+	static int height;
+	static int width;
+	// Indices
 	int key;
 	int commandOptionsIndex = 0;
 	int index;
-	Image img;
+	
+
+	
+	// Temp variables for testing until Pokemon and battle classes are ready
+	Image img1, img2, img3;
+	Double PlayerPokemonMaxHP = 200.0;
+	Double PlayerPokemonHP = 180.0;
+	Double OpponentPokemonMaxHP = 200.0;
+	Double OpponentPokemonHP = 200.0;
+	Double hpRatio;
+	//***************************************************************
+	
 	
 	public BattleView(){
 		
 		battleCanvas = Canvas.createIfSupported();
 		battleCanvasBackBuffer = Canvas.createIfSupported();
+		
 		height = MapView.height;
 		width = MapView.width;
 	    // init the canvases
@@ -49,13 +64,18 @@ public class BattleView extends Composite{
 	    battleCanvasBackBuffer.setCoordinateSpaceHeight(height);
 	    battleCanvasBackBuffer.setCoordinateSpaceWidth(width);
 	    battleCanvasBackBuffer.setCoordinateSpaceHeight(height);
+
 	    battleContext = battleCanvas.getContext2d();
 	    battleBackBufferContext = battleCanvasBackBuffer.getContext2d();
+
 	    
 	    FokemonUI.panel.setWidth(width + "px");
 	    FokemonUI.panel.setHeight(height + "px");
 	    RootPanel.get(holderId).add(FokemonUI.panel);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 	    FokemonUI.panel.add(battleCanvas,0,0);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    
 	    
 	    commandOptions = new ListBox();
 	    commandOptions.setVisibleItemCount(4);
@@ -63,36 +83,52 @@ public class BattleView extends Composite{
 	    commandOptions.setHeight("80px");
 	    setBattleOptions();
 	    FokemonUI.panel.clear();
-	    FokemonUI.panel.add(battleCanvas);
-	    FokemonUI.panel.add(commandOptions, width-150, height-80);
+	    FokemonUI.panel.add(battleCanvas,0,0);
+	    FokemonUI.panel.add(commandOptions, width-150-3, height-80-3);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 
 	    battleAnnouncementBox = new TextBox();
 	    battleAnnouncementBox.setWidth(width-150-20 + "px");
 	    battleAnnouncementBox.setHeight("40px");
 	    battleAnnouncementBox.setText("Look at my horse. My horse is amazing!!!");
-	    FokemonUI.panel.add(battleAnnouncementBox, 10, height-50);
+	    FokemonUI.panel.add(battleAnnouncementBox, 5, height-51);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    
+	    //Add HP Bars
+	    playerHPBar = new HealthBarWidget();
+	    opponentHPBar = new HealthBarWidget();
+	    FokemonUI.panel.add(playerHPBar.hpBarCanvas, width/2 - hpBarWidth/2 - 120, height/2 - 12 - 120);
+	    FokemonUI.panel.add(opponentHPBar.hpBarCanvas, width/2 - hpBarWidth/2 + 120, height/2 - 12 - 120);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
+	    // Instantiate Images since Pokemon class in not ready yet
+	    img1 = new Image("PokemonSprites/Arena.png");
+	    img2 = new Image("PokemonSprites/Charizard.png");
+	    img3 = new Image("PokemonSprites/Pikachu.png");
+	    
+	    battleBackBufferContext.setFillStyle(CssColor.make("rgba(211,211,211,0.2)"));
+
+	    
 	    initHandlers();	
 	}
 	
 	void doUpdate() {
 			// update the back canvas, set to fron canvas
-			battleBackBufferContext.setFillStyle(CssColor.make("rgba(0,255,0,0.6)"));
-			draw(battleBackBufferContext, battleContext);  
+			draw(battleBackBufferContext, battleContext);
 		  }
 	
 	public void draw(Context2d context, Context2d front) {
 		
-		context.save();
-		img = new Image("PokemonSprites/Arena.png");
-    	context.drawImage((ImageElement) img.getElement().cast(), width/2 - img.getWidth()/2, height/2-img.getHeight()/2);
-    	
-    	img = new Image("PokemonSprites/Charizard.png");
-    	context.drawImage((ImageElement) img.getElement().cast(), width/2 - img.getWidth()/2 - 120, height/2 - img.getHeight() - 10);
-    	
-    	img = new Image("PokemonSprites/Pikachu.png");
-    	context.drawImage((ImageElement) img.getElement().cast(), width/2 - img.getWidth()/2 + 120, height/2 - img.getHeight() - 10);
-		context.restore();
+		//context.save();
+		context.fillRect(0, 0, width, height);
+    	context.drawImage((ImageElement) img1.getElement().cast(), width/2 - img1.getWidth()/2, height/2-img1.getHeight()/2);
+    	context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+    	context.drawImage((ImageElement) img3.getElement().cast(), width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+    	//The following should actually be triggered off of a change in HP, or turn
+    	playerHPBar.doUpdate(PlayerPokemonHP, PlayerPokemonMaxHP);
+		opponentHPBar.doUpdate(OpponentPokemonHP, OpponentPokemonMaxHP);
+		updatePlayerHPLabel();
+		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
 	
@@ -104,7 +140,6 @@ public class BattleView extends Composite{
 				index = commandOptions.getSelectedIndex();
 				switch(key){
 				case 32: //Space; Select
-					System.out.println(commandOptions.getSelectedIndex());
 					handleOptionSelect(index);
 					break;
 				case 53: //2; DOWN in list
@@ -126,15 +161,13 @@ public class BattleView extends Composite{
 					decrementSelectedCommandOption();
 					break;
 				case 57: //9; Select
-					System.out.println(commandOptions.getSelectedIndex());
 					handleOptionSelect(index);
 					break;
 				case 101: //E; Select
-					System.out.println(commandOptions.getSelectedIndex());
 					handleOptionSelect(index);
 					break;
 				}
-				System.out.println(key); //For Debug
+				//System.out.println(key); //For Debug
 			}
 		};
 		commandOptions.addDomHandler(wasdHandler, KeyPressEvent.getType());
@@ -153,7 +186,7 @@ public class BattleView extends Composite{
 	void setFightOptions(){ // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 1;
-		commandOptions.addItem("MOVE 1");
+		commandOptions.addItem("Attack!");
 		commandOptions.addItem("MOVE 2");
 		commandOptions.addItem("MOVE 3");
 		commandOptions.addItem("MOVE 4");
@@ -182,6 +215,9 @@ public class BattleView extends Composite{
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
+	void runAway(){
+		setBattleAnnouncement("Could not escape!");
+	}
 	 void handleOptionSelect(int index) {		 
 		switch(commandOptionsIndex){
 		case 0:
@@ -196,7 +232,7 @@ public class BattleView extends Composite{
 				setItemOptions();
 				break;
 			case 3: // RUN
-				//Not Yet Implemented
+				runAway();
 				break;
 			default:
 				break;
@@ -205,7 +241,9 @@ public class BattleView extends Composite{
 		case 1: // FIGHT Screen; showing Pokemons Moves
 			switch(index){
 			case 0: // MOVE 1
-				//Not Yet Implemented
+				//Attack; Temporarily reduce opponents HP by 20
+				OpponentPokemonHP = OpponentPokemonHP-25;
+				setBattleOptions();
 				break;
 			case 1: // MOVE 2
 				//Not Yet Implemented
@@ -235,6 +273,14 @@ public class BattleView extends Composite{
 	 }
 	 public void setBattleAnnouncement(String announcement){
 		 battleAnnouncementBox.setText(announcement);
+	 }
+	 void updatePlayerHPLabel(){
+		 //Initialize Label widget if not already
+		 if(userHPvMax==null){
+			 userHPvMax = new Label();
+			 FokemonUI.panel.add(userHPvMax, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 140);
+		 }
+		 userHPvMax.setText(PlayerPokemonHP+"/"+PlayerPokemonMaxHP);
 	 }
 }
 

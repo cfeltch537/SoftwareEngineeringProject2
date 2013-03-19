@@ -15,8 +15,10 @@
 package edu.ycp.cs320.fokemon_webApp.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Label;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -30,7 +32,7 @@ public class FokemonUI implements EntryPoint {
 	  static MapView map;
 	  static AbsolutePanel panel;
 	  static BattleView battle;
-	  static final int refreshRate = 100;
+	  static final int refreshRate = 25;
 	  
 	  public void onModuleLoad() {
 		  
@@ -38,7 +40,7 @@ public class FokemonUI implements EntryPoint {
 		  map = new MapView();
 		  tempView = new CirculatingImagesView();
 		  battle = new BattleView();
-		  
+		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		  
 		  final Timer timer = new Timer() {
 		      @Override

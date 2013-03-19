@@ -62,6 +62,7 @@ public class MapView extends Composite{
 	    FokemonUI.panel.setHeight(height + "px");
 	    RootPanel.get(holderId).add(FokemonUI.panel);
 	    FokemonUI.panel.add(canvas);
+	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 	    initHandlers();
 	}
