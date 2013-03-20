@@ -37,7 +37,7 @@ public class TempBattle {
 		loc=new Location(0, 0, 0);
 		AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
 		DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
-		Attacker=new Pokemon(40, 40);
+		Attacker=new Pokemon(50, 50);
 		Defender=new Pokemon(35, 35);
 		Attacker.getMoves().add(AttackerMove);
 		Attacker.getMoves().add(DefenderMove);

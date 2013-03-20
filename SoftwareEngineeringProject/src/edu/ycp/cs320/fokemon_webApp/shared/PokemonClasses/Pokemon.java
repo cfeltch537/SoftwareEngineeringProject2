@@ -21,7 +21,7 @@ public class Pokemon {
 		ArrayList <PokeType> type= new ArrayList<PokeType>();
 		type.add(PokeType.NORMAL);
 		stats=new BattleStats(lvl, lvl, lvl, lvl, lvl, lvl, lvl, Status.NRM);
-		info=new PokeInfo(nPokeNum, nPokeNum, "test", "test", true, type, lvl, lvl);
+		info=new PokeInfo(nPokeNum, nPokeNum, "<<Name>>", "<<Nickname>>", true, type, lvl, lvl);
 		tempBattleStats= new TempBattleStats();
 		moves= new ArrayList<Move>();
 
