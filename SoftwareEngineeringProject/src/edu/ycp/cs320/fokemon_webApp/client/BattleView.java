@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite{
 	static final String holderId = "canvasholder";
@@ -31,6 +32,8 @@ public class BattleView extends Composite{
 	Label userHPvMax;
 	Label playerPokemonName;
 	Label opponentPokemonName;
+	Image playerStatusAilments;
+	Image opponentStatusAilments;
 	Image playerPokemon;
 	Image opponentPokemon;
 	HealthBarWidget playerHPBar;
@@ -43,6 +46,7 @@ public class BattleView extends Composite{
 	int key;
 	int commandOptionsIndex = 0;
 	int index;
+	
 	
 	TempBattle test;
 	
@@ -121,12 +125,10 @@ public class BattleView extends Composite{
 	    initHandlers();
 	    
 	}
-	
 	void doUpdate() {
 			// update the back canvas, set to fron canvas
 			draw(battleBackBufferContext, battleContext);
 		  }
-	
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
@@ -141,9 +143,11 @@ public class BattleView extends Composite{
     	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
+		
 		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
+	
 	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
@@ -227,7 +231,7 @@ public class BattleView extends Composite{
 	void runAway(){
 		setBattleAnnouncement("Could not escape!");
 	}
-	 void handleOptionSelect(int index) {		 
+	void handleOptionSelect(int index) { // Called by KB Handler; Handles User Input	 
 		switch(commandOptionsIndex){
 		case 0: // At Fight, Pokemon, Bag, Run Screen
 			switch(index){
@@ -244,29 +248,32 @@ public class BattleView extends Composite{
 			}
 			break;
 		case 1: // FIGHT Screen; Trigger Move
-			//test.getUser().setMoveIndex(index);
+			test.getUser().setMoveIndex(index);
 			test.getOpp().setMoveIndex(0);
 			test.getUser().setChoice(TurnChoice.MOVE);
 			test.getOpp().setChoice(TurnChoice.MOVE);
 			test.getBattle().Turn();
+			test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().setStatus(Status.PSN);
+			test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
+			updatePokemonStatus();
 			setBattleOptions();
 		}
 			
 		}
-	 void incrementSelectedCommandOption(){
+	void incrementSelectedCommandOption(){
 		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()-1){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()+1, true);
 		 }
 	 }
-	 void decrementSelectedCommandOption(){
+	void decrementSelectedCommandOption(){
 		 if(commandOptions.getSelectedIndex()>0){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
 		 }
 	 }
-	 public void setBattleAnnouncement(String announcement){
+	public void setBattleAnnouncement(String announcement){
 		 battleAnnouncementBox.setText(announcement);
 	 }
-	 void updatePlayerHPLabel(){
+	void updatePlayerHPLabel(){
 		 //Initialize Label widget if not already
 		 if(userHPvMax==null){
 			 userHPvMax = new Label();
@@ -274,7 +281,7 @@ public class BattleView extends Composite{
 		 }
 		 userHPvMax.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
-	 void updatePokemonLabels(){
+	void updatePokemonLabels(){
 		 // Player Battling Pokemon
 		 if(playerPokemonName==null){
 			 playerPokemonName = new Label();
@@ -286,9 +293,9 @@ public class BattleView extends Composite{
 			 opponentPokemonName = new Label();
 			 FokemonUI.panel.add(opponentPokemonName, width/2  - hpBarWidth/2 + 120, height/2 - 12 - 140);
 		 }
-		 opponentPokemonName.setText(test.getOpp().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getNickname());
+		 opponentPokemonName.setText(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getNickname());
 	 }
-	 void updatePokemonImages(){
+	void updatePokemonImages(){
 		 // Player Battling Pokemon
 		
 		playerPokemon = new Image(img2.getUrl());//This should set to a pokemons ID specific Image
@@ -319,6 +326,85 @@ public class BattleView extends Composite{
 		});
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		}
+	 
+	 void updatePokemonStatus(){
+		 
+		 // Player
+		 if(playerStatusAilments==null){
+			 playerStatusAilments = new Image();
+			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 22 - 110);
+		 }
+		 
+		 switch(test.getBattle().getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getStatus()){
+		 case BRN:
+			 playerStatusAilments.setUrl("StatusAilments/Burn.png"); 
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case FNT: 
+			 playerStatusAilments.setUrl("StatusAilments/Faint.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case SLP:
+			 playerStatusAilments.setUrl("StatusAilments/Sleep.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case PRL:
+			 playerStatusAilments.setUrl("StatusAilments/Paralyze.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case PSN:
+			 playerStatusAilments.setUrl("StatusAilments/Poison.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case FRZ:
+			 playerStatusAilments.setUrl("StatusAilments/Freeze.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case NRM:
+			 playerStatusAilments.setVisible(false);
+		 default:
+			break;
+		 }
+		 playerStatusAilments.setPixelSize(32, 11);
+		 
+		 //Opponent
+		 if(opponentStatusAilments==null){
+			 opponentStatusAilments = new Image();
+			 FokemonUI.panel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 22 - 110);
+		 }
+		 
+		 switch(test.getBattle().getOpponent().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getStatus()){
+		 case BRN:
+			 opponentStatusAilments.setUrl("StatusAilments/Burn.png"); 
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case FNT: 
+			 opponentStatusAilments.setUrl("StatusAilments/Faint.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case SLP:
+			 opponentStatusAilments.setUrl("StatusAilments/Sleep.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case PRL:
+			 opponentStatusAilments.setUrl("StatusAilments/Paralyze.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case PSN:
+			 opponentStatusAilments.setUrl("StatusAilments/Poison.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case FRZ:
+			 opponentStatusAilments.setUrl("StatusAilments/Freeze.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case NRM:
+			 opponentStatusAilments.setVisible(false);
+		 default:
+			break;
+		 }
+		 opponentStatusAilments.setPixelSize(32, 11);
+	 }
 }
 
 
