@@ -13,12 +13,12 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class EffectDataBase {
 	private static Random rand=new Random();
-	private static int randomNum=0;
-	private static int i=0;
+
 	
-	
-	public static void moveEffect(Pokemon Attacker, Pokemon Defender, ArrayList <Effect> effect){
-		for (i=0; i<effect.size(); i++){
+	public static ArrayList<String> moveEffect(Pokemon Attacker, Pokemon Defender, ArrayList <Effect> effect){
+		int randomNum=0;
+		ArrayList<String> battleMessage=new ArrayList<String>();
+		for (int i=0; i<effect.size(); i++){
 			randomNum = rand.nextInt(100);
 			effect.get(i).setEffectText("");
 			if(effect.get(i).getEffectChance()>=randomNum){
@@ -29,35 +29,37 @@ public class EffectDataBase {
 		        case PARALYZE:  //Paralyzed
 		        	if(Defender.getStats().getStatus()==Status.NRM)
 			        Defender.getStats().setStatus(Status.PRL);
-		        	effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Was Paralyzed./n");
+		        	battleMessage.add(Defender.getInfo().getNickname()+" was paralyzed.  ");
 		                 break;
 		        case POISON:  //Poisoned
 		        	if(Defender.getStats().getStatus()==Status.NRM)
 			        Defender.getStats().setStatus(Status.PSN);
-		        	effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Was Poisoned./n");
+		        	battleMessage.add(Defender.getInfo().getNickname()+" was poisoned.  ");
 		                 break;
 		        case SLEEP:  //Sleep
 		        	if(Defender.getStats().getStatus()==Status.NRM)
 			        Defender.getStats().setStatus(Status.SLP);
-		        	effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Fell Asleep./n");
+		        	//Defender.getTempBattleStats().setSLPCount(effect.get(i).getMagnitude());
+		        	Defender.getTempBattleStats().setSLPCount(rand.nextInt(2)+2);
+		        	battleMessage.add(Defender.getInfo().getNickname()+" fell asleep.  ");
 		                 break;	
 		        case BURN:  //Burn
 		        	if(Defender.getStats().getStatus()==Status.NRM)
 			        Defender.getStats().setStatus(Status.BRN);
-		        	effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Was Burned./n");
+		        	battleMessage.add(Defender.getInfo().getNickname()+" was burned.  ");
 		                 break;
 		        case FREEZE:  //Freeze
 		        	if(Defender.getStats().getStatus()==Status.NRM)
 			        Defender.getStats().setStatus(Status.FRZ);
-		        	effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Was Frozen Solid./n");
+		        	battleMessage.add(Defender.getInfo().getNickname()+" was frozen solid.  ");
 		                 break;
 		        case KO:  //Death
 			        Defender.getStats().setCurHp(0);
-			        effect.get(i).setEffectText(Defender.getInfo().getNickname()+" Was One-Hit KOed./n");
+			        battleMessage.add(Defender.getInfo().getNickname()+" was One-Hit KOed.  ");
 		                 break;
 		        case RECOVERCONST:  //RecoverConstant HP
 			        Attacker.getStats().setCurHp(Attacker.getStats().getCurHp()+effect.get(i).getMagnitude());
-			        effect.get(i).setEffectText(Attacker.getInfo().getNickname()+" Has Recovered HP./n");
+			        battleMessage.add(Attacker.getInfo().getNickname()+" has recovered HP.  ");
 		                 break;  
 		        default: //no effect
 		                 break;
@@ -66,6 +68,7 @@ public class EffectDataBase {
 			}	
 			
 		}	
+		return battleMessage;
 
 	}
 	}

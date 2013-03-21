@@ -19,6 +19,7 @@ public class Player {
 	private TurnChoice choice;
 	private int moveIndex;
 	private int itemIndex;
+	private int turnOrder;
 	
 	
 
@@ -30,6 +31,7 @@ public class Player {
 		this.moveIndex=0;
 		this.itemIndex=0;
 		this.choice=TurnChoice.MOVE;
+		this.turnOrder=0;
 		
 		team=new ArrayList<Pokemon>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
@@ -119,5 +121,13 @@ public class Player {
 	}
 	public void addPokemonToTeam(Pokemon pokemon){
 		team.add(pokemon);
+	}
+
+	public int getTurnOrder() {
+		return turnOrder;
+	}
+
+	public void setTurnOrder(int TurnOrder) {
+		turnOrder = TurnOrder;
 	}
 }

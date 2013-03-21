@@ -1,7 +1,9 @@
 package edu.ycp.cs320.fokemon_webApp.shared.Battle;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
@@ -17,8 +19,9 @@ public class Battle {
 	private Player opponent;
 	private Weather weather;
 	private Random rand;
-	private String battleMessage;
+	private ArrayList<String> battleMessage;
 	private Move confused;
+	
 	
 	
 	public Battle(Player user, Player opponent){
@@ -29,10 +32,11 @@ public class Battle {
 		setInitialCurrentPokemon(opponent,0);
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+		battleMessage=new ArrayList<String>();
 	}
 	public void Turn(){
 		Pokemon userPoke=user.getTeam(user.getCurrentPokemonIndex());
-		Pokemon oppPoke=opponent.getTeam(user.getCurrentPokemonIndex());
+		Pokemon oppPoke=opponent.getTeam(opponent.getCurrentPokemonIndex());
 		boolean canAttack=false;
 		switch(user.getChoice()){
 		 case MOVE:
@@ -48,6 +52,11 @@ public class Battle {
 				 if(oppPoke.getStats().getStatus()==Status.PRL)oppSpeed*=.25;
 				 
 				 if(userSpeed>=oppSpeed){
+					
+					 canAttack=CheckAttackStatus(oppPoke);
+					 user.setTurnOrder(2);
+					 opponent.setTurnOrder(1);
+				 }
 					 canAttack=CheckAttackStatus(userPoke);
 					 if(canAttack==true){
 						 attack(userPoke,oppPoke,userPoke.getMove(user.getMoveIndex()));
@@ -60,6 +69,8 @@ public class Battle {
 					 }
 				 }else{
 					 canAttack=CheckAttackStatus(oppPoke);
+					 user.setTurnOrder(2);
+					 opponent.setTurnOrder(1);
 					 if(canAttack==true){
 						 attack(oppPoke,userPoke,oppPoke.getMove(opponent.getMoveIndex()));
 						 oppPoke.getMove(opponent.getMoveIndex()).setCurPP(oppPoke.getMove(opponent.getMoveIndex()).getCurPP()-1);
@@ -71,28 +82,105 @@ public class Battle {
 					 }
 				 }
 				 
-				 
-			 }else{
-				 
-			 }
-	        	break;
+		
+			break;
 	     default:
 	    	 	break; 
 		}
-		applyStatusDamage(oppPoke);
+	    applyStatusDamage(oppPoke);
 		applyStatusDamage(userPoke);
 	}
+
+public void findTurnOrder(){
+	Pokemon userPoke=user.getTeam(user.getCurrentPokemonIndex());
+	Pokemon oppPoke=opponent.getTeam(opponent.getCurrentPokemonIndex());
+	switch(user.getChoice()){
+	 case MOVE:
+		 if (opponent.getChoice()==TurnChoice.MOVE){
+			 double userSpeed=userPoke.getStats().getSpd()*
+					 getStatMod(userPoke.getTempBattleStats().getSPDBoost() + userPoke.getMove(user.getMoveIndex()).getMovePriority());
+			 //*SpeedAbilityMod*userPoke.getItem.getSpeedMod();
+			 if(userPoke.getStats().getStatus()==Status.PRL)userSpeed*=.25;
+			 
+			 double oppSpeed=oppPoke.getStats().getSpd()*
+					 getStatMod(oppPoke.getTempBattleStats().getSPDBoost() + oppPoke.getMove(opponent.getMoveIndex()).getMovePriority());
+			 //*SpeedAbilityMod*oppPoke.getItem.getSpeedMod();
+			 if(oppPoke.getStats().getStatus()==Status.PRL)oppSpeed*=.25;
+			 
+			 if(userSpeed>=oppSpeed){
+	
+				 user.setTurnOrder(1);
+				 opponent.setTurnOrder(2);
+			 }else{
+				 user.setTurnOrder(2);
+				 opponent.setTurnOrder(1);
+			 }
+		 }else{
+			 user.setTurnOrder(2);
+			 opponent.setTurnOrder(1);
+		 }
+		 break;
+	 case ITEM:
+		 break;
+		 default:
+			 break;
+	}
+}
+public void Turn(int turnNumber){
+	battleMessage=new ArrayList<String>();
+	boolean canAttack=false;
+	Player turnPlayer, otherPlayer;
+	
+	if(turnNumber==1) findTurnOrder();
+	if (turnNumber!=3){
+		if(user.getTurnOrder()==turnNumber){
+			turnPlayer=user;
+			otherPlayer=opponent;
+		}else{
+			turnPlayer=opponent;
+			otherPlayer=user;
+		}
+		
+		Pokemon userPoke=turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex());
+		Pokemon oppPoke=otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex());
+		
+		switch(turnPlayer.getChoice()){
+		case MOVE:
+			 canAttack=CheckAttackStatus(userPoke);
+			 if(canAttack==true){
+				 battleMessage.add(userPoke.getInfo().getNickname()+" used "+userPoke.getMove(turnPlayer.getMoveIndex()).getMoveName().toString()+".  ");
+				 attack(userPoke,oppPoke,userPoke.getMove(turnPlayer.getMoveIndex()));
+				 EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect());
+				 userPoke.getMove(turnPlayer.getMoveIndex()).setCurPP(userPoke.getMove(turnPlayer.getMoveIndex()).getCurPP()-1);
+			 }
+			break;
+		case ITEM:
+			break;
+		case SWITCH:
+			break;
+		case RUN:
+			break;
+		default:
+			break;
+		}
+	
+	
+	}else{
+		applyStatusDamage(user.getTeam(user.getCurrentPokemonIndex()));
+		applyStatusDamage(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+	}
+}
 	private void applyStatusDamage(Pokemon userPoke) {
 		int damage=0;
 		damage=userPoke.getStats().getMaxHp()/8;
 		if(damage==0)damage++;
 		if(userPoke.getStats().getStatus()==Status.BRN){
 			userPoke.getStats().setCurHp(userPoke.getStats().getCurHp()-damage);
-			battleMessage=battleMessage+ userPoke.getInfo().getNickname()+" was hurt by burn  /n";
+			battleMessage.add(userPoke.getInfo().getNickname()+" was hurt by burn. ");
 		}
 		if(userPoke.getStats().getStatus()==Status.PSN){
 			userPoke.getStats().setCurHp(userPoke.getStats().getCurHp()-damage);
-			battleMessage=battleMessage+ userPoke.getInfo().getNickname()+" was hurt by poison  /n";
+			battleMessage.add(userPoke.getInfo().getNickname()+" was hurt by poison.  ");
 		}
 		if(userPoke.getStats().getCurHp()<=0){
 			userPoke.getStats().setCurHp(0);
@@ -107,15 +195,15 @@ public class Battle {
 		if(poke.getStats().getStatus()==Status.FNT)return false;
 		//Paralyzed
 		if(poke.getStats().getStatus()==Status.PRL && Chance<=25){
-			battleMessage=battleMessage+ poke.getInfo().getNickname()+" is paralyzed and can't move! /n";
+			battleMessage.add(poke.getInfo().getNickname()+" is paralyzed and can't move! ");
 			return false;
 		}
 		//frozen
 		if(poke.getStats().getStatus()==Status.FRZ && Chance<=80){
-			battleMessage=battleMessage+ poke.getInfo().getNickname()+" is frozen solid  /n";
+			battleMessage.add(poke.getInfo().getNickname()+" is frozen solid.  ");
 			return false;
-		}else{
-			battleMessage=battleMessage+ poke.getInfo().getNickname()+" was unfrozen /n";
+		}else if(poke.getStats().getStatus()==Status.FRZ){
+			battleMessage.add(poke.getInfo().getNickname()+" was unfrozen.  ");
 			poke.getStats().setStatus(Status.NRM);
 		}
 		//sleep
@@ -125,9 +213,9 @@ public class Battle {
 				poke.getStats().setSLPCount(0);
 				poke.getStats().setStatus(Status.NRM);
 				poke.getTempBattleStats().setSLPCount(0);
-				battleMessage=battleMessage+ poke.getInfo().getNickname()+" woke up  /n";
+				battleMessage.add(poke.getInfo().getNickname()+" woke up.  ");
 			}else{
-				battleMessage=battleMessage+ poke.getInfo().getNickname()+" is asleep  /n";
+				battleMessage.add(poke.getInfo().getNickname()+" is fast asleep.  ");
 				return false;
 			}
 		}
@@ -138,10 +226,10 @@ public class Battle {
 				poke.getTempBattleStats().setConfused(false);
 				poke.getTempBattleStats().setConfusedCount(0);
 				poke.getTempBattleStats().setConfusedTurns(0);
-				battleMessage=battleMessage+ poke.getInfo().getNickname()+" cured itself of confusion  /n";
+				battleMessage.add(poke.getInfo().getNickname()+" was cured of confusion.  ");
 			}
 			if(Chance<=50){
-				battleMessage=battleMessage+ poke.getInfo().getNickname()+" hurt itself in confused  /n";
+				battleMessage.add(poke.getInfo().getNickname()+" hurt itself in confused.  ");
 				attack(poke, poke, confused);
 			}
 		}
@@ -155,8 +243,11 @@ public class Battle {
 		int Num=rand.nextInt(100);
 		if(attacker.getInfo().getType().contains(move.getPokeType()))stab=1.5;
 		if(Num>=100-Math.pow(6.25, attacker.getTempBattleStats().getCRITBoost())) CH=2;
+		if(CH==2)battleMessage.add("It's a critical hit ");
 		R-=rand.nextInt(15);
 		type=CalcSuperEffective(defender,move);
+		if(type>1)battleMessage.add("The attack was super effective. ");
+		if(type<1)battleMessage.add("The attack was not very effective. ");
 		basePower=move.getDamage();//times itemmultiplier,user and foe ability
 		if(attacker.getStats().getStatus()==Status.BRN)mod1*=.5;
 		if((move.getPokeType()==PokeType.FIRE && weather==Weather.SUNNY)|| (move.getPokeType()==PokeType.WATER && weather==Weather.RAINY))mod1*=1.5;
@@ -179,6 +270,7 @@ public class Battle {
 		double accuracy, evasion;
 		int damage=0;
 		Random rand=new Random();
+		
 		if(attacker.getTempBattleStats().getACCBoost()>=0){
 			if(attacker.getTempBattleStats().getACCBoost()>6)attacker.getTempBattleStats().setACCBoost(6);
 			accuracy=(attacker.getTempBattleStats().getACCBoost()+3)/3;
@@ -200,10 +292,13 @@ public class Battle {
 			defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
 			//effect
 			if(defender.getStats().getCurHp()<=0){
+				battleMessage.add(defender.getInfo().getNickname()+" has fainted. ");
 				defender.getStats().setCurHp(0);
 				defender.getStats().setStatus(Status.FNT);
 			}
 				
+		}else{
+			battleMessage.add("The attack missed.  ");
 		}
 	}
 	public double CalcSuperEffective(Pokemon defender, Move move){
@@ -242,10 +337,10 @@ public class Battle {
 	public void setOpponent(Player opponent) {
 		this.opponent = opponent;
 	}
-	public String getBattleMessage() {
+	public ArrayList<String> getBattleMessage() {
 		return battleMessage;
 	}
-	public void setBattleMessage(String battleMessage) {
+	public void setBattleMessage(ArrayList<String> battleMessage) {
 		this.battleMessage = battleMessage;
 	}
 
