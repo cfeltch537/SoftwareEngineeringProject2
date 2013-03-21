@@ -8,6 +8,8 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -134,15 +136,15 @@ public class BattleView extends Composite{
 		//context.save();
 		context.fillRect(0, 0, width, height);
 		context.drawImage((ImageElement) img1.getElement().cast(), width/2 - img1.getWidth()/2, height/2-img1.getHeight()/2);
-    	//The following should actually be triggered off of a change in HP, or turn
+		//context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+		//The following should actually be triggered off of a change in HP, or turn
     	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
 		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
-	
-	  void initHandlers() {
+	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
@@ -206,12 +208,9 @@ public class BattleView extends Composite{
 	void setPokemonOptions(){ // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 2;
-		commandOptions.addItem("POKeMON 1");
-		commandOptions.addItem("POKeMON 2");
-		commandOptions.addItem("POKeMON 3");
-		commandOptions.addItem("POKeMON 4");
-		commandOptions.addItem("POKeMON 5");
-		commandOptions.addItem("POKeMON 6");
+		for(int i=0; i<test.getUser().getTeam().size(); i++){
+			commandOptions.addItem(test.getUser().getTeam(i).getInfo().getNickname());
+			}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
@@ -245,16 +244,17 @@ public class BattleView extends Composite{
 			}
 			break;
 		case 1: // FIGHT Screen; Trigger Move
-			test.getUser().setMoveIndex(index);
+			//test.getUser().setMoveIndex(index);
 			test.getOpp().setMoveIndex(0);
 			test.getUser().setChoice(TurnChoice.MOVE);
 			test.getOpp().setChoice(TurnChoice.MOVE);
 			test.getBattle().Turn();
+			setBattleOptions();
 		}
 			
 		}
 	 void incrementSelectedCommandOption(){
-		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()){
+		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()-1){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()+1, true);
 		 }
 	 }
@@ -290,22 +290,35 @@ public class BattleView extends Composite{
 	 }
 	 void updatePokemonImages(){
 		 // Player Battling Pokemon
-		 if(playerPokemon==null){
-			 playerPokemon = new Image();
-			 FokemonUI.panel.add(playerPokemon);
-		 }
-		 playerPokemon.setUrl(img2.getUrl()); //This should set to a pokemons ID specific Image
-		 FokemonUI.panel.remove(playerPokemon);
-		 FokemonUI.panel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
-		// Player Battling Pokemon
-		 if(opponentPokemon==null){
-			 opponentPokemon = new Image();
-			 FokemonUI.panel.add(opponentPokemon);
-		 }
-		 opponentPokemon.setUrl(img3.getUrl()); //This should set to a pokemons ID specific Image
-		 FokemonUI.panel.remove(opponentPokemon);
-		 FokemonUI.panel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
-	 }
+		
+		playerPokemon = new Image(img2.getUrl());//This should set to a pokemons ID specific Image
+		playerPokemon.setVisible(false);
+		FokemonUI.panel.add(playerPokemon);
+		playerPokemon.addLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				FokemonUI.panel.remove(playerPokemon); 
+
+				FokemonUI.panel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+				playerPokemon.setVisible(true);
+			}
+		});
+
+		 // Opponent Battling Pokemon
+		
+		opponentPokemon = new Image(img3.getUrl());//This should set to a pokemons ID specific Image
+		opponentPokemon.setVisible(false);
+		FokemonUI.panel.add(opponentPokemon);
+		opponentPokemon.addLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				FokemonUI.panel.remove(opponentPokemon); 
+				FokemonUI.panel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+				opponentPokemon.setVisible(true);
+			}
+		});
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		}
 }
 
 
