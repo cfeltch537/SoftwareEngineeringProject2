@@ -9,7 +9,6 @@ import org.junit.Test;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.BattleStats;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
-
 public class BattleStatsTest {
 	private BattleStats squirtle;
 	private BattleStats bulbasaur;
