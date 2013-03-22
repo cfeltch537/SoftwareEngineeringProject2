@@ -138,11 +138,6 @@ public class BattleView extends Composite{
 		updatePokemonImages();
 	}
 	
-	void onPokemonShift(){
-		updatePokemonLabels();
-		updatePokemonImages();
-	}
-	
 	public void draw(Context2d context, Context2d front) {
 		//context.save();
 		context.fillRect(0, 0, width, height);
