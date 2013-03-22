@@ -138,6 +138,15 @@ public void findTurnOrder(){
 		 break;
 	}
 }
+public boolean CheckTurnValidity(){
+	if(isTurnOk(user)==false)return false;
+	if(isTurnOk(opponent)==false)return false;
+	return true;
+}
+public boolean isTurnOk(Player player){
+	
+	return true;
+}
 public void Turn(int turnNumber){
 	battleMessage=new ArrayList<String>();
 	boolean canAttack=false;
@@ -169,6 +178,7 @@ public void Turn(int turnNumber){
 		case ITEM:
 			break;
 		case SWITCH:
+			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
 			break;
 		case RUN:
 			break;
@@ -181,6 +191,7 @@ public void Turn(int turnNumber){
 		applyStatusDamage(user.getTeam(user.getCurrentPokemonIndex()));
 		applyStatusDamage(opponent.getTeam(opponent.getCurrentPokemonIndex()));
 	}
+	
 }
 public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 	//a is wild or trainer, t=traded, b=base, e=luckyegg,L=lvl of opp, Lp=lvl of poke
