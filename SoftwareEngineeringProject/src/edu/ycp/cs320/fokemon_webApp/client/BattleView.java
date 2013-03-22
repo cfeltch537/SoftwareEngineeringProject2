@@ -1,6 +1,10 @@
 
 package edu.ycp.cs320.fokemon_webApp.client;
 
+import java.util.ArrayList;
+
+import org.apache.commons.collections.functors.SwitchTransformer;
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -8,6 +12,8 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -16,6 +22,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite{
 	static final String holderId = "canvasholder";
@@ -29,6 +36,8 @@ public class BattleView extends Composite{
 	Label userHPvMax;
 	Label playerPokemonName;
 	Label opponentPokemonName;
+	Image playerStatusAilments;
+	Image opponentStatusAilments;
 	Image playerPokemon;
 	Image opponentPokemon;
 	HealthBarWidget playerHPBar;
@@ -41,6 +50,7 @@ public class BattleView extends Composite{
 	int key;
 	int commandOptionsIndex = 0;
 	int index;
+	
 	
 	TempBattle test;
 	
@@ -119,12 +129,10 @@ public class BattleView extends Composite{
 	    initHandlers();
 	    
 	}
-	
 	void doUpdate() {
 			// update the back canvas, set to fron canvas
 			draw(battleBackBufferContext, battleContext);
 		  }
-	
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
@@ -134,20 +142,23 @@ public class BattleView extends Composite{
 		//context.save();
 		context.fillRect(0, 0, width, height);
 		context.drawImage((ImageElement) img1.getElement().cast(), width/2 - img1.getWidth()/2, height/2-img1.getHeight()/2);
-    	//The following should actually be triggered off of a change in HP, or turn
+		//context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+		//The following should actually be triggered off of a change in HP, or turn
     	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
+		
 		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
 	
-	  void initHandlers() {
+	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				key = event.getUnicodeCharCode();
 				index = commandOptions.getSelectedIndex();
+				
 				switch(key){
 				case 32: //Space; Select
 					handleOptionSelect(index);
@@ -177,7 +188,7 @@ public class BattleView extends Composite{
 					handleOptionSelect(index);
 					break;
 				}
-				setBattleAnnouncement(test.getBattle().getBattleMessage());
+				//setBattleAnnouncement(test.getBattle().getBattleMessage());
 				//System.out.println(key); //For Debug
 			}
 		};
@@ -206,12 +217,9 @@ public class BattleView extends Composite{
 	void setPokemonOptions(){ // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 2;
-		commandOptions.addItem("POKeMON 1");
-		commandOptions.addItem("POKeMON 2");
-		commandOptions.addItem("POKeMON 3");
-		commandOptions.addItem("POKeMON 4");
-		commandOptions.addItem("POKeMON 5");
-		commandOptions.addItem("POKeMON 6");
+		for(int i=0; i<test.getUser().getTeam().size(); i++){
+			commandOptions.addItem(test.getUser().getTeam(i).getInfo().getNickname());
+			}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
@@ -226,9 +234,15 @@ public class BattleView extends Composite{
 		commandOptions.setItemSelected(0, true);
 	}
 	void runAway(){
-		setBattleAnnouncement("Could not escape!");
+		battleAnnouncementBox.setText("Could not get away!");
 	}
-	 void handleOptionSelect(int index) {		 
+	void switchToNextScreen(){
+		commandOptions.clear();
+		commandOptions.addItem("NEXT...");
+		commandOptions.setFocus(true);
+		commandOptions.setItemSelected(0, true);
+	}
+	void handleOptionSelect(int index) { // Called by KB Handler; Handles User Input	 
 		switch(commandOptionsIndex){
 		case 0: // At Fight, Pokemon, Bag, Run Screen
 			switch(index){
@@ -245,28 +259,41 @@ public class BattleView extends Composite{
 			}
 			break;
 		case 1: // FIGHT Screen; Trigger Move
-			test.getUser().setMoveIndex(index);
-			test.getOpp().setMoveIndex(0);
-			test.getUser().setChoice(TurnChoice.MOVE);
-			test.getOpp().setChoice(TurnChoice.MOVE);
-			test.getBattle().Turn();
+			//handleFightOption(index);
+			handleTurn1(index);
+			switchToNextScreen();
+			commandOptionsIndex = 2;
+			break;
+		case 2:
+			handleTurn2();
+			switchToNextScreen();
+			commandOptionsIndex = 3;
+			break;
+		case 3:
+			handleTurn3();
+			setBattleOptions();
+			break;
 		}
+		System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
 			
 		}
-	 void incrementSelectedCommandOption(){
-		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()){
+	void incrementSelectedCommandOption(){
+		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()-1){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()+1, true);
 		 }
 	 }
-	 void decrementSelectedCommandOption(){
+	void decrementSelectedCommandOption(){
 		 if(commandOptions.getSelectedIndex()>0){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
 		 }
 	 }
-	 public void setBattleAnnouncement(String announcement){
-		 battleAnnouncementBox.setText(announcement);
+	public void setBattleAnnouncement(ArrayList<String> announcement, int stringInd){
+		if(announcement.size()>stringInd){
+			battleAnnouncementBox.setText(announcement.get(stringInd));
+		}
+		 
 	 }
-	 void updatePlayerHPLabel(){
+	void updatePlayerHPLabel(){
 		 //Initialize Label widget if not already
 		 if(userHPvMax==null){
 			 userHPvMax = new Label();
@@ -274,7 +301,7 @@ public class BattleView extends Composite{
 		 }
 		 userHPvMax.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
-	 void updatePokemonLabels(){
+	void updatePokemonLabels(){
 		 // Player Battling Pokemon
 		 if(playerPokemonName==null){
 			 playerPokemonName = new Label();
@@ -286,25 +313,163 @@ public class BattleView extends Composite{
 			 opponentPokemonName = new Label();
 			 FokemonUI.panel.add(opponentPokemonName, width/2  - hpBarWidth/2 + 120, height/2 - 12 - 140);
 		 }
-		 opponentPokemonName.setText(test.getOpp().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getNickname());
+		 opponentPokemonName.setText(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getNickname());
 	 }
-	 void updatePokemonImages(){
+	void updatePokemonImages(){
 		 // Player Battling Pokemon
-		 if(playerPokemon==null){
-			 playerPokemon = new Image();
-			 FokemonUI.panel.add(playerPokemon);
+		
+		playerPokemon = new Image(img2.getUrl());//This should set to a pokemons ID specific Image
+		playerPokemon.setVisible(false);
+		FokemonUI.panel.add(playerPokemon);
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		playerPokemon.addLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				FokemonUI.panel.remove(playerPokemon); 
+
+				FokemonUI.panel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+				playerPokemon.setVisible(true);
+			}
+		});
+
+		 // Opponent Battling Pokemon
+		
+		opponentPokemon = new Image(img3.getUrl());//This should set to a pokemons ID specific Image
+		opponentPokemon.setVisible(false);
+		FokemonUI.panel.add(opponentPokemon);
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		opponentPokemon.addLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				FokemonUI.panel.remove(opponentPokemon); 
+				FokemonUI.panel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+				opponentPokemon.setVisible(true);
+			}
+		});
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		}
+	 
+	 void updatePokemonStatus(){
+		 
+		 // Player
+		 if(playerStatusAilments==null){
+			 playerStatusAilments = new Image();
+			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 22 - 110);
 		 }
-		 playerPokemon.setUrl(img2.getUrl()); //This should set to a pokemons ID specific Image
-		 FokemonUI.panel.remove(playerPokemon);
-		 FokemonUI.panel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
-		// Player Battling Pokemon
-		 if(opponentPokemon==null){
-			 opponentPokemon = new Image();
-			 FokemonUI.panel.add(opponentPokemon);
+		 
+		 switch(test.getBattle().getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getStatus()){
+		 case BRN:
+			 playerStatusAilments.setUrl("StatusAilments/Burn.png"); 
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case FNT: 
+			 playerStatusAilments.setUrl("StatusAilments/Faint.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case SLP:
+			 playerStatusAilments.setUrl("StatusAilments/Sleep.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case PRL:
+			 playerStatusAilments.setUrl("StatusAilments/Paralyze.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case PSN:
+			 playerStatusAilments.setUrl("StatusAilments/Poison.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case FRZ:
+			 playerStatusAilments.setUrl("StatusAilments/Freeze.png");
+			 playerStatusAilments.setVisible(true);
+			 break;
+		 case NRM:
+			 playerStatusAilments.setVisible(false);
+		 default:
+			break;
 		 }
-		 opponentPokemon.setUrl(img3.getUrl()); //This should set to a pokemons ID specific Image
-		 FokemonUI.panel.remove(opponentPokemon);
-		 FokemonUI.panel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+		 playerStatusAilments.setPixelSize(32, 11);
+		 
+		 //Opponent
+		 if(opponentStatusAilments==null){
+			 opponentStatusAilments = new Image();
+			 FokemonUI.panel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 22 - 110);
+		 }
+		 
+		 switch(test.getBattle().getOpponent().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getStatus()){
+		 case BRN:
+			 opponentStatusAilments.setUrl("StatusAilments/Burn.png"); 
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case FNT: 
+			 opponentStatusAilments.setUrl("StatusAilments/Faint.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case SLP:
+			 opponentStatusAilments.setUrl("StatusAilments/Sleep.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case PRL:
+			 opponentStatusAilments.setUrl("StatusAilments/Paralyze.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case PSN:
+			 opponentStatusAilments.setUrl("StatusAilments/Poison.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case FRZ:
+			 opponentStatusAilments.setUrl("StatusAilments/Freeze.png");
+			 opponentStatusAilments.setVisible(true);
+			 break;
+		 case NRM:
+			 opponentStatusAilments.setVisible(false);
+		 default:
+			break;
+		 }
+		 opponentStatusAilments.setPixelSize(32, 11);
+	 }
+	 void handleTurn1(int moveIndex){
+		test.getUser().setMoveIndex(moveIndex);
+		//test.getUser().setMoveIndex(0);
+		test.getOpp().setMoveIndex(0);
+		test.getUser().setChoice(TurnChoice.MOVE);
+		test.getOpp().setChoice(TurnChoice.MOVE);
+		//test.getBattle().Turn();
+		test.getBattle().Turn(1);
+		updatePokemonStatus();
+		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 void handleTurn2(){
+		 test.getBattle().Turn(2);
+		 updatePokemonStatus();
+		 setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 void handleTurn3(){
+		 test.getBattle().Turn(3);
+		updatePokemonStatus();
+		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 
+	 void handleFightOption(int moveIndex){
+			test.getUser().setMoveIndex(moveIndex);
+			//test.getUser().setMoveIndex(0);
+			test.getOpp().setMoveIndex(0);
+			test.getUser().setChoice(TurnChoice.MOVE);
+			test.getOpp().setChoice(TurnChoice.MOVE);
+			//test.getBattle().Turn();
+			test.getBattle().Turn(1);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			test.getBattle().Turn(2);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			test.getBattle().Turn(3);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			//System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
+			//test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().setStatus(Status.PSN);
+			//test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
+			updatePokemonStatus();
+			setBattleOptions();
 	 }
 }
 
