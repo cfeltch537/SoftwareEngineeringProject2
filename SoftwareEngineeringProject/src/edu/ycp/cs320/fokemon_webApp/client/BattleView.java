@@ -138,12 +138,15 @@ public class BattleView extends Composite{
 		updatePokemonImages();
 	}
 	
+	void onPokemonShift(){
+		updatePokemonLabels();
+		updatePokemonImages();
+	}
+	
 	public void draw(Context2d context, Context2d front) {
 		//context.save();
 		context.fillRect(0, 0, width, height);
 		context.drawImage((ImageElement) img1.getElement().cast(), width/2 - img1.getWidth()/2, height/2-img1.getHeight()/2);
-		//context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
-		//The following should actually be triggered off of a change in HP, or turn
     	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
@@ -301,6 +304,7 @@ public class BattleView extends Composite{
 		 }
 		 userHPvMax.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
+
 	void updatePokemonLabels(){
 		 // Player Battling Pokemon
 		 if(playerPokemonName==null){
@@ -469,6 +473,7 @@ public class BattleView extends Composite{
 			//test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
 			updatePokemonStatus();
 			setBattleOptions();
+
 	 }
 }
 
