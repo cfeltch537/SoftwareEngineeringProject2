@@ -1,6 +1,10 @@
 
 package edu.ycp.cs320.fokemon_webApp.client;
 
+import java.util.ArrayList;
+
+import org.apache.commons.collections.functors.SwitchTransformer;
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -154,6 +158,7 @@ public class BattleView extends Composite{
 			public void onKeyPress(KeyPressEvent event) {
 				key = event.getUnicodeCharCode();
 				index = commandOptions.getSelectedIndex();
+				
 				switch(key){
 				case 32: //Space; Select
 					handleOptionSelect(index);
@@ -183,7 +188,7 @@ public class BattleView extends Composite{
 					handleOptionSelect(index);
 					break;
 				}
-				setBattleAnnouncement(test.getBattle().getBattleMessage());
+				//setBattleAnnouncement(test.getBattle().getBattleMessage());
 				//System.out.println(key); //For Debug
 			}
 		};
@@ -229,7 +234,13 @@ public class BattleView extends Composite{
 		commandOptions.setItemSelected(0, true);
 	}
 	void runAway(){
-		setBattleAnnouncement("Could not escape!");
+		battleAnnouncementBox.setText("Could not get away!");
+	}
+	void switchToNextScreen(){
+		commandOptions.clear();
+		commandOptions.addItem("NEXT...");
+		commandOptions.setFocus(true);
+		commandOptions.setItemSelected(0, true);
 	}
 	void handleOptionSelect(int index) { // Called by KB Handler; Handles User Input	 
 		switch(commandOptionsIndex){
@@ -248,16 +259,22 @@ public class BattleView extends Composite{
 			}
 			break;
 		case 1: // FIGHT Screen; Trigger Move
-			test.getUser().setMoveIndex(index);
-			test.getOpp().setMoveIndex(0);
-			test.getUser().setChoice(TurnChoice.MOVE);
-			test.getOpp().setChoice(TurnChoice.MOVE);
-			test.getBattle().Turn();
-			test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().setStatus(Status.PSN);
-			test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
-			updatePokemonStatus();
+			//handleFightOption(index);
+			handleTurn1(index);
+			switchToNextScreen();
+			commandOptionsIndex = 2;
+			break;
+		case 2:
+			handleTurn2();
+			switchToNextScreen();
+			commandOptionsIndex = 3;
+			break;
+		case 3:
+			handleTurn3();
 			setBattleOptions();
+			break;
 		}
+		System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
 			
 		}
 	void incrementSelectedCommandOption(){
@@ -270,8 +287,11 @@ public class BattleView extends Composite{
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
 		 }
 	 }
-	public void setBattleAnnouncement(String announcement){
-		 battleAnnouncementBox.setText(announcement);
+	public void setBattleAnnouncement(ArrayList<String> announcement, int stringInd){
+		if(announcement.size()>stringInd){
+			battleAnnouncementBox.setText(announcement.get(stringInd));
+		}
+		 
 	 }
 	void updatePlayerHPLabel(){
 		 //Initialize Label widget if not already
@@ -301,6 +321,7 @@ public class BattleView extends Composite{
 		playerPokemon = new Image(img2.getUrl());//This should set to a pokemons ID specific Image
 		playerPokemon.setVisible(false);
 		FokemonUI.panel.add(playerPokemon);
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		playerPokemon.addLoadHandler(new LoadHandler() {
 			@Override
 			public void onLoad(LoadEvent event) {
@@ -316,6 +337,7 @@ public class BattleView extends Composite{
 		opponentPokemon = new Image(img3.getUrl());//This should set to a pokemons ID specific Image
 		opponentPokemon.setVisible(false);
 		FokemonUI.panel.add(opponentPokemon);
+		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		opponentPokemon.addLoadHandler(new LoadHandler() {
 			@Override
 			public void onLoad(LoadEvent event) {
@@ -404,6 +426,50 @@ public class BattleView extends Composite{
 			break;
 		 }
 		 opponentStatusAilments.setPixelSize(32, 11);
+	 }
+	 void handleTurn1(int moveIndex){
+		test.getUser().setMoveIndex(moveIndex);
+		//test.getUser().setMoveIndex(0);
+		test.getOpp().setMoveIndex(0);
+		test.getUser().setChoice(TurnChoice.MOVE);
+		test.getOpp().setChoice(TurnChoice.MOVE);
+		//test.getBattle().Turn();
+		test.getBattle().Turn(1);
+		updatePokemonStatus();
+		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 void handleTurn2(){
+		 test.getBattle().Turn(2);
+		 updatePokemonStatus();
+		 setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 void handleTurn3(){
+		 test.getBattle().Turn(3);
+		updatePokemonStatus();
+		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+	 }
+	 
+	 void handleFightOption(int moveIndex){
+			test.getUser().setMoveIndex(moveIndex);
+			//test.getUser().setMoveIndex(0);
+			test.getOpp().setMoveIndex(0);
+			test.getUser().setChoice(TurnChoice.MOVE);
+			test.getOpp().setChoice(TurnChoice.MOVE);
+			//test.getBattle().Turn();
+			test.getBattle().Turn(1);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			test.getBattle().Turn(2);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			test.getBattle().Turn(3);
+			updatePokemonStatus();
+			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+			//System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
+			//test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().setStatus(Status.PSN);
+			//test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
+			updatePokemonStatus();
+			setBattleOptions();
 	 }
 }
 

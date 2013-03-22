@@ -38,9 +38,17 @@ public class TempBattle {
 		AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
 		DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
 		Attacker=new Pokemon(50, 50);
+		Attacker.getInfo().setNickname("Charizard");
+		Attacker.getStats().setMaxHp(200);
+		Attacker.getStats().setCurHp(200);
 		Defender=new Pokemon(35, 35);
+		Defender.getInfo().setNickname("Pikachu");
+		Defender.getStats().setMaxHp(200);
+		Defender.getStats().setCurHp(200);
 		Attacker.getMoves().add(AttackerMove);
 		Attacker.getMoves().add(DefenderMove);
+		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Thunder_Wave));
+		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Defender.getMoves().add(DefenderMove);
 		Pokemon Attacker2=new Pokemon(40,40);
 		Attacker2=Attacker;

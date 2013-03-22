@@ -58,6 +58,7 @@ public class HealthBarWidget extends Composite{
 		 context.clearRect(0, 0, hpBarWidth, 12);
 			// Draw Players HP Bar
 			context.drawImage(hpEmpty,0,0);
+			if(PokemonHP!=0){
 			hpRatio = PokemonHP/PokemonMaxHP;
 			if(hpRatio >= 0.75){ // Green Bar
 				context.drawImage(
@@ -104,6 +105,7 @@ public class HealthBarWidget extends Composite{
 						hpBarWidth*hpRatio, //dw
 						12.0); //dh
 			}
+		}
 		context.restore();
 		front.drawImage(context.getCanvas(),0,0);
 	}
