@@ -144,7 +144,7 @@ public boolean CheckTurnValidity(){
 	return true;
 }
 public boolean isTurnOk(Player player){
-	
+	if (1==2)return false;
 	return true;
 }
 public void Turn(int turnNumber){
