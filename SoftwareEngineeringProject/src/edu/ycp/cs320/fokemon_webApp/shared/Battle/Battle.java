@@ -121,10 +121,31 @@ public void findTurnOrder(){
 		 }
 		 break;
 	 case ITEM:
+		 user.setTurnOrder(1);
+		 opponent.setTurnOrder(2);
 		 break;
-		 default:
-			 break;
+	 case RUN:
+		 user.setTurnOrder(1);
+		 opponent.setTurnOrder(2);
+		 break;
+	 case SWITCH:
+		 user.setTurnOrder(1);
+		 opponent.setTurnOrder(2);
+		 break;
+	 default:
+		 user.setTurnOrder(1);
+		 opponent.setTurnOrder(2);
+		 break;
 	}
+}
+public boolean CheckTurnValidity(){
+	if(isTurnOk(user)==false)return false;
+	if(isTurnOk(opponent)==false)return false;
+	return true;
+}
+public boolean isTurnOk(Player player){
+	
+	return true;
 }
 public void Turn(int turnNumber){
 	battleMessage=new ArrayList<String>();
@@ -157,6 +178,7 @@ public void Turn(int turnNumber){
 		case ITEM:
 			break;
 		case SWITCH:
+			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
 			break;
 		case RUN:
 			break;
@@ -168,6 +190,25 @@ public void Turn(int turnNumber){
 	}else{
 		applyStatusDamage(user.getTeam(user.getCurrentPokemonIndex()));
 		applyStatusDamage(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+	}
+	
+}
+public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
+	//a is wild or trainer, t=traded, b=base, e=luckyegg,L=lvl of opp, Lp=lvl of poke
+	//s is 2 times the number of non fainted used pokemon, or 2 if holding xpshare
+	double a, b, L,Lp,s,t,e;
+	int xp;
+	a=1;
+	b=40;
+	L=loser.getInfo().getLvl();
+	for(int i=0;i<team.size();i++){
+		Lp=team.get(i).getInfo().getLvl();
+		if (user.getPlayerID()==team.get(i).getInfo().getPlayerID()) t=1;
+		else t=1.5;
+		s=2;
+		e=1;
+		
+		xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
 	}
 }
 	private void applyStatusDamage(Pokemon userPoke) {

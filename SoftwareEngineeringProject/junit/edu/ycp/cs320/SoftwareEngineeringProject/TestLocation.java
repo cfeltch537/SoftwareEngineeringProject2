@@ -5,9 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
-
 
 public class TestLocation {
 	private Location pos1;
