@@ -35,7 +35,7 @@ public class TempBattle {
 	
   public TempBattle() {
 		loc=new Location(0, 0, 0);
-		AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
+		AttackerMove=MoveDataBase.generateMove(MoveName.Blizzard);
 		DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
 		Attacker=new Pokemon(50, 50);
 		Attacker.getInfo().setNickname("Charizard");
@@ -66,6 +66,7 @@ public class TempBattle {
 		opp=new Player(100,"Roberto", true, loc);
 		opp.getTeam().add(Defender);
 		opp.getTeam().add(Defender2);
+		
 		opp.getTeam().add(Defender3);
 		setBattle(new Battle(user, opp));
   }

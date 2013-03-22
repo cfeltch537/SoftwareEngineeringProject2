@@ -214,7 +214,7 @@ public class BattleView extends Composite{
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
-	void setPokemonOptions(){ // Shows Pokemon Moves
+	void setPokemonOptions(){ // Shows Available Pokemon
 		commandOptions.clear();
 		commandOptionsIndex = 2;
 		for(int i=0; i<test.getUser().getTeam().size(); i++){
@@ -287,9 +287,9 @@ public class BattleView extends Composite{
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
 		 }
 	 }
-	public void setBattleAnnouncement(ArrayList<String> announcement, int stringInd){
-		if(announcement.size()>stringInd){
-			battleAnnouncementBox.setText(announcement.get(stringInd));
+	public void setBattleAnnouncement(ArrayList<String> announcement, int incrementCommand){
+		for(int i=0; i<announcement.size(); i++){
+			battleAnnouncementBox.setText(announcement.get(i));
 		}
 		 
 	 }
@@ -348,8 +348,7 @@ public class BattleView extends Composite{
 		});
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		}
-	 
-	 void updatePokemonStatus(){
+	void updatePokemonStatus(){
 		 
 		 // Player
 		 if(playerStatusAilments==null){
@@ -427,7 +426,7 @@ public class BattleView extends Composite{
 		 }
 		 opponentStatusAilments.setPixelSize(32, 11);
 	 }
-	 void handleTurn1(int moveIndex){
+	void handleTurn1(int moveIndex){
 		test.getUser().setMoveIndex(moveIndex);
 		//test.getUser().setMoveIndex(0);
 		test.getOpp().setMoveIndex(0);
@@ -438,12 +437,12 @@ public class BattleView extends Composite{
 		updatePokemonStatus();
 		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
 	 }
-	 void handleTurn2(){
+	void handleTurn2(){
 		 test.getBattle().Turn(2);
 		 updatePokemonStatus();
 		 setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
 	 }
-	 void handleTurn3(){
+	void handleTurn3(){
 		 test.getBattle().Turn(3);
 		updatePokemonStatus();
 		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
