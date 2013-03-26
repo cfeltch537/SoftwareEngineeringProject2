@@ -47,10 +47,10 @@ public class BattleView extends Composite{
 	static int height;
 	static int width;
 	// Indices
-	int key;
+	int key = 0;
 	int commandOptionsIndex = 0;
-	int index;
-	
+	int index = 0;
+	int messageIndex = 0;
 	
 	TempBattle test;
 	
@@ -133,6 +133,7 @@ public class BattleView extends Composite{
 			// update the back canvas, set to fron canvas
 			draw(battleBackBufferContext, battleContext);
 		  }
+	
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
@@ -186,7 +187,6 @@ public class BattleView extends Composite{
 					handleOptionSelect(index);
 					break;
 				}
-				//setBattleAnnouncement(test.getBattle().getBattleMessage());
 				//System.out.println(key); //For Debug
 			}
 		};
@@ -207,7 +207,7 @@ public class BattleView extends Composite{
 		commandOptions.clear();
 		commandOptionsIndex = 1;
 		for(int i=0; i<test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMoves().size(); i++){
-		commandOptions.addItem(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMoveName().toString());
+		commandOptions.addItem(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMoveName().name);
 		}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
@@ -257,19 +257,40 @@ public class BattleView extends Composite{
 			}
 			break;
 		case 1: // FIGHT Screen; Trigger Move
-			//handleFightOption(index);
 			handleTurn1(index);
 			switchToNextScreen();
 			commandOptionsIndex = 2;
 			break;
-		case 2:
-			handleTurn2();
-			switchToNextScreen();
-			commandOptionsIndex = 3;
+		case 2: // Message from Turn 1 Printing
+			if(messageIndex<test.getBattle().getBattleMessage().size()){ //While there is still a message to be displayed
+				setBattleAnnouncement(test.getBattle().getBattleMessage(), messageIndex); // Display message
+				messageIndex++; //Move on too next message
+			}else{ // When no more messages to be displayed
+				messageIndex=0; //reset message index
+				handleTurn2(); // Trigger turn 2 (Slower Pokemon)
+				switchToNextScreen(); // remain at next screen
+				commandOptionsIndex = 3; // Switch to Turn 2 Case
+			}
 			break;
-		case 3:
-			handleTurn3();
-			setBattleOptions();
+		case 3: // Turn 2 case
+			if(messageIndex<test.getBattle().getBattleMessage().size()){ //While there is still a message to be displayed
+				setBattleAnnouncement(test.getBattle().getBattleMessage(), messageIndex); // Display message
+				messageIndex++;  //Move on too next message
+			}else{ // When no more messages to be displayed
+				messageIndex=0; // Reset message index
+				handleTurn3(); // Trigger turn 3 (Post Battle Damage and Announcements)
+				switchToNextScreen(); // Remain at next Screen
+				commandOptionsIndex = 4; // Switch to Turn 3 case
+			}
+			break;
+		case 4: // Turn 3 Case
+			if(messageIndex<test.getBattle().getBattleMessage().size()){ //While there is still a message to be displayed
+				setBattleAnnouncement(test.getBattle().getBattleMessage(), messageIndex); // Display message
+				messageIndex++;  //Move on too next message
+			}else{ // When no more messages to be displayed
+				messageIndex=0;  //reset message index
+				setBattleOptions(); // Return to Cattle Options for next turn
+			}
 			break;
 		}
 		System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
@@ -285,11 +306,10 @@ public class BattleView extends Composite{
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()-1, true);
 		 }
 	 }
-	public void setBattleAnnouncement(ArrayList<String> announcement, int incrementCommand){
-		for(int i=0; i<announcement.size(); i++){
-			battleAnnouncementBox.setText(announcement.get(i));
+	public void setBattleAnnouncement(ArrayList<String> announcement, int index){
+		if(index<announcement.size()){
+		battleAnnouncementBox.setText(announcement.get(index)); 
 		}
-		 
 	 }
 	void updatePlayerHPLabel(){
 		 //Initialize Label widget if not already
@@ -354,7 +374,6 @@ public class BattleView extends Composite{
 			 playerStatusAilments = new Image();
 			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 22 - 110);
 		 }
-		 
 		 switch(test.getBattle().getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getStatus()){
 		 case BRN:
 			 playerStatusAilments.setUrl("StatusAilments/Burn.png"); 
@@ -427,49 +446,47 @@ public class BattleView extends Composite{
 	 }
 	void handleTurn1(int moveIndex){
 		test.getUser().setMoveIndex(moveIndex);
-		//test.getUser().setMoveIndex(0);
 		test.getOpp().setMoveIndex(0);
 		test.getUser().setChoice(TurnChoice.MOVE);
 		test.getOpp().setChoice(TurnChoice.MOVE);
 		//test.getBattle().Turn();
 		test.getBattle().Turn(1);
 		updatePokemonStatus();
-		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+		setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
+		messageIndex++;
 	 }
 	void handleTurn2(){
 		 test.getBattle().Turn(2);
 		 updatePokemonStatus();
-		 setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+		 setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
+		 messageIndex++;
 	 }
 	void handleTurn3(){
 		 test.getBattle().Turn(3);
-		updatePokemonStatus();
-		setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+		 updatePokemonStatus();
+		 setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
+		 messageIndex++;
 	 }
-	 
-	 void handleFightOption(int moveIndex){
-			test.getUser().setMoveIndex(moveIndex);
-			//test.getUser().setMoveIndex(0);
-			test.getOpp().setMoveIndex(0);
-			test.getUser().setChoice(TurnChoice.MOVE);
-			test.getOpp().setChoice(TurnChoice.MOVE);
-			//test.getBattle().Turn();
-			test.getBattle().Turn(1);
-			updatePokemonStatus();
-			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
-			test.getBattle().Turn(2);
-			updatePokemonStatus();
-			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
-			test.getBattle().Turn(3);
-			updatePokemonStatus();
-			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
-			//System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
-			//test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().setStatus(Status.PSN);
-			//test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().setStatus(Status.FRZ);
-			updatePokemonStatus();
-			setBattleOptions();
-
-	 }
+//	 void handleFightOption(int moveIndex){
+//			test.getUser().setMoveIndex(moveIndex);
+//			//test.getUser().setMoveIndex(0);
+//			test.getOpp().setMoveIndex(0);
+//			test.getUser().setChoice(TurnChoice.MOVE);
+//			test.getOpp().setChoice(TurnChoice.MOVE);
+//			//test.getBattle().Turn();
+//			test.getBattle().Turn(1);
+//			updatePokemonStatus();
+//			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+//			test.getBattle().Turn(2);
+//			updatePokemonStatus();
+//			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+//			test.getBattle().Turn(3);
+//			updatePokemonStatus();
+//			setBattleAnnouncement(test.getBattle().getBattleMessage(),0);
+//			updatePokemonStatus();
+//			setBattleOptions();
+//
+//	 }
 }
 
 
