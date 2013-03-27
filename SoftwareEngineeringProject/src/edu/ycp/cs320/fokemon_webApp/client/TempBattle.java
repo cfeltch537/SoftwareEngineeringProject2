@@ -37,7 +37,7 @@ public class TempBattle {
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Defender.getMoves().add(DefenderMove);
 		Pokemon Attacker2=new Pokemon(40,40);
-		Attacker2=Attacker;
+		Attacker2=Defender;
 		Pokemon Attacker3=new Pokemon(40,40);
 		Attacker3=Attacker;
 		
