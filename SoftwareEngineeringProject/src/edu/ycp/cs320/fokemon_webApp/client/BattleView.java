@@ -131,15 +131,13 @@ public class BattleView extends Composite{
 	    
 	}
 	void doUpdate() {
-			// update the back canvas, set to fron canvas
+			// update the back canvas, set to front canvas
 			draw(battleBackBufferContext, battleContext);
 		  }
-	
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
 	}
-	
 	public void draw(Context2d context, Context2d front) {
 		//context.save();
 		context.fillRect(0, 0, width, height);
@@ -151,7 +149,6 @@ public class BattleView extends Composite{
 		//context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
-	
 	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
@@ -208,7 +205,9 @@ public class BattleView extends Composite{
 		commandOptions.clear();
 		commandOptionsIndex = 1;
 		for(int i=0; i<test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMoves().size(); i++){
-		commandOptions.addItem(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMoveName().name);
+		commandOptions.addItem(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMoveName().name + 
+				" " + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getCurPP()+
+				"/" + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getMove(i).getMaxPP());
 		}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
@@ -265,10 +264,12 @@ public class BattleView extends Composite{
 			
 		}
 	void handleTurn(int userMoveIndex, TurnChoice userTurnChoice){
-		handleTurn1(index,TurnChoice.MOVE);
-		switchToNextScreen();
 		switch(turnIndex){
 			case 0: // TURN 1 SCREEN ... Message from Turn 1 Printing
+				if(messageIndex==0){
+					handleTurn1(index,TurnChoice.MOVE);
+					switchToNextScreen();	
+					}
 				if(messageIndex<test.getBattle().getBattleMessage().size()){ //While there is still a message to be displayed
 					setBattleAnnouncement(test.getBattle().getBattleMessage(), messageIndex); // Display message
 					messageIndex++; //Move on too next message
@@ -308,7 +309,6 @@ public class BattleView extends Composite{
 				break;
 		}
 	}
-	
 	void incrementSelectedCommandOption(){
 		 if(commandOptions.getSelectedIndex()<commandOptions.getItemCount()-1){
 			 commandOptions.setItemSelected(commandOptions.getSelectedIndex()+1, true);
@@ -332,7 +332,6 @@ public class BattleView extends Composite{
 		 }
 		 userHPvMax.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
-
 	void updatePokemonLabels(){
 		 // Player Battling Pokemon
 		 if(playerPokemonName==null){
@@ -463,12 +462,11 @@ public class BattleView extends Composite{
 	void handleTurn1(int moveIndex, TurnChoice userChoice){
 		test.getUser().setMoveIndex(moveIndex);
 		test.getOpp().setMoveIndex(0);
-		test.getUser().setChoice(TurnChoice.MOVE);
+		test.getUser().setChoice(userChoice);
 		test.getOpp().setChoice(TurnChoice.MOVE);
 		test.getBattle().Turn(1);
 		updatePokemonStatus();
 		setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
-		messageIndex++;
 	 }
 	void handleTurn2(){
 		 test.getBattle().Turn(2);
