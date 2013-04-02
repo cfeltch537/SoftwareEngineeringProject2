@@ -11,6 +11,8 @@ public class BattleStats {
 	private int spDef;
 	private int spd;
 	private int SLPCount;
+	private int baseXP;
+	private int[] EVyield;
 	private Status status;
 	
 	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk, int spDef, int spd, Status status) {
@@ -109,5 +111,21 @@ public class BattleStats {
 
 	public void setSLPCount(int sLPCount) {
 		SLPCount = sLPCount;
+	}
+
+	public int getBaseXP() {
+		return baseXP;
+	}
+
+	public void setBaseXP(int baseXP) {
+		this.baseXP = baseXP;
+	}
+
+	public int[] getEVyield() {
+		return EVyield;
+	}
+
+	public void setEVyield(int[] eVyield) {
+		EVyield = eVyield;
 	}
 }

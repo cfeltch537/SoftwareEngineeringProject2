@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 
-import edu.ycp.cs320.fokemon_webApp.shared.Player.PokedexEntry;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexEntry;
 
 
 public class Pokedex {
@@ -46,8 +46,8 @@ public class Pokedex {
 	        int incSpDef = Integer.parseInt(st.nextToken());
 	        int incSpd = Integer.parseInt(st.nextToken());
 
-	        temp = new PokedexEntry(id,spriteFront,spriteBack,name,details,type,baseHP,baseAtk,baseDef,baseSpAtk,baseSpDef,baseSpd,incHP,incAtk,incDef,incSpAtk,incSpDef,incSpd);	      
-	        pokeMap.put(temp.getId(), temp);
+	       // temp = new PokedexEntry(id,spriteFront,spriteBack,name,details,type,baseHP,baseAtk,baseDef,baseSpAtk,baseSpDef,baseSpd,incHP,incAtk,incDef,incSpAtk,incSpDef,incSpd);	      
+	      //  pokeMap.put(temp.getId(), temp);
 	        // read the next line
 	        stringRead = br.readLine();
 	      }

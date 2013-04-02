@@ -144,6 +144,24 @@ public boolean CheckTurnValidity(){
 	return true;
 }
 public boolean isTurnOk(Player player){
+	Pokemon curPoke=player.getTeam(player.getCurrentPokemonIndex());
+	switch(player.getChoice()){
+	case MOVE:
+		if(curPoke.getMove(player.getMoveIndex()).getCurPP()==0) return false;
+		break;
+	case ITEM:
+		//not a use able item, not good target
+		break;
+	case SWITCH:
+		if(player.getCurrentPokemonIndex()==player.getMoveIndex()) return false;
+		if(player.getTeam(player.getMoveIndex()).getStats().getStatus()==Status.FNT)return false;
+		break;
+	case RUN:
+		//not a wild pokemon
+		break;
+	default:
+		return false;
+	}
 
 	return true;
 }

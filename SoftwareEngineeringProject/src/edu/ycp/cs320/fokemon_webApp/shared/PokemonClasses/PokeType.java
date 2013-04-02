@@ -13,5 +13,6 @@ public enum PokeType {
 	GROUND,
 	DRAGON,
 	FLYING,
-	ICE
+	ICE,
+	STEEL;
 }

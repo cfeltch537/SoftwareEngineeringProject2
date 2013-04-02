@@ -1,27 +1,68 @@
-package edu.ycp.cs320.fokemon_webApp.shared.Player;
+package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
-import java.awt.Image;
 
-public class PokedexEntry {
-	private int id;
-	private Image spriteFront;
-	private Image spriteBack;
-	private String details;
-	private String name;
-	private int type;
-	private int baseHP;
-	private int baseAtk;
-	private int baseDef;
-	private int baseSpAtk;
-	private int baseSpDef;
-	private int baseSpd;
-	private int incHP;
-	private int incAtk;
-	private int incDef;
-	private int incSpAtk;
-	private int incSpDef;
-	private int incSpd;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class PokedexEntry implements Serializable{
 	
+	private int[] baseStats=new int [6];
+	private PokeID ID;
+	private String PokeName;
+	private ArrayList <PokeType> type;
+	private int baseXP;
+	private int[] EVyield= new int[6];
+	
+	
+	public PokedexEntry(PokeID ID, String PokeName, int[] baseStats, int baseXP, int[] EVyield,ArrayList <PokeType> type ){
+		this.ID=ID;
+		this.PokeName=PokeName;
+		this.baseStats=baseStats;
+		this.baseXP=baseXP;
+		this.EVyield=EVyield;
+		this.type=type;
+	}
+	
+	public int[] getBaseStats() {
+		return baseStats;
+	}
+	public void setBaseStats(int[] baseStats) {
+		this.baseStats = baseStats;
+	}
+	public PokeID getPokeID() {
+		return ID;
+	}
+	public void setPokeID(PokeID pokeID) {
+		ID = pokeID;
+	}
+	public String getPokeName() {
+		return PokeName;
+	}
+	public void setPokeName(String pokeName) {
+		PokeName = pokeName;
+	}
+	public ArrayList <PokeType> getType() {
+		return type;
+	}
+	public void setType(ArrayList <PokeType> type) {
+		this.type = type;
+	}
+	public int getBaseXP() {
+		return baseXP;
+	}
+	public void setBaseXP(int baseXP) {
+		this.baseXP = baseXP;
+	}
+	public int[] getEVyield() {
+		return EVyield;
+	}
+	public void setEVyield(int[] eVyield) {
+		EVyield = eVyield;
+	}
+	
+	
+	
+	/*
 	public PokedexEntry(int _id, Image _spriteFront, Image _spriteBack, String _name, String _details, int _type, int _baseHP, int _baseAtk, int _baseDef, 
 			int _baseSpAtk, int _baseSpDef, int _baseSpd,  int _incHP, int _incAtk, int _incDef, int _incSpAtk, int _incSpDef, int _incSpd) {
 		this.id=_id;
@@ -210,5 +251,5 @@ public class PokedexEntry {
 
 	public void setIncSpd(int incSpd) {
 		this.incSpd = incSpd;
-	}
+	}*/
 }
