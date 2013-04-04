@@ -47,7 +47,6 @@ public class CirculatingImagesView extends Composite{
 		    canvasTemp.setCoordinateSpaceHeight(heightTemp);
 		    backBufferTemp.setCoordinateSpaceWidth(widthTemp);
 		    backBufferTemp.setCoordinateSpaceHeight(heightTemp);
-		    FokemonUI.panel.add(canvasTemp,100,40);
 		    contextTemp = canvasTemp.getContext2d();
 		    backBufferContextTemp = backBufferTemp.getContext2d();
 		    

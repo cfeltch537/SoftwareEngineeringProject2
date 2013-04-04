@@ -1,26 +1,23 @@
 
 package edu.ycp.cs320.fokemon_webApp.client;
 
-import java.io.IOException;
-
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.RootPanel;
-
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
-import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 
 public class MapView extends Composite{
 	static final String holderId = "canvasholder";
 	Canvas backBuffer;
+	AbsolutePanel mapPanel;
 	Canvas canvas;
 	Context2d context;
 	Context2d backBufferContext;
@@ -29,19 +26,11 @@ public class MapView extends Composite{
 	Image img;
 	static int height;
 	static int width;
-	static PokedexReader pokedex;
 	
 	
 	public MapView(){
-		/*  System.out.println("why");
-		  try {
-			pokedex= new PokedexReader();
-		} catch (IOException e) {
-			System.out.println("why");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
+		mapPanel = new AbsolutePanel();
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player Cody
 		areaList = new Area[2];  
 		areaList[0] = new Area();
@@ -69,12 +58,12 @@ public class MapView extends Composite{
 	    context = canvas.getContext2d();
 	    backBufferContext = backBuffer.getContext2d();
 	    
-	    FokemonUI.panel.setWidth(width + "px");
-	    FokemonUI.panel.setHeight(height + "px");
-	    RootPanel.get(holderId).add(FokemonUI.panel);
-	    FokemonUI.panel.add(canvas);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    mapPanel.setWidth(width + "px");
+	    mapPanel.setHeight(height + "px");
+	    mapPanel.add(canvas);
+	    mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
+	    doUpdate();
 	    initHandlers();
 	}
 	
@@ -117,8 +106,9 @@ public class MapView extends Composite{
         	  if(height==player.getPlayerLocation().getX()&&width==player.getPlayerLocation().getY()){
         		img = new Image ("23x25_Trainer_Front.png");
           		if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
-          			img.setVisibleRect(0, 0, img.getWidth(), img.getHeight()/2);
+          			//img.setVisibleRect(0, 0, img.getWidth(), img.getHeight()/2);
           			context.drawImage((ImageElement) img.getElement().cast(), 16*player.getPlayerLocation().getX()-3, 16*player.getPlayerLocation().getY()-15+2);
+          			FokemonUI.startBattle();
           		}else{
 	            	context.drawImage((ImageElement) img.getElement().cast(), 16*player.getPlayerLocation().getX()-3, 16*player.getPlayerLocation().getY()-15+2);
           		}
@@ -162,6 +152,7 @@ public class MapView extends Composite{
 					break;
 				}
 				System.out.println(key); //For Debug
+				doUpdate();
 			}
 		};
 		canvas.addDomHandler(wasdHandler, KeyPressEvent.getType());

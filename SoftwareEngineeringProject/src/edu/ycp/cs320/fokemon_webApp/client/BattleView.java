@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -26,6 +27,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite{
 	static final String holderId = "canvasholder";
+	static AbsolutePanel battlePanel;
 	Canvas battleCanvasBackBuffer;
 	Canvas battleCanvas;
 	Context2d battleContext;
@@ -64,6 +66,7 @@ public class BattleView extends Composite{
 	
 	public BattleView(){
 		
+		battlePanel = new AbsolutePanel();
 		battleCanvas = Canvas.createIfSupported();
 		battleCanvasBackBuffer = Canvas.createIfSupported();
 		
@@ -83,12 +86,11 @@ public class BattleView extends Composite{
 	    battleBackBufferContext = battleCanvasBackBuffer.getContext2d();
 
 	    
-	    FokemonUI.panel.setWidth(width + "px");
-	    FokemonUI.panel.setHeight(height + "px");
-	    RootPanel.get(holderId).add(FokemonUI.panel);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
-	    FokemonUI.panel.add(battleCanvas,0,0);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    battlePanel.setWidth(width + "px");
+	    battlePanel.setHeight(height + "px");
+	    battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    battlePanel.add(battleCanvas,0,0);
+	    battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 	    
 	    // Instantiate Command Options List box and add it to the Absolute panel in bottom right corner
 	    commandOptions = new ListBox();
@@ -96,25 +98,25 @@ public class BattleView extends Composite{
 	    commandOptions.setWidth("150px");
 	    commandOptions.setHeight("80px");
 	    setBattleOptions();
-	    FokemonUI.panel.clear();
-	    FokemonUI.panel.add(battleCanvas,0,0);
-	    FokemonUI.panel.add(commandOptions, width-150-3, height-80-3);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    battlePanel.clear();
+	    battlePanel.add(battleCanvas,0,0);
+	    battlePanel.add(commandOptions, width-150-3, height-80-3);
+	    battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 
 	    // Instantiate Battle AnnounceMent Text Box and add it to the Absolute panel in bottom left corner and center
 	    battleAnnouncementBox = new TextBox();
 	    battleAnnouncementBox.setWidth(width-150-20 + "px");
 	    battleAnnouncementBox.setHeight("40px");
 	    battleAnnouncementBox.setText("Look at my horse. My horse is amazing!!!");
-	    FokemonUI.panel.add(battleAnnouncementBox, 5, height-51);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    battlePanel.add(battleAnnouncementBox, 5, height-51);
+	    battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 	    
 	    //Add HP Bars
 	    playerHPBar = new HealthBarWidget();
 	    opponentHPBar = new HealthBarWidget();
-	    FokemonUI.panel.add(playerHPBar.hpBarCanvas, width/2 - hpBarWidth/2 - 120, height/2 - 15 - 120);
-	    FokemonUI.panel.add(opponentHPBar.hpBarCanvas, width/2 - hpBarWidth/2 + 120, height/2 - 15 - 120);
-	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+	    battlePanel.add(playerHPBar.hpBarCanvas, width/2 - hpBarWidth/2 - 120, height/2 - 15 - 120);
+	    battlePanel.add(opponentHPBar.hpBarCanvas, width/2 - hpBarWidth/2 + 120, height/2 - 15 - 120);
+	    battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 	    // Instantiate Images since Pokemon class in not ready yet
 	    img1 = new Image("PokemonSprites/Arena.png");
@@ -334,7 +336,7 @@ public class BattleView extends Composite{
 		 //Initialize Label widget if not already
 		 if(userHPvMax==null){
 			 userHPvMax = new Label();
-			 FokemonUI.panel.add(userHPvMax, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 110);
+			 battlePanel.add(userHPvMax, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 110);
 		 }
 		 userHPvMax.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp()+"/"+test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 	 }
@@ -342,31 +344,34 @@ public class BattleView extends Composite{
 		 // Player Battling Pokemon
 		 if(playerPokemonName==null){
 			 playerPokemonName = new Label();
-			 FokemonUI.panel.add(playerPokemonName, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 140);
-			 FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+			 battlePanel.add(playerPokemonName, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 140);
+			 battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 }
 		 playerPokemonName.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getNickname() + "  Lv" + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getLvl());
 		// Player Battling Pokemon
 		 if(opponentPokemonName==null){
 			 opponentPokemonName = new Label();
-			 FokemonUI.panel.add(opponentPokemonName, width/2  - hpBarWidth/2 + 120, height/2 - 12 - 140);
-			 FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+			 battlePanel.add(opponentPokemonName, width/2  - hpBarWidth/2 + 120, height/2 - 12 - 140);
+			 battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 }
 		 opponentPokemonName.setText(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getNickname()  + "  Lv" + test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getLvl());
 	 }
 	void updatePokemonImages(){
 		 // Player Battling Pokemon
+		if(playerPokemon!=null){
+		battlePanel.remove(playerPokemon);
+		}
 		playerPokemon = new Image("PokemonSprites/" + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
 		playerPokemon.setVisible(false);
-		FokemonUI.panel.add(playerPokemon);
-		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		battlePanel.add(playerPokemon);
+		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		playerPokemon.addLoadHandler(new LoadHandler() {
 			@Override
 			public void onLoad(LoadEvent event) {
-				FokemonUI.panel.remove(playerPokemon);
-				FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
-				FokemonUI.panel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
-				FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+				battlePanel.remove(playerPokemon);
+				battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
+				battlePanel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+				battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 				playerPokemon.setVisible(true);
 			}
 		});
@@ -375,24 +380,24 @@ public class BattleView extends Composite{
 		
 		opponentPokemon = new Image("PokemonSprites/" + test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
 		opponentPokemon.setVisible(false);
-		FokemonUI.panel.add(opponentPokemon);
-		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		battlePanel.add(opponentPokemon);
+		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		opponentPokemon.addLoadHandler(new LoadHandler() {
 			@Override
 			public void onLoad(LoadEvent event) {
-				FokemonUI.panel.remove(opponentPokemon); 
-				FokemonUI.panel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+				battlePanel.remove(opponentPokemon); 
+				battlePanel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
 				opponentPokemon.setVisible(true);
 			}
 		});
-		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
+		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		}
 	void updatePokemonStatus(){
 		 
 		 // Player
 		 if(playerStatusAilments==null){
 			 playerStatusAilments = new Image();
-			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 25 - 110);
+			 battlePanel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 25 - 110);
 		 }
 		 switch(test.getBattle().getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getStatus()){
 		 case BRN:
@@ -429,7 +434,7 @@ public class BattleView extends Composite{
 		 //Opponent
 		 if(opponentStatusAilments==null){
 			 opponentStatusAilments = new Image();
-			 FokemonUI.panel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 25 - 110);
+			 battlePanel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 25 - 110);
 		 }
 		 
 		 switch(test.getBattle().getOpponent().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getStatus()){

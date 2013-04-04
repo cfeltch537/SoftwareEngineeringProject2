@@ -14,14 +14,13 @@
  *******************************************************************************/
 package edu.ycp.cs320.fokemon_webApp.client;
 
-import java.io.IOException;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 
@@ -36,22 +35,21 @@ public class FokemonUI implements EntryPoint {
 	static final String holderId = "canvasholder";
 
 	  static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
-
+	
 	  static CirculatingImagesView tempView;
 	  static MapView map;
-	  static AbsolutePanel panel;
 	  static BattleView battle;
 	  private static PokedexReader pokedex;
 	  private PokedexReaderServiceAsync pokedexReaderSvc = GWT.create(PokedexReaderService.class);
 	  static final int refreshRate = 25;
 	  
 	  public void onModuleLoad() {
+	
 
-		  panel = new AbsolutePanel();
 		  createPokedexReader();
 		  map = new MapView();
+		  RootPanel.get(holderId).add(map.mapPanel);
 		  tempView = new CirculatingImagesView();
-		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 //System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  
 		  
@@ -66,12 +64,12 @@ public class FokemonUI implements EntryPoint {
 	  static void doUpdate() {
 		  // update the back canvas, set to front canvas
 		//System.out.println(pokedex.getPokeMap().firstKey().toString());
-		  map.doUpdate(); 
+		  //map.doUpdate(); 
 		  //tempView.doUpdate();
 		  if(battle!=null){
-		  battle.doUpdate();
+			  battle.doUpdate();
 		  }
-		  }
+	  }
 	  
 	  private void createPokedexReader() {
 		    // Initialize the service proxy.
@@ -98,11 +96,19 @@ public class FokemonUI implements EntryPoint {
 		    pokedexReaderSvc.readCSV(callback);
 		    //pokedexReaderSvc.readCSV(callback).getPrices(stocks.toArray(new String[0]), callback);
 		  }
-	public static PokedexReader getPokedex() {
+	  public static PokedexReader getPokedex() {
 		return pokedex;
 	}
-	public static void setPokedex(PokedexReader pokedex) {
+	  public static void setPokedex(PokedexReader pokedex) {
 		FokemonUI.pokedex = pokedex;
 	}
+	  public static void startBattle(){//Instantiates BattleView
+		  if(pokedex!=null){
+			// Call joey's create battle function(s); creating instance of a battle
+			  battle = new BattleView(); //Instantiate a BattleView
+			  RootPanel.get(holderId).remove(map.mapPanel);
+			  RootPanel.get(holderId).add(battle.battlePanel);
+		  }
+	  }
 }
 

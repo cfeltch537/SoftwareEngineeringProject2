@@ -38,7 +38,7 @@ public class TempBattle {
 		loc=new Location(0, 0, 0);
 		user=new Player(200, "Cody F.", true, loc);
 		opp=new Player(100,"Roberto", true, loc);
-		AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
+		AttackerMove=MoveDataBase.generateMove(MoveName.Spore);
 		DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
 		Attacker=Pokemon.GeneratePokemon(PokeID.Charizard, 50);
 		Attacker.getInfo().setNickname("Charizizzle");
@@ -49,7 +49,7 @@ public class TempBattle {
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Thunder_Wave));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Defender.getMoves().add(DefenderMove);
-		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Squirtle, 10);
+		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Snorlax, 35);
 		Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Blastoise,30);
 		Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Abra,10);
 		Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Gastly,35);
