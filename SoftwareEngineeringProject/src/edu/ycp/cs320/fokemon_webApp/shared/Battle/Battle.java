@@ -189,7 +189,7 @@ public void Turn(int turnNumber){
 			 if(canAttack==true){
 				 battleMessage.add(userPoke.getInfo().getNickname()+" used "+userPoke.getMove(turnPlayer.getMoveIndex()).getMoveName().toString()+".  ");
 				 attack(userPoke,oppPoke,userPoke.getMove(turnPlayer.getMoveIndex()));
-				 battleMessage.addAll(EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect()));
+				 EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect());
 				 userPoke.getMove(turnPlayer.getMoveIndex()).setCurPP(userPoke.getMove(turnPlayer.getMoveIndex()).getCurPP()-1);
 			 }
 			break;
