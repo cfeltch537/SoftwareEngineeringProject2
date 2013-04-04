@@ -13,7 +13,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 public class Pokemon {
 	//create parameters for each pokemon
 	private BattleStats stats;
-	private static PokeInfo info;
+	private PokeInfo info;
 	private TempBattleStats tempBattleStats;
 	private ArrayList <Move> moves;
 	

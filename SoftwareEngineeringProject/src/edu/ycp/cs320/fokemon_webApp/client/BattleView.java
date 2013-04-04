@@ -133,6 +133,7 @@ public class BattleView extends Composite{
 	void doUpdate() {
 			// update the back canvas, set to front canvas
 			draw(battleBackBufferContext, battleContext);
+			
 		  }
 	void onPokemonShift(){
 		updatePokemonLabels();
@@ -261,6 +262,9 @@ public class BattleView extends Composite{
 		case 1: // FIGHT SCREEN ... Trigger Move
 			handleTurn(index,TurnChoice.MOVE);
 			break;
+		case 2: // Pokemon Screen ... Trigger Move
+			handleTurn(index,TurnChoice.SWITCH);
+			break;
 		}
 		System.out.println(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp());
 			
@@ -269,7 +273,7 @@ public class BattleView extends Composite{
 		switch(turnIndex){
 			case 0: // TURN 1 SCREEN ... Message from Turn 1 Printing
 				if(messageIndex==0){
-					handleTurn1(index,TurnChoice.MOVE);
+					handleTurn1(index,userTurnChoice);
 					switchToNextScreen();	
 					}
 				if(messageIndex<test.getBattle().getBattleMessage().size()){ //While there is still a message to be displayed
@@ -352,8 +356,7 @@ public class BattleView extends Composite{
 	 }
 	void updatePokemonImages(){
 		 // Player Battling Pokemon
-		
-		playerPokemon = new Image(img2.getUrl());//This should set to a pokemons ID specific Image
+		playerPokemon = new Image("PokemonSprites/" + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
 		playerPokemon.setVisible(false);
 		FokemonUI.panel.add(playerPokemon);
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
@@ -370,7 +373,7 @@ public class BattleView extends Composite{
 
 		 // Opponent Battling Pokemon
 		
-		opponentPokemon = new Image(img3.getUrl());//This should set to a pokemons ID specific Image
+		opponentPokemon = new Image("PokemonSprites/" + test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
 		opponentPokemon.setVisible(false);
 		FokemonUI.panel.add(opponentPokemon);
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
@@ -384,8 +387,7 @@ public class BattleView extends Composite{
 		});
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		}
-	 
-	 void updatePokemonStatus(){
+	void updatePokemonStatus(){
 		 
 		 // Player
 		 if(playerStatusAilments==null){
@@ -470,14 +472,17 @@ public class BattleView extends Composite{
 		test.getBattle().Turn(1);
 		updatePokemonStatus();
 		setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
+		if(userChoice.equals(TurnChoice.SWITCH)){
+			onPokemonShift();
+		}
 	 }
-	 void handleTurn2(){
+	void handleTurn2(){
 		 test.getBattle().Turn(2);
 		 updatePokemonStatus();
 		 setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
 		 messageIndex++;
 	 }
-	 void handleTurn3(){
+	void handleTurn3(){
 		 test.getBattle().Turn(3);
 		 updatePokemonStatus();
 		 if(test.getBattle().getBattleMessage().size()!=0){
