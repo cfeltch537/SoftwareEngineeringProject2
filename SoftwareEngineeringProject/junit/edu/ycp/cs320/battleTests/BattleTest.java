@@ -40,20 +40,20 @@ public class BattleTest extends TestCase{
 			loc=new Location(0, 0, 0);
 			AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
 			DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
-			Attacker=new Pokemon(PokeID.Charizard, 40);
-			Defender=new Pokemon(PokeID.Pikachu, 35);
+			Attacker=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
+			Defender=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
 			Attacker.getMoves().add(AttackerMove);
 			Attacker.getMoves().add(DefenderMove);
 			Defender.getMoves().add(DefenderMove);
 
-			Pokemon Attacker2=new Pokemon(PokeID.Charizard, 40);
+			Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
 			Attacker2=Attacker;
-			Pokemon Attacker3=new Pokemon(PokeID.Charizard, 40);
+			Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
 			Attacker3=Attacker;
 			
-			Pokemon Defender2=new Pokemon(PokeID.Pikachu, 35);
+			Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
 			Defender2=Defender;
-			Pokemon Defender3=new Pokemon(PokeID.Pikachu, 35);
+			Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
 			Defender3=Defender;
 			user=new Player(200, "joey", false, loc);
 			user.getTeam().add(Attacker);

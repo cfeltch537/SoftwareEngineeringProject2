@@ -46,12 +46,11 @@ public class FokemonUI implements EntryPoint {
 	  static final int refreshRate = 25;
 	  
 	  public void onModuleLoad() {
-		  
+
 		  panel = new AbsolutePanel();
 		  createPokedexReader();
 		  map = new MapView();
 		  tempView = new CirculatingImagesView();
-		  //battle = new BattleView();
 		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 //System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  
@@ -91,6 +90,7 @@ public class FokemonUI implements EntryPoint {
 		        //updateTable(result);
 		    	  setPokedex(result);
 		    	  battle = new BattleView();
+
 		      }
 		    };
 
@@ -98,7 +98,6 @@ public class FokemonUI implements EntryPoint {
 		    pokedexReaderSvc.readCSV(callback);
 		    //pokedexReaderSvc.readCSV(callback).getPrices(stocks.toArray(new String[0]), callback);
 		  }
-	
 	public static PokedexReader getPokedex() {
 		return pokedex;
 	}
