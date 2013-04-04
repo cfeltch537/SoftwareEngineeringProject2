@@ -22,16 +22,7 @@ public class Pokemon {
 		this.stats=stats;
 		this.moves=moves;
 	}
-	public Pokemon(PokeID nPokeNum, int lvl) {
-		/*ArrayList <PokeType> type= new ArrayList<PokeType>();
-		type.add(PokeType.NORMAL);
-		stats=new BattleStats(lvl, lvl, lvl, lvl, lvl, lvl, lvl, Status.NRM, lvl, null, null);
-		info=new PokeInfo(nPokeNum, 100, "<<Name>>", "<<Nickname>>", true, type, lvl, lvl);
-		tempBattleStats= new TempBattleStats();
-		moves= new ArrayList<Move>();*/
-		GeneratePokemon(nPokeNum, lvl);
 
-	}
 	
 	public static Pokemon GeneratePokemon(PokeID ID, int lvl){
 		Random rand=new Random();
@@ -43,16 +34,22 @@ public class Pokemon {
 		boolean gender;
 		if(rand.nextInt()%2==0)gender=false;
 		else gender=true;
-		PokeInfo info=new PokeInfo(entry.getPokeID(),TempBattle.getUser().getPlayerID(),entry.getPokeName(),entry.getPokeName(),gender,entry.getType(),lvl,0);
+		entry.getPokeID();
+		TempBattle.getUser().getPlayerID();
+		entry.getPokeName();
+		entry.getPokeName();
+		entry.getType();
+		PokeInfo information=new PokeInfo(entry.getPokeID(),TempBattle.getUser().getPlayerID(),entry.getPokeName(),entry.getPokeName(),gender,entry.getType(),lvl,0);
 		
 		Move move1=MoveDataBase.generateMove(MoveName.Tackle);
 		ArrayList<Move>moves=new ArrayList<Move>();
 		
 		moves.add(move1);
 		BattleStats battleStats=new BattleStats(0,0,0,0,0,0, 0, Status.NRM,entry.getBaseXP(),entry.getBaseStats(),entry.getEVyield());
-		Pokemon pokemon=new Pokemon(info, battleStats, moves);
+		Pokemon pokemon=new Pokemon(information, battleStats, moves);
 		
 		pokemon.UpdateStats();
+		pokemon.getStats().setCurHp(pokemon.getStats().getMaxHp());
 		
 		
 		return pokemon;

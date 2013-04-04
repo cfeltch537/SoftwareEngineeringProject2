@@ -46,12 +46,12 @@ public class FokemonUI implements EntryPoint {
 	  static final int refreshRate = 25;
 	  
 	  public void onModuleLoad() {
-		  
+		  createPokedexReader();
 		  panel = new AbsolutePanel();
 		  map = new MapView();
 		  tempView = new CirculatingImagesView();
-		  battle = new BattleView();
-		  createPokedexReader();
+		  
+		  
 		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 //System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  
@@ -88,6 +88,8 @@ public class FokemonUI implements EntryPoint {
 		      public void onSuccess(PokedexReader result) {
 		        //updateTable(result);
 		    	  setPokedex(result);
+		    	  battle = new BattleView();
+		    	  System.out.println("battle is made");
 		      }
 		    };
 
@@ -96,25 +98,8 @@ public class FokemonUI implements EntryPoint {
 		    //pokedexReaderSvc.readCSV(callback).getPrices(stocks.toArray(new String[0]), callback);
 		  }
 	
-	protected void CreatePokedexReader() {
-		RPC.pokedexReader.readCSV(new AsyncCallback<PokedexReader>() {
-			@Override
-			public void onSuccess(PokedexReader result) {
-				GWT.log("Order succeeded!");
-				setPokedex(result);
-				
-				// FIXME: should update the UI to inform the user of the completion of the order
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				GWT.log("Order failure", caught);
-				
-				// FIXME: should update the UI to inform the user of the error
-			}
-		});
-
-	}
+	
+	
 	public static PokedexReader getPokedex() {
 		return pokedex;
 	}
