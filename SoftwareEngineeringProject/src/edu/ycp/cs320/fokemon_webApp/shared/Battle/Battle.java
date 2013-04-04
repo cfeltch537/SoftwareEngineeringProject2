@@ -197,6 +197,7 @@ public void Turn(int turnNumber){
 			break;
 		case SWITCH:
 			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
+			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 			break;
 		case RUN:
 			break;

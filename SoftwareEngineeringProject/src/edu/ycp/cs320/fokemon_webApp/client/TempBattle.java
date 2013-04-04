@@ -49,7 +49,7 @@ public class TempBattle {
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Thunder_Wave));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Defender.getMoves().add(DefenderMove);
-		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Charizard, 10);
+		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Squirtle, 10);
 		Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Blastoise,30);
 		Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Abra,10);
 		Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Gastly,35);
