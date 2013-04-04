@@ -4,12 +4,9 @@ package edu.ycp.cs320.fokemon_webApp.client;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.GestureStartEvent;
 import com.google.gwt.event.dom.client.GestureStartHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -18,15 +15,7 @@ import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
 import com.google.gwt.event.dom.client.TouchMoveHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-
-import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
-import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
-import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class CirculatingImagesView extends Composite{
 	static final String holderId = "canvasholder";

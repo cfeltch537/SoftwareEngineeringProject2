@@ -50,26 +50,21 @@ public class TempBattle {
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Defender.getMoves().add(DefenderMove);
 		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Charizard, 10);
-	
 		Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Blastoise,30);
-		
-		
 		Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Abra,10);
-		
 		Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Gastly,35);
-		
-		
 		user.getTeam().add(Attacker);
 		user.getTeam().add(Attacker2);
 		user.getTeam().add(Attacker3);
-		
 		opp.getTeam().add(Defender);
 		opp.getTeam().add(Defender2);
 		opp.getTeam().add(Defender3);
 		setBattle(new Battle(user, opp));
   }
   
-  public static Player getUser() {
+
+public static Player getUser() {
+
 	return user;
 }
 
