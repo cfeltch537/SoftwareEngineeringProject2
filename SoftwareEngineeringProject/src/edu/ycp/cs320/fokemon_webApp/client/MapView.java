@@ -93,7 +93,6 @@ public class MapView extends Composite{
 	            	if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img!=null){
 	            	img = areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img;
 	            	context.drawImage((ImageElement) img.getElement().cast(), 16*height, 16*width);
-
 	            	}
 	            }
 	        }
@@ -131,7 +130,7 @@ public class MapView extends Composite{
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
 	
-	  void initHandlers() {
+	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
