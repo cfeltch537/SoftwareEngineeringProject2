@@ -112,8 +112,8 @@ public class BattleView extends Composite{
 	    //Add HP Bars
 	    playerHPBar = new HealthBarWidget();
 	    opponentHPBar = new HealthBarWidget();
-	    FokemonUI.panel.add(playerHPBar.hpBarCanvas, width/2 - hpBarWidth/2 - 120, height/2 - 12 - 120);
-	    FokemonUI.panel.add(opponentHPBar.hpBarCanvas, width/2 - hpBarWidth/2 + 120, height/2 - 12 - 120);
+	    FokemonUI.panel.add(playerHPBar.hpBarCanvas, width/2 - hpBarWidth/2 - 120, height/2 - 15 - 120);
+	    FokemonUI.panel.add(opponentHPBar.hpBarCanvas, width/2 - hpBarWidth/2 + 120, height/2 - 15 - 120);
 	    FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 	    // Instantiate Images since Pokemon class in not ready yet
@@ -124,7 +124,7 @@ public class BattleView extends Composite{
 	    //Instantiate Battle
 	    test = new TempBattle();
 	    
-	    battleBackBufferContext.setFillStyle(CssColor.make("rgba(255,211,255,0.1)"));
+	    battleBackBufferContext.setFillStyle(CssColor.make("rgba(224,224,224,0.1)"));
 
 	    onPokemonShift();
 	    initHandlers();
@@ -339,14 +339,14 @@ public class BattleView extends Composite{
 			 FokemonUI.panel.add(playerPokemonName, width/2  - hpBarWidth/2 - 120, height/2 - 12 - 140);
 			 FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 }
-		 playerPokemonName.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getNickname());
+		 playerPokemonName.setText(test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getNickname() + "  Lv" + test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getInfo().getLvl());
 		// Player Battling Pokemon
 		 if(opponentPokemonName==null){
 			 opponentPokemonName = new Label();
 			 FokemonUI.panel.add(opponentPokemonName, width/2  - hpBarWidth/2 + 120, height/2 - 12 - 140);
 			 FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 }
-		 opponentPokemonName.setText(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getNickname());
+		 opponentPokemonName.setText(test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getNickname()  + "  Lv" + test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getInfo().getLvl());
 	 }
 	void updatePokemonImages(){
 		 // Player Battling Pokemon
@@ -387,7 +387,7 @@ public class BattleView extends Composite{
 		 // Player
 		 if(playerStatusAilments==null){
 			 playerStatusAilments = new Image();
-			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 22 - 110);
+			 FokemonUI.panel.add(playerStatusAilments, width/2  - hpBarWidth/2 - 120 - 34, height/2 - 25 - 110);
 		 }
 		 switch(test.getBattle().getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getStatus()){
 		 case BRN:
@@ -424,7 +424,7 @@ public class BattleView extends Composite{
 		 //Opponent
 		 if(opponentStatusAilments==null){
 			 opponentStatusAilments = new Image();
-			 FokemonUI.panel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 22 - 110);
+			 FokemonUI.panel.add(opponentStatusAilments, width/2  + hpBarWidth/2 + 120 + 3, height/2 - 25 - 110);
 		 }
 		 
 		 switch(test.getBattle().getOpponent().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getStatus()){

@@ -30,15 +30,15 @@ public class FokemonUI implements EntryPoint {
 	  static CirculatingImagesView tempView;
 	  static MapView map;
 	  static AbsolutePanel panel;
-	  static BattleView battle;
+	  //static BattleView battle;
 	  static final int refreshRate = 25;
 	  
 	  public void onModuleLoad() {
 		  
 		  panel = new AbsolutePanel();
 		  map = new MapView();
-		  tempView = new CirculatingImagesView();
-		  battle = new BattleView();
+		  //tempView = new CirculatingImagesView();
+		  //battle = new BattleView();
 		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		  
 		  final Timer timer = new Timer() {
@@ -54,6 +54,6 @@ public class FokemonUI implements EntryPoint {
 		  
 		  map.doUpdate(); 
 		  //tempView.doUpdate();
-		  battle.doUpdate();
-		  }
+		  //battle.doUpdate();
+	  }
 	}

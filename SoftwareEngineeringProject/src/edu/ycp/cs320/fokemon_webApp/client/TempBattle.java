@@ -57,7 +57,7 @@ public class TempBattle {
 		setBattle(new Battle(user, opp));
   }
   
-  public Player getUser() {
+ public Player getUser() {
 	return user;
 }
 
