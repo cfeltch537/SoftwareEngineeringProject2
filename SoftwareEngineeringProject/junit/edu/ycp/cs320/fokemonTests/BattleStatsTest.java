@@ -16,9 +16,9 @@ public class BattleStatsTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		squirtle = new BattleStats(10, 12, 14, 16, 18, 20, 22, Status.FRZ);
-		bulbasaur = new BattleStats(24, 26, 28, 30, 32, 34, 36, Status.PSN);
-		charmander = new BattleStats(38, 40, 42, 44, 46, 48, 50, Status.BRN);
+		squirtle = new BattleStats(10, 12, 14, 16, 18, 20, 22, Status.FRZ, 0, null, null);
+		bulbasaur = new BattleStats(24, 26, 28, 30, 32, 34, 36, Status.PSN, 0, null, null);
+		charmander = new BattleStats(38, 40, 42, 44, 46, 48, 50, Status.BRN, 0, null, null);
 	}
 	
 	@Test

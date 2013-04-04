@@ -15,6 +15,7 @@
 package edu.ycp.cs320.fokemon_webApp.server;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,11 +41,11 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements PokedexRe
 	public PokedexReader readCSV(){
 		PokedexReader test=new PokedexReader();
 		System.out.println("********************in CSV reader");
-		return new PokedexReader();
-		/*TreeMap <PokeID, PokedexEntry>pokeMap = new TreeMap<PokeID,PokedexEntry>();
+		
+		TreeMap <PokeID, PokedexEntry>pokeMap = new TreeMap<PokeID,PokedexEntry>();
 		ArrayList <String>storeValues = new ArrayList<String>();
 		storeValues=loadIt();
-		for(int i=0;i<storeValues.size();i+=8){
+		for(int i=0;i<storeValues.size();i+=17){
 			
 			int[] baseStats={Integer.parseInt(storeValues.get(i+2)),Integer.parseInt(storeValues.get(i+3)),
 					Integer.parseInt(storeValues.get(i+4)),Integer.parseInt(storeValues.get(i+5)),Integer.parseInt(storeValues.get(i+6))
@@ -59,7 +60,7 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements PokedexRe
 			pokeMap.put(PokeID.valueOf(storeValues.get(i+1)), entry);
 		}
 		
-		return new PokedexReader(pokeMap);*/
+		return new PokedexReader(pokeMap);
 		
 	}
 	
@@ -72,9 +73,15 @@ private static ArrayList<String> loadIt()  {
 	//strFile="C://Users/user/My Documents/IGVC2013_SensorData/KalmanFilterData_03-13-2013_18.49.50.csv";
 	String value;
 	//create BufferedReader to read csv file
-	InputStream in = PokedexReaderImpl.class.getClassLoader().getResourceAsStream("strFile");
-	//BufferedReader br = new BufferedReader( new FileReader(strFile));
-	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	//InputStream in = PokedexReaderImpl.class.getClassLoader().getResourceAsStream("strFile");
+	BufferedReader br=null;
+	try {
+		br = new BufferedReader( new FileReader(strFile));
+	} catch (FileNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	//BufferedReader br = new BufferedReader(new InputStreamReader(in));
 	String strLine = "";
 	StringTokenizer st = null;
 	int lineNumber = 0, tokenNumber = 0;

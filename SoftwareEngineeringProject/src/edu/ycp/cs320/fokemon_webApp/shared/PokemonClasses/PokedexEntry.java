@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class PokedexEntry implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7929743202600974187L;
 	private int[] baseStats=new int [6];
 	private PokeID ID;
 	private String PokeName;
@@ -13,7 +17,9 @@ public class PokedexEntry implements Serializable{
 	private int baseXP;
 	private int[] EVyield= new int[6];
 	
-	
+	public PokedexEntry(){
+		
+	}
 	public PokedexEntry(PokeID ID, String PokeName, int[] baseStats, int baseXP, int[] EVyield,ArrayList <PokeType> type ){
 		this.ID=ID;
 		this.PokeName=PokeName;

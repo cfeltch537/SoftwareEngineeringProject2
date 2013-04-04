@@ -3,6 +3,7 @@ package edu.ycp.cs320.fokemonTests;
 
 import java.util.ArrayList;
 
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeInfo;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 
@@ -22,9 +23,9 @@ public class PokeInfoTest extends TestCase {
 		// TODO - create test fixture objects
 		type=new ArrayList<PokeType>();
 		type.add(PokeType.NORMAL);
-		a = new PokeInfo(1, 2, "Mew","a", false, type, 10, 3);
+		a = new PokeInfo(PokeID.Mew, 2, "Mew","a", false, type, 10, 3);
 		type.add(PokeType.FIRE);
-		b = new PokeInfo(2, 3, "Mewtwo","b", true, type, 11, 4);
+		b = new PokeInfo(PokeID.Mewtwo, 3, "Mewtwo","b", true, type, 11, 4);
 	}
 	
 	// TODO - add test methods
@@ -34,8 +35,8 @@ public class PokeInfoTest extends TestCase {
 		assertEquals(PokeType.FIRE, b.getType().get(1));
 	}
 	public void testGetPokeID() throws Exception {
-		assertEquals(1, a.getPokeID());
-		assertEquals(2, b.getPokeID());
+		assertEquals(PokeID.Mew, a.getID());
+		assertEquals(PokeID.Mewtwo, b.getID());
 	}
 	public void testGetPlayerID() throws Exception {
 		assertEquals(2, a.getPlayerID());
@@ -72,11 +73,11 @@ public class PokeInfoTest extends TestCase {
 		a.setNickname("tyrone");
 		assertEquals("tyrone", a.getNickname());
 		
-		a.setPlayerID(12);
-		assertEquals(12,a.getPlayerID());
+		//a.setPlayerID(12);
+		//assertEquals(12,a.getPlayerID());
 		
-		a.setPokeID(12);
-		assertEquals(12,a.getPokeID());
+		//a.setPokeID(12);
+		//assertEquals(12,a.getID());
 		
 		type.clear();
 		type.add(PokeType.ROCK);

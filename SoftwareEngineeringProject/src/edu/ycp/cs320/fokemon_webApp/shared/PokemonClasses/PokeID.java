@@ -1,6 +1,8 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
-public enum PokeID {
+import java.io.Serializable;
+
+public enum PokeID implements Serializable{
 	Bulbasaur,
 	Ivysaur,
 	Venusaur,

@@ -41,7 +41,7 @@ public class FokemonUI implements EntryPoint {
 	  static MapView map;
 	  static AbsolutePanel panel;
 	  static BattleView battle;
-	  static PokedexReader pokedex;
+	  private static PokedexReader pokedex;
 	  private PokedexReaderServiceAsync pokedexReaderSvc = GWT.create(PokedexReaderService.class);
 	  static final int refreshRate = 25;
 	  
@@ -66,7 +66,7 @@ public class FokemonUI implements EntryPoint {
 	  }
 	  static void doUpdate() {
 		  // update the back canvas, set to front canvas
-	//	System.out.println(pokedex.getPokeMap().firstKey().toString());
+		//System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  map.doUpdate(); 
 		  //tempView.doUpdate();
 		  battle.doUpdate();
@@ -81,12 +81,13 @@ public class FokemonUI implements EntryPoint {
 		    // Set up the callback object.
 		    AsyncCallback<PokedexReader> callback = new AsyncCallback<PokedexReader>() {
 		      public void onFailure(Throwable caught) {
+		    	  System.out.println("error with CSV File Reader");
 		        // TODO: Do something with errors.
 		      }
 
 		      public void onSuccess(PokedexReader result) {
 		        //updateTable(result);
-		    	  pokedex=result;
+		    	  setPokedex(result);
 		      }
 		    };
 
@@ -96,11 +97,11 @@ public class FokemonUI implements EntryPoint {
 		  }
 	
 	protected void CreatePokedexReader() {
-		RPC.PokedexReader.readCSV(new AsyncCallback<PokedexReader>() {
+		RPC.pokedexReader.readCSV(new AsyncCallback<PokedexReader>() {
 			@Override
 			public void onSuccess(PokedexReader result) {
 				GWT.log("Order succeeded!");
-				pokedex=result;
+				setPokedex(result);
 				
 				// FIXME: should update the UI to inform the user of the completion of the order
 			}
@@ -113,5 +114,11 @@ public class FokemonUI implements EntryPoint {
 			}
 		});
 
+	}
+	public static PokedexReader getPokedex() {
+		return pokedex;
+	}
+	public static void setPokedex(PokedexReader pokedex) {
+		FokemonUI.pokedex = pokedex;
 	}
 }
