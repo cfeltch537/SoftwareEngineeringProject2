@@ -50,7 +50,7 @@ public class FokemonUI implements EntryPoint {
 		  panel = new AbsolutePanel();
 		  map = new MapView();
 		  tempView = new CirculatingImagesView();
-		  
+
 		  
 		  panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		 //System.out.println(pokedex.getPokeMap().firstKey().toString());
