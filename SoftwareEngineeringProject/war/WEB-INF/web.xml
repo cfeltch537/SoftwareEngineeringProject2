@@ -5,6 +5,16 @@
 
 <web-app>
 
+  <!--  Servlets -->
+  <servlet>
+    <servlet-name>pokedexReaderImpl</servlet-name>
+    <servlet-class>edu.ycp.cs320.fokemon_webApp.server.PokedexReaderImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>pokedexReaderImpl</servlet-name>
+    <url-pattern>/gwtcanvasdemo/pokedexReader</url-pattern>
+  </servlet-mapping>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>FokemonUI.html</welcome-file>

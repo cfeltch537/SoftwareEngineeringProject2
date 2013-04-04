@@ -8,10 +8,14 @@ public enum PokeType {
 	FIGHTING,
 	ELECTRIC,
 	ROCK,
-	PSYHIC,
+	PSYCHIC,
 	GHOST,
 	GROUND,
 	DRAGON,
 	FLYING,
-	ICE
+	ICE,
+	BUG,
+	DARK,
+	POISON,
+	STEEL;
 }

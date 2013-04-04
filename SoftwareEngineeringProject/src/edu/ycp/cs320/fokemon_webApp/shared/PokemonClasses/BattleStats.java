@@ -11,9 +11,12 @@ public class BattleStats {
 	private int spDef;
 	private int spd;
 	private int SLPCount;
+	private int baseXP;
+	private int[] baseStats;
+	private int[] EVyield;
 	private Status status;
 	
-	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk, int spDef, int spd, Status status) {
+	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk, int spDef, int spd, Status status,int baseXP,int[] baseStats,int[] EVyield) {
 		this.setCurHp(curHp);
 		this.setMaxHp(maxHp);
 		this.setAtk(atk);
@@ -22,6 +25,9 @@ public class BattleStats {
 		this.setSpDef(spDef);
 		this.setSpd(spd);
 		this.setStatus(status);
+		this.setBaseXP(baseXP);
+		this.setBaseStats(baseStats);
+		this.setEVyield(EVyield);
 		SLPCount=0;
 	}
 
@@ -109,5 +115,29 @@ public class BattleStats {
 
 	public void setSLPCount(int sLPCount) {
 		SLPCount = sLPCount;
+	}
+
+	public int getBaseXP() {
+		return baseXP;
+	}
+
+	public void setBaseXP(int baseXP) {
+		this.baseXP = baseXP;
+	}
+
+	public int[] getEVyield() {
+		return EVyield;
+	}
+
+	public void setEVyield(int[] eVyield) {
+		EVyield = eVyield;
+	}
+
+	public int[] getBaseStats() {
+		return baseStats;
+	}
+
+	public void setBaseStats(int[] baseStats) {
+		this.baseStats = baseStats;
 	}
 }

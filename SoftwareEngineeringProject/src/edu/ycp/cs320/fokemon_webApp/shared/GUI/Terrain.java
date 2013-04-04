@@ -1,3 +1,4 @@
+
 package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
 import java.util.LinkedList;
@@ -50,3 +51,4 @@ public class Terrain{
 		}
 	}
 }
+

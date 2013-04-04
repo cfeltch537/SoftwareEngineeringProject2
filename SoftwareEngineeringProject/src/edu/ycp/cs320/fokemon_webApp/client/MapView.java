@@ -1,6 +1,8 @@
 
 package edu.ycp.cs320.fokemon_webApp.client;
 
+import java.io.IOException;
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
@@ -14,6 +16,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 
 public class MapView extends Composite{
 	static final String holderId = "canvasholder";
@@ -26,9 +29,18 @@ public class MapView extends Composite{
 	Image img;
 	static int height;
 	static int width;
+	static PokedexReader pokedex;
 	
 	
 	public MapView(){
+		/*  System.out.println("why");
+		  try {
+			pokedex= new PokedexReader();
+		} catch (IOException e) {
+			System.out.println("why");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player Cody
 		areaList = new Area[2];  

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class PokeInfo {
-	private int PokeID;
+	private PokeID ID;
 	private int PlayerID;
 	private String PokeName;
 	private String Nickname;
@@ -15,8 +15,8 @@ public class PokeInfo {
 	private int lvl;
 	private int xp;
 	
-	public PokeInfo(int PokeID, int PlayerID, String PokeName, String Nickname, Boolean Gender, ArrayList <PokeType> type, int lvl, int xp){
-		this.PokeID=PokeID;
+	public PokeInfo(PokeID ID, int PlayerID, String PokeName, String Nickname, Boolean Gender, ArrayList <PokeType> type, int lvl, int xp){
+		this.setID(ID);
 		this.PlayerID=PlayerID;
 		this.PokeName=PokeName;
 		this.Nickname=Nickname;
@@ -24,14 +24,6 @@ public class PokeInfo {
 		this.type=type;
 		this.lvl=lvl;
 		this.xp=xp;
-	}
-
-	public int getPokeID() {
-		return PokeID;
-	}
-
-	public void setPokeID(int pokeID) {
-		PokeID = pokeID;
 	}
 
 	public int getPlayerID() {
@@ -88,6 +80,14 @@ public class PokeInfo {
 
 	public void setXp(int xp) {
 		this.xp = xp;
+	}
+
+	public PokeID getID() {
+		return ID;
+	}
+
+	public void setID(PokeID iD) {
+		ID = iD;
 	}
 	
 

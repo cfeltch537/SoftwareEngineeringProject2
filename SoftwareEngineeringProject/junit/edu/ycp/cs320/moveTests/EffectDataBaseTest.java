@@ -17,8 +17,8 @@ public class EffectDataBaseTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		// TODO - create test fixture objects
-		A=new Pokemon(1, 1);
-		B=new Pokemon(1,1);
+		//A=new Pokemon(1, 1);
+		//B=new Pokemon(1,1);
 		EffectIndex=1;
 		//A.setBaseAtk(12);
 	}

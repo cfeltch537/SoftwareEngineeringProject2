@@ -142,6 +142,8 @@ public class BattleView extends Composite{
 		//context.save();
 		context.fillRect(0, 0, width, height);
 		context.drawImage((ImageElement) img1.getElement().cast(), width/2 - img1.getWidth()/2, height/2-img1.getHeight()/2);
+		//context.drawImage((ImageElement) img2.getElement().cast(), width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+		//The following should actually be triggered off of a change in HP, or turn
     	playerHPBar.doUpdate((double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getUser().getTeam(test.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
 		opponentHPBar.doUpdate((double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getCurHp(), (double)test.getOpp().getTeam(test.getOpp().getCurrentPokemonIndex()).getStats().getMaxHp());
 		updatePlayerHPLabel();
@@ -212,7 +214,7 @@ public class BattleView extends Composite{
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
-	void setPokemonOptions(){ // Shows Available Pokemon
+	void setPokemonOptions(){ // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 2;
 		for(int i=0; i<test.getUser().getTeam().size(); i++){
@@ -382,7 +384,8 @@ public class BattleView extends Composite{
 		});
 		FokemonUI.panel.getElement().getStyle().setPosition(Position.RELATIVE);
 		}
-	void updatePokemonStatus(){
+	 
+	 void updatePokemonStatus(){
 		 
 		 // Player
 		 if(playerStatusAilments==null){
@@ -468,13 +471,13 @@ public class BattleView extends Composite{
 		updatePokemonStatus();
 		setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
 	 }
-	void handleTurn2(){
+	 void handleTurn2(){
 		 test.getBattle().Turn(2);
 		 updatePokemonStatus();
 		 setBattleAnnouncement(test.getBattle().getBattleMessage(),messageIndex);
 		 messageIndex++;
 	 }
-	void handleTurn3(){
+	 void handleTurn3(){
 		 test.getBattle().Turn(3);
 		 updatePokemonStatus();
 		 if(test.getBattle().getBattleMessage().size()!=0){
