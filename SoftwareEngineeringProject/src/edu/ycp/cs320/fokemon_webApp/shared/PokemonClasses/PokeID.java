@@ -1,6 +1,10 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public enum PokeID implements Serializable{
 	Bulbasaur,
@@ -154,6 +158,13 @@ public enum PokeID implements Serializable{
 	Dragonite,
 	Mewtwo,
 	Mew;
+	  private static final List<PokeID> VALUES =
+			    Collections.unmodifiableList(Arrays.asList(values()));
+			  private static final int SIZE = VALUES.size();
+			  private static final Random RANDOM = new Random();
 
+			  public static PokeID randomPokeID()  {
+			    return VALUES.get(RANDOM.nextInt(SIZE));
+			  }
 
 }

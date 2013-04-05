@@ -3,12 +3,14 @@ package edu.ycp.cs320.fokemon_webApp.shared.Battle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import edu.ycp.cs320.fokemon_webApp.client.TempBattle;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
@@ -21,10 +23,12 @@ public class Battle {
 	private Random rand;
 	private ArrayList<String> battleMessage;
 	private Move confused;
+	private Boolean battleOver;
 	
 	
 	
 	public Battle(Player user, Player opponent){
+		battleOver=false;
 		confused=MoveDataBase.generateMove(MoveName.Confused);
 		this.setUser(user);
 		this.setOpponent(opponent);
@@ -33,6 +37,18 @@ public class Battle {
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		battleMessage=new ArrayList<String>();
+	}
+	public static Battle wildPokemonBattle(PokeID id, int lvl){
+		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
+		Player wildPlayer=new Player(wildPoke.getInfo().getPlayerID(), wildPoke.getInfo().getNickname(), wildPoke.getInfo().getGender(), TempBattle.getUser().getPlayerLocation());
+		wildPlayer.getTeam().add(wildPoke);
+		return new Battle(TempBattle.getUser(),wildPlayer);
+	}
+	public static Battle wildPokemonBattle(){
+		Random rand=new Random();
+		int lvl=rand.nextInt(99)+1;
+		return wildPokemonBattle(PokeID.randomPokeID(),lvl);
+				
 	}
 	public void Turn(){
 		Pokemon userPoke=user.getTeam(user.getCurrentPokemonIndex());
@@ -209,6 +225,20 @@ public void Turn(int turnNumber){
 	}else{
 		applyStatusDamage(user.getTeam(user.getCurrentPokemonIndex()));
 		applyStatusDamage(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		CheckFaintedPokemon();
+		
+	}
+	
+}
+private void CheckFaintedPokemon() {
+	// TODO Auto-generated method stub
+	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
+		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+		battleOver=true;
+	}
+	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
+		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+		battleOver=true;
 	}
 	
 }
@@ -402,6 +432,12 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 	}
 	public void setBattleMessage(ArrayList<String> battleMessage) {
 		this.battleMessage = battleMessage;
+	}
+	public Boolean getBattleOver() {
+		return battleOver;
+	}
+	public void setBattleOver(Boolean battleOver) {
+		this.battleOver = battleOver;
 	}
 
 }
