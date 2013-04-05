@@ -234,11 +234,11 @@ public void Turn(int turnNumber){
 }
 private void CheckFaintedPokemon() {
 	// TODO Auto-generated method stub
-	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
+	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
 		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
-	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
+	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
 		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
