@@ -10,6 +10,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.PlayerType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
@@ -41,6 +42,7 @@ public class Battle {
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
 		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
 		Player wildPlayer=new Player(wildPoke.getInfo().getPlayerID(), wildPoke.getInfo().getNickname(), wildPoke.getInfo().getGender(), TempBattle.getUser().getPlayerLocation());
+		wildPlayer.setType(PlayerType.Wild);
 		wildPlayer.getTeam().add(wildPoke);
 		return new Battle(TempBattle.getUser(),wildPlayer);
 	}
@@ -233,11 +235,11 @@ public void Turn(int turnNumber){
 private void CheckFaintedPokemon() {
 	// TODO Auto-generated method stub
 	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
-		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
 	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
-		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
 	
@@ -299,7 +301,7 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		//sleep
 		if(poke.getStats().getStatus()==Status.SLP){
 			poke.getTempBattleStats().setSLPCount(poke.getTempBattleStats().getSLPCount()+1);
-			if(poke.getTempBattleStats().getSLPCount()>poke.getStats().getSLPCount()){
+			if(poke.getTempBattleStats().getSLPCount()<poke.getStats().getSLPCount()){
 				poke.getStats().setSLPCount(0);
 				poke.getStats().setStatus(Status.NRM);
 				poke.getTempBattleStats().setSLPCount(0);
