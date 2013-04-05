@@ -301,7 +301,7 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		//sleep
 		if(poke.getStats().getStatus()==Status.SLP){
 			poke.getTempBattleStats().setSLPCount(poke.getTempBattleStats().getSLPCount()+1);
-			if(poke.getTempBattleStats().getSLPCount()<poke.getStats().getSLPCount()){
+			if(poke.getTempBattleStats().getSLPCount()>poke.getStats().getSLPCount()){
 				poke.getStats().setSLPCount(0);
 				poke.getStats().setStatus(Status.NRM);
 				poke.getTempBattleStats().setSLPCount(0);
@@ -381,7 +381,7 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		
 		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100) || move.getAccuracy()<0){//move hits
 			damage=CalcDamage(attacker, defender, move);
-			defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			if(move.getDamage()!=0)defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
 			//effect
 			if(defender.getStats().getCurHp()<=0){
 				battleMessage.add(defender.getInfo().getNickname()+" has fainted. ");

@@ -42,7 +42,7 @@ public class EffectDataBase {
 		        	if(Defender.getStats().getStatus()==Status.NRM){
 			        Defender.getStats().setStatus(Status.SLP);
 		        	//Defender.getTempBattleStats().setSLPCount(effect.get(i).getMagnitude());
-		        	Defender.getTempBattleStats().setSLPCount(rand.nextInt(2)+2);
+		        	Defender.getStats().setSLPCount(rand.nextInt(2)+2);
 		        	battleMessage.add(Defender.getInfo().getNickname()+" fell asleep.  ");
 		        	}
 		                 break;	
