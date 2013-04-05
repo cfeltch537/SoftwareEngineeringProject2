@@ -37,12 +37,14 @@ public class Battle {
 		setInitialCurrentPokemon(opponent,0);
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
+		opponent.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
 	}
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
 		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
+		wildPoke.getInfo().setIsWild(true);
 		Player wildPlayer=new Player(wildPoke.getInfo().getPlayerID(), wildPoke.getInfo().getNickname(), wildPoke.getInfo().getGender(), TempBattle.getUser().getPlayerLocation());
-		wildPlayer.setType(PlayerType.Wild);
 		wildPlayer.getTeam().add(wildPoke);
 		return new Battle(TempBattle.getUser(),wildPlayer);
 	}
@@ -216,6 +218,7 @@ public void Turn(int turnNumber){
 		case SWITCH:
 			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
 			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 			break;
 		case RUN:
 			break;
@@ -235,10 +238,12 @@ public void Turn(int turnNumber){
 private void CheckFaintedPokemon() {
 	// TODO Auto-generated method stub
 	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
+		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
 		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
 	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
 		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
@@ -250,16 +255,25 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 	double a, b, L,Lp,s,t,e;
 	int xp;
 	a=1;
-	b=40;
+	if(loser.getInfo().getIsWild()==true)a=1.5;
+	b=loser.getStats().getBaseXP();
 	L=loser.getInfo().getLvl();
+	s=0;
+	for(int i=0;i<team.size();i++){
+		if(team.get(i).getInfo().getUsedInBattle()==true)s+=2;
+	}
 	for(int i=0;i<team.size();i++){
 		Lp=team.get(i).getInfo().getLvl();
 		if (user.getPlayerID()==team.get(i).getInfo().getPlayerID()) t=1;
 		else t=1.5;
 		s=2;
 		e=1;
-		
-		xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
+		if(team.get(i).getInfo().getUsedInBattle()==true){
+			xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
+			team.get(i).getInfo().setXp(xp+team.get(i).getInfo().getXp());
+			battleMessage.add(team.get(i).getInfo().getNickname()+" has gained "+xp+" experience points.  ");
+		}
+		team.get(i).getInfo().setUsedInBattle(false);
 	}
 }
 	private void applyStatusDamage(Pokemon userPoke) {
