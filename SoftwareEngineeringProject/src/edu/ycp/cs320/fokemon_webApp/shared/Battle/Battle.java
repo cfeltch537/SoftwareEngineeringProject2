@@ -273,6 +273,7 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 			xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
 			team.get(i).getInfo().setXp(xp+team.get(i).getInfo().getXp());
 			battleMessage.add(team.get(i).getInfo().getNickname()+" has gained "+xp+" experience points.  ");
+			team.get(i).CheckLevelUp();
 		}
 		team.get(i).getInfo().setUsedInBattle(false);
 	}
