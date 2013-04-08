@@ -244,6 +244,7 @@ private void CheckFaintedPokemon() {
 	}
 	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
 		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
+		CalculateXP(user.getTeam(),opponent.getTeam(opponent.getCurrentPokemonIndex()));
 		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
