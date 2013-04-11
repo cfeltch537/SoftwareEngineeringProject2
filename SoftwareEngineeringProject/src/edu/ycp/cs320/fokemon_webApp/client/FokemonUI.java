@@ -22,6 +22,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 
 
@@ -38,7 +39,7 @@ public class FokemonUI implements EntryPoint {
 	
 	  static CirculatingImagesView tempView;
 	  static MapView map;
-	  static BattleView battle;
+	  static BattleView battleView;
 	  private static PokedexReader pokedex;
 	  private PokedexReaderServiceAsync pokedexReaderSvc = GWT.create(PokedexReaderService.class);
 	  static final int refreshRate = 25;
@@ -49,6 +50,7 @@ public class FokemonUI implements EntryPoint {
 		  createPokedexReader();
 		  map = new MapView();
 		  RootPanel.get(holderId).add(map.mapPanel);
+		  map.setFocusCanvas();
 		  tempView = new CirculatingImagesView();
 		 //System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  
@@ -66,8 +68,8 @@ public class FokemonUI implements EntryPoint {
 		//System.out.println(pokedex.getPokeMap().firstKey().toString());
 		  //map.doUpdate(); 
 		  //tempView.doUpdate();
-		  if(battle!=null){
-			  battle.doUpdate();
+		  if(battleView!=null&&battleView.battle!=null){
+			  battleView.doUpdate();
 		  }
 	  }
 	  
@@ -87,7 +89,7 @@ public class FokemonUI implements EntryPoint {
 		      public void onSuccess(PokedexReader result) {
 		        //updateTable(result);
 		    	  setPokedex(result);
-		    	  battle = new BattleView();
+		    	  battleView = new BattleView();
 
 		      }
 		    };
@@ -105,9 +107,11 @@ public class FokemonUI implements EntryPoint {
 	  public static void startBattle(){//Instantiates BattleView
 		  if(pokedex!=null){
 			// Call joey's create battle function(s); creating instance of a battle
-			  battle = new BattleView(); //Instantiate a BattleView
+			  battleView = new BattleView(); //Instantiate a BattleView
+			  battleView.setBattle(Battle.wildPokemonBattle());
 			  RootPanel.get(holderId).remove(map.mapPanel);
-			  RootPanel.get(holderId).add(battle.battlePanel);
+			  RootPanel.get(holderId).add(battleView.battlePanel);
+			  battleView.commandOptions.setFocus(true);
 		  }
 	  }
 }

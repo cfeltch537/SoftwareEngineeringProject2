@@ -158,7 +158,9 @@ public class MapView extends Composite{
 		canvas.addDomHandler(wasdHandler, KeyPressEvent.getType());
 		canvas.setFocus(true);
 	 }
-	
+public void setFocusCanvas(){
+	canvas.setFocus(true);
+}
 }
 
 
