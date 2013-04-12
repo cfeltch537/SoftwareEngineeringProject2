@@ -24,5 +24,6 @@ public enum EffectType {
 	BOOSTSPDEF,
 	BOOSTSPD,
 	BOOSTACCUR,
-	REST,
+	REST, 
+	FLINCH,
 }

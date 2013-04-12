@@ -66,6 +66,9 @@ public class EffectDataBase {
 			        Attacker.getStats().setCurHp(Attacker.getStats().getCurHp()+effect.get(i).getMagnitude());
 			        battleMessage.add(Attacker.getInfo().getNickname()+" has recovered HP.  ");
 		                 break;  
+		        case FLINCH:  //make opponent skip next turn
+			        Defender.getTempBattleStats().setSkipTurn(true);
+		                 break; 
 		        default: //no effect
 		                 break;
 				}

@@ -301,6 +301,11 @@ public class Battle {
 		//fainted
 		if(poke.getStats().getStatus()==Status.FNT)return false;
 		//Paralyzed
+		if(poke.getTempBattleStats().isSkipTurn()){
+			battleMessage.add(poke.getInfo().getNickname()+" flinched. ");
+			return false;
+		}
+		//Paralyzed
 		if(poke.getStats().getStatus()==Status.PRL && Chance<=25){
 			battleMessage.add(poke.getInfo().getNickname()+" is paralyzed and can't move! ");
 			return false;
