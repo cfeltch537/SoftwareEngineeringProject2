@@ -354,8 +354,6 @@ public class Battle {
 		if(CH==2)battleMessage.add("It's a critical hit ");
 		R-=rand.nextInt(15);
 		type=CalcSuperEffective(defender,move);
-		if(type>1)battleMessage.add("The attack was super effective. ");
-		if(type<1)battleMessage.add("The attack was not very effective. ");
 		basePower=move.getDamage();//times itemmultiplier,user and foe ability
 		if(attacker.getStats().getStatus()==Status.BRN)mod1*=.5;
 		if((move.getPokeType()==PokeType.FIRE && weather==Weather.SUNNY)|| (move.getPokeType()==PokeType.WATER && weather==Weather.RAINY))mod1*=1.5;
@@ -589,9 +587,9 @@ public class Battle {
 		default:
 			break;
 		}
-		if(damage==0)battleMessage.add("the move had no effect");
-		else if(damage<1)battleMessage.add("the move wasn't very effect");
-		else if(damage>1)battleMessage.add("the move was very effect");
+		if(damage==0)battleMessage.add("It had no effect");
+		else if(damage<1)battleMessage.add("It's not very effective");
+		else if(damage>1)battleMessage.add("It's super effective");
 		return damage;
 	}
 	public double getStatMod(int modLevel){
