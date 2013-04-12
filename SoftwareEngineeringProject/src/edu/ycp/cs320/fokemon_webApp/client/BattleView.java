@@ -318,6 +318,7 @@ public class BattleView extends Composite{
 				}else{ // When no more messages to be displayed
 					messageIndex=0;  //reset message index
 					setBattleOptions(); // Return to Cattle Options for next turn
+					checkEndBattle();
 				}
 				turnIndex=0;
 				break;
@@ -376,7 +377,7 @@ public class BattleView extends Composite{
 			public void onLoad(LoadEvent event) {
 				battlePanel.remove(playerPokemon);
 				battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
-				battlePanel.add(playerPokemon, width/2 - img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
+				battlePanel.add(playerPokemon, width/2 - playerPokemon.getWidth()/2 - 120, height/2 - playerPokemon.getHeight() - 10);
 				battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 				playerPokemon.setVisible(true);
 			}
@@ -396,7 +397,7 @@ public class BattleView extends Composite{
 			@Override
 			public void onLoad(LoadEvent event) {
 				battlePanel.remove(opponentPokemon); 
-				battlePanel.add(opponentPokemon, width/2 - img3.getWidth()/2 + 120, height/2 - img3.getHeight() - 10);
+				battlePanel.add(opponentPokemon, width/2 - opponentPokemon.getWidth()/2 + 120, height/2 - opponentPokemon.getHeight() - 10);
 				opponentPokemon.setVisible(true);
 			}
 		});
@@ -505,6 +506,11 @@ public class BattleView extends Composite{
 		 }
 		 messageIndex++;
 	 }
+	void checkEndBattle(){
+		if(battle.getBattleOver()){
+			FokemonUI.endBattle();
+		}
+	}
 }
 
 

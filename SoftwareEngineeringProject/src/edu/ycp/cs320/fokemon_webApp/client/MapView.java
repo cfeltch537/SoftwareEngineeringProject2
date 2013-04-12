@@ -135,7 +135,7 @@ public class MapView extends Composite{
 				case 115: //S; DOWN
 					player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
 					break;
-				case 50: //2; DOWN
+				case 53: //5; DOWN
 					player.getPlayerLocation().setY(player.getPlayerLocation().getY()+1);
 					break;
 				case 97: //A, LEFT
