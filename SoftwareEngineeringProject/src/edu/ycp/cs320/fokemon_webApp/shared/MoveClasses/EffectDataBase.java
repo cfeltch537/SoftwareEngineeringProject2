@@ -66,6 +66,9 @@ public class EffectDataBase {
 			        Attacker.getStats().setCurHp(Attacker.getStats().getCurHp()+effect.get(i).getMagnitude());
 			        battleMessage.add(Attacker.getInfo().getNickname()+" has recovered HP.  ");
 		                 break;  
+		        case FLINCH:  //RecoverConstant HP
+			        Defender.getTempBattleStats().setFlinched(true);
+		                 break;  
 		        default: //no effect
 		                 break;
 				}
