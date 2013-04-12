@@ -384,7 +384,11 @@ public class BattleView extends Composite{
 
 		 // Opponent Battling Pokemon
 		
-		opponentPokemon = new Image("PokemonSprites/" + battle.getOpponent().getTeam(battle.getOpponent().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
+		//opponentPokemon = new Image("PokemonSprites/" + battle.getOpponent().getTeam(battle.getOpponent().getCurrentPokemonIndex()).getInfo().getPokeName() + ".png");//This should set to a pokemons ID specific Image
+		if(opponentPokemon!=null){
+			battlePanel.remove(opponentPokemon);
+		}
+		opponentPokemon = new Image("PokemonSprites/Snorlax.png");//This should set to a pokemons ID specific Image
 		opponentPokemon.setVisible(false);
 		battlePanel.add(opponentPokemon);
 		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
