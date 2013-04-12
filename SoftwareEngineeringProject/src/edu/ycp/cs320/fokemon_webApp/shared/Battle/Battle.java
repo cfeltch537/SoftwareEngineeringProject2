@@ -209,7 +209,6 @@ public class Battle {
 			 if(canAttack==true){
 				 battleMessage.add(userPoke.getInfo().getNickname()+" used "+userPoke.getMove(turnPlayer.getMoveIndex()).getMoveName().toString()+".  ");
 				 attack(userPoke,oppPoke,userPoke.getMove(turnPlayer.getMoveIndex()));
-				 battleMessage.addAll(EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect()));
 				 userPoke.getMove(turnPlayer.getMoveIndex()).setCurPP(userPoke.getMove(turnPlayer.getMoveIndex()).getCurPP()-1);
 			 }
 			break;
@@ -354,8 +353,6 @@ public class Battle {
 		if(CH==2)battleMessage.add("It's a critical hit ");
 		R-=rand.nextInt(15);
 		type=CalcSuperEffective(defender,move);
-		if(type>1)battleMessage.add("The attack was super effective. ");
-		if(type<1)battleMessage.add("The attack was not very effective. ");
 		basePower=move.getDamage();//times itemmultiplier,user and foe ability
 		if(attacker.getStats().getStatus()==Status.BRN)mod1*=.5;
 		if((move.getPokeType()==PokeType.FIRE && weather==Weather.SUNNY)|| (move.getPokeType()==PokeType.WATER && weather==Weather.RAINY))mod1*=1.5;
@@ -397,7 +394,10 @@ public class Battle {
 		
 		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100) || move.getAccuracy()<0){//move hits
 			damage=CalcDamage(attacker, defender, move);
-			if(move.getDamage()!=0)defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			if(move.getDamage()!=0){
+				defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			}
+			battleMessage.addAll(EffectDataBase.moveEffect(attacker, defender, move.getEffect()));
 			//effect
 			if(defender.getStats().getCurHp()<=0){
 				battleMessage.add(defender.getInfo().getNickname()+" has fainted. ");
@@ -441,36 +441,157 @@ public class Battle {
 			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case ELECTRIC:
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=0;
 			break;
 		case FIGHTING:
+			if(defender.getInfo().getType().contains(PokeType.NORMAL))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=0;
 			break;
 		case FIRE:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
 			break;
 		case FLYING:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case GHOST:
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.NORMAL))damage*=0;
 			break;
 		case GRASS:
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case GROUND:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=0;
 			break;
 		case ICE:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case NORMAL:
+			
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=0;
 			break;
 		case POISON:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=0;
 			break;
 		case PSYCHIC:
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=0;
 			break;
 		case ROCK:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case STEEL:
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
 			break;
 		case WATER:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
 			break;
 		default:
 			break;
 		}
+		if(damage==0)battleMessage.add("It had no effect");
+		else if(damage<1)battleMessage.add("It's not very effective");
+		else if(damage>1)battleMessage.add("It's super effective");
 		return damage;
 	}
 	public double getStatMod(int modLevel){
