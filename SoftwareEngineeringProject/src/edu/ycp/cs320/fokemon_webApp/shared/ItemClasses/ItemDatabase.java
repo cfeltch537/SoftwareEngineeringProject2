@@ -1,18 +1,11 @@
 package edu.ycp.cs320.fokemon_webApp.shared.ItemClasses;
 
-import java.util.ArrayList;
-
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class ItemDatabase {
-	public static Item generateItem(ItemName itemName, Pokemon attacker, ArrayList<Effect> effect, int moveIndex)	{
-		ArrayList<Effect> effectList = new ArrayList<Effect>();
-		Effect itemEffect = new Effect(EffectType.NONE,0,0,"");
-		effectList.add(itemEffect);
-		Item item = new Item(0, 0, false, false, itemName, effectList);
+	public static Item generateItem(ItemName itemName, Pokemon attacker, int moveIndex)	{
+		Item item = new Item(0, 0, false, false, itemName);
 
 		switch(itemName)	{
 		case CALCIUM:
