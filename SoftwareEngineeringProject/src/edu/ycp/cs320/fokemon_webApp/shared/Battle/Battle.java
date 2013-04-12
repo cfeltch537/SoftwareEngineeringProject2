@@ -209,7 +209,6 @@ public class Battle {
 			 if(canAttack==true){
 				 battleMessage.add(userPoke.getInfo().getNickname()+" used "+userPoke.getMove(turnPlayer.getMoveIndex()).getMoveName().toString()+".  ");
 				 attack(userPoke,oppPoke,userPoke.getMove(turnPlayer.getMoveIndex()));
-				 battleMessage.addAll(EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect()));
 				 userPoke.getMove(turnPlayer.getMoveIndex()).setCurPP(userPoke.getMove(turnPlayer.getMoveIndex()).getCurPP()-1);
 			 }
 			break;
@@ -395,7 +394,10 @@ public class Battle {
 		
 		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100) || move.getAccuracy()<0){//move hits
 			damage=CalcDamage(attacker, defender, move);
-			if(move.getDamage()!=0)defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			if(move.getDamage()!=0){
+				defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			}
+			battleMessage.addAll(EffectDataBase.moveEffect(attacker, defender, move.getEffect()));
 			//effect
 			if(defender.getStats().getCurHp()<=0){
 				battleMessage.add(defender.getInfo().getNickname()+" has fainted. ");
