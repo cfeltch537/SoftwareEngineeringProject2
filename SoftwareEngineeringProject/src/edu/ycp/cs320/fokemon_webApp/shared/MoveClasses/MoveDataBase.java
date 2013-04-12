@@ -1289,6 +1289,14 @@ public class MoveDataBase {
 	case Swords_Dance:
 		break;
 	case Tackle:
+		move.setDamage(50);
+    	move.setAccuracy(100);
+    	move.setMaxPP(35);
+    	move.setPhysical(true);
+    	move.setPokeType(PokeType.NORMAL);
+    	
+    	effectList.add(0, effect);
+    	move.setEffect(effectList);
 		break;
 	case Tail_Whip:
 		break;
