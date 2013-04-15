@@ -1,0 +1,2 @@
+serviceClass: edu.ycp.cs320.fokemon_webApp.client.PokedexReaderService
+path: 4DD8B139BCAE80A6BDB1D3920715A894.gwt.rpc

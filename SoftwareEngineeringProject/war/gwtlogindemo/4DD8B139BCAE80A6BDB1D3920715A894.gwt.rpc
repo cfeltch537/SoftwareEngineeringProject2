@@ -1,0 +1,15 @@
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+edu.ycp.cs320.fokemon_webApp.client.PokedexReaderService, false, false, false, false, _, 925166292
+edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID, true, true, false, false, edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID/3354886912, 3354886912
+edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType, true, true, false, false, edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType/1601138306, 1601138306
+edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexEntry, true, true, false, false, edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexEntry/2698408522, 2698408522
+edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader, true, true, false, false, edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader/2970566050, 2970566050
+[I, true, true, false, false, [I/2970817851, 2970817851
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.util.ArrayList, true, true, false, false, java.util.ArrayList/4159755760, 4159755760
+java.util.TreeMap, true, true, false, false, java.util.TreeMap/1493889780, 1493889780
