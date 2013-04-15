@@ -54,6 +54,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(50);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 50 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -70,6 +73,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(200);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 200 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -86,6 +92,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(10);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getMove(moveIndex).getCurPP() + 10 > attacker.getMove(moveIndex).getMaxPP())	{
 //				attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getMaxPP());
 //			}	else 	{
@@ -102,6 +111,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(50);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 50 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -114,12 +126,19 @@ public class ItemDatabase {
 			item.setSellPrice(1500);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			if(attacker.getStats().getStatus() != Status.FNT)	{
-				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
-				attacker.getStats().setStatus(Status.NRM);
-			}	else 	{
-				break;
-			}
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getStats().getMaxHp());
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getStats().getStatus() != Status.FNT)	{
+//				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
+//				attacker.getStats().setStatus(Status.NRM);
+//			}	else 	{
+//				break;
+//			}
 			break;
 		case HEAL_POWDER:
 			item.setQuantity(1);
@@ -127,11 +146,18 @@ public class ItemDatabase {
 			item.setSellPrice(225);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			if(attacker.getStats().getStatus() != Status.FNT)	{
-				attacker.getStats().setStatus(Status.NRM);
-			}	else 	{
-				break;
-			}
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(0);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getStats().getStatus() != Status.FNT)	{
+//				attacker.getStats().setStatus(Status.NRM);
+//			}	else 	{
+//				break;
+//			}
 			break;
 		case HP_UP:
 			item.setQuantity(1);
@@ -150,6 +176,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(200);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 200 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -173,6 +202,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(80);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 80 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -211,12 +243,19 @@ public class ItemDatabase {
 			item.setSellPrice(2800);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			if(attacker.getStats().getStatus() == Status.FNT)	{
-				attacker.getStats().setStatus(Status.NRM);
-				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
-			}	else 	{
-				break;
-			}
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getStats().getMaxHp());
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getStats().getStatus() == Status.FNT)	{
+//				attacker.getStats().setStatus(Status.NRM);
+//				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
+//			}	else 	{
+//				break;
+//			}
 			break;
 		case POTION:
 			item.setQuantity(1);
@@ -228,6 +267,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(20);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 20 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -240,11 +282,18 @@ public class ItemDatabase {
 			item.setSellPrice(4900);
 			item.setUseInBattle(false);
 			item.setUseOutOfBattle(true);
-			if(attacker.getMove(moveIndex).getCurPP() + attacker.getMove(moveIndex).getMaxPP() / 5 > attacker.getMove(moveIndex).getMaxPP())	{
-				attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getMaxPP());
-			}	else 	{
-				attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getCurPP() + attacker.getMove(moveIndex).getMaxPP() / 5);
-			}
+			
+			effect.setEffectIndex(EffectType.PP_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getMove(moveIndex).getMaxPP() / 5);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getMove(moveIndex).getCurPP() + attacker.getMove(moveIndex).getMaxPP() / 5 > attacker.getMove(moveIndex).getMaxPP())	{
+//				attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getMaxPP());
+//			}	else 	{
+//				attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getCurPP() + attacker.getMove(moveIndex).getMaxPP() / 5);
+//			}
 			break;
 		case PROTEIN:
 			item.setQuantity(1);
@@ -271,12 +320,19 @@ public class ItemDatabase {
 			item.setSellPrice(1400);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			if(attacker.getStats().getStatus() == Status.FNT)	{
-				attacker.getStats().setStatus(Status.NRM);
-				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
-			}	else 	{
-				break;
-			}
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getStats().getMaxHp());
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getStats().getStatus() == Status.FNT)	{
+//				attacker.getStats().setStatus(Status.NRM);
+//				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
+//			}	else 	{
+//				break;
+//			}
 			break;
 		case REVIVE:
 			item.setQuantity(1);
@@ -284,12 +340,19 @@ public class ItemDatabase {
 			item.setSellPrice(750);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			if(attacker.getStats().getStatus() == Status.FNT)	{
-				attacker.getStats().setStatus(Status.NRM);
-				attacker.getStats().setCurHp(attacker.getStats().getMaxHp()/2);
-			}	else 	{
-				break;
-			}
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getStats().getMaxHp()/2);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			if(attacker.getStats().getStatus() == Status.FNT)	{
+//				attacker.getStats().setStatus(Status.NRM);
+//				attacker.getStats().setCurHp(attacker.getStats().getMaxHp()/2);
+//			}	else 	{
+//				break;
+//			}
 			break;
 		case SODA_POP:
 			item.setQuantity(1);
@@ -301,6 +364,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(60);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 60 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
@@ -317,6 +383,9 @@ public class ItemDatabase {
 			effect.setEffectIndex(EffectType.RECOVERCONST);
 			effect.setEffectChance(100);
 			effect.setMagnitude(50);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 //			if(attacker.getStats().getCurHp() + 50 > attacker.getStats().getMaxHp())	{
 //				attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 //			}	else 	{
