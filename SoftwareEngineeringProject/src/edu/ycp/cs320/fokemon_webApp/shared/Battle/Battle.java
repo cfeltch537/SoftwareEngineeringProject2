@@ -37,9 +37,9 @@ public class Battle {
 		setInitialCurrentPokemon(user,0);
 		setInitialCurrentPokemon(opponent,0);
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
-		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
-		opponent.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
 		runCount=0;
 	}
@@ -639,7 +639,7 @@ public class Battle {
 	}
 	public void setInitialCurrentPokemon(Player player, int index){
 		if(player.getTeam(index).getStats().getStatus()==Status.FNT){
-			setInitialCurrentPokemon(player, index++);
+			setInitialCurrentPokemon(player, index+1);
 		}else{
 			player.setCurrentPokemonIndex(index);
 		}
