@@ -69,14 +69,14 @@ public class EffectDataBase {
 		        case RECOVERFULL:
 		        	if(Attacker.getStats().getStatus() != Status.FNT){
 		        		Attacker.getStats().setStatus(Status.NRM);
-		        		Attacker.getStats().setCurHp(Attacker.getStats().getCurHp() + effect.get(i).getMagnitude());
+		        		Attacker.getStats().setCurHp(effect.get(i).getMagnitude());
 		        		battleMessage.add(Attacker.getInfo().getNickname() + " has recovered full HP and is back to normal. ");
 		        	}	else {
 		        		battleMessage.add(Attacker.getInfo().getNickname() + " nothing happened because they were fainted. ");
 		        	}
 		        	break;
 		        case PP_UP:
-		        	Attacker.getMove(i).setCurPP(Attacker.getMove(i).getCurPP() + effect.get(i).getMagnitude());
+		        	Attacker.getMove(i).setCurPP(effect.get(i).getMagnitude());
 		        	battleMessage.add(Attacker.getInfo().getNickname() + " has recoverd some  PP. ");
 		        	break;
 		        default: //no effect

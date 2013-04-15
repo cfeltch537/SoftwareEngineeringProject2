@@ -37,12 +37,18 @@ public class ItemDatabase {
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
 			for(int i = 0; i < attacker.getMoves().size(); i++){
-				if(attacker.getMove(i).getCurPP() + 10 > attacker.getMove(i).getMaxPP())	{
-					attacker.getMove(i).setCurPP(attacker.getMove(i).getMaxPP());
-				}	else 	{
-					attacker.getMove(i).setCurPP(attacker.getMove(i).getCurPP() + 10);
-				}
+				effect.setEffectIndex(EffectType.PP_UP);
+				effect.setEffectChance(100);
+				effect.setMagnitude(attacker.getMove(i).getCurPP() + 10);
+				
+				itemEffect.add(0, effect);
+//				if(attacker.getMove(i).getCurPP() + 10 > attacker.getMove(i).getMaxPP())	{
+//					attacker.getMove(i).setCurPP(attacker.getMove(i).getMaxPP());
+//				}	else 	{
+//					attacker.getMove(i).setCurPP(attacker.getMove(i).getCurPP() + 10);
+//				}
 			}
+			item.setItemEffect(itemEffect);
 			break;
 		case ENERGY_POWDER:
 			item.setQuantity(1);
@@ -149,7 +155,7 @@ public class ItemDatabase {
 			
 			effect.setEffectIndex(EffectType.RECOVERFULL);
 			effect.setEffectChance(100);
-			effect.setMagnitude(0);
+			effect.setMagnitude(attacker.getStats().getCurHp());
 			
 			itemEffect.add(0, effect);
 			item.setItemEffect(itemEffect);
@@ -218,8 +224,14 @@ public class ItemDatabase {
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
 			for(int i = 0; i < attacker.getMoves().size(); i++){
-				attacker.getMove(i).setCurPP(attacker.getMove(i).getMaxPP());
+				effect.setEffectIndex(EffectType.PP_UP);
+				effect.setEffectChance(100);
+				effect.setMagnitude(attacker.getMove(i).getMaxPP());
+				
+				itemEffect.add(effect);
+//				attacker.getMove(i).setCurPP(attacker.getMove(i).getMaxPP());
 			}
+			item.setItemEffect(itemEffect);
 			break;
 		case MAX_ETHER:
 			item.setQuantity(1);
@@ -227,7 +239,14 @@ public class ItemDatabase {
 			item.setSellPrice(1000);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getMaxPP());
+			
+			effect.setEffectIndex(EffectType.PP_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getMove(moveIndex).getMaxPP());
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			attacker.getMove(moveIndex).setCurPP(attacker.getMove(moveIndex).getMaxPP());
 			break;
 		case MAX_POTION:
 			item.setQuantity(1);
@@ -235,7 +254,14 @@ public class ItemDatabase {
 			item.setSellPrice(1250);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(true);
-			attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
+			
+			effect.setEffectIndex(EffectType.RECOVERFULL);
+			effect.setEffectChance(100);
+			effect.setMagnitude(attacker.getStats().getMaxHp());
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
+//			attacker.getStats().setCurHp(attacker.getStats().getMaxHp());
 			break;
 		case MAX_REVIVE:
 			item.setQuantity(1);
@@ -285,7 +311,7 @@ public class ItemDatabase {
 			
 			effect.setEffectIndex(EffectType.PP_UP);
 			effect.setEffectChance(100);
-			effect.setMagnitude(attacker.getMove(moveIndex).getMaxPP() / 5);
+			effect.setMagnitude(attacker.getMove(moveIndex).getMaxPP() / 5 + attacker.getMove(moveIndex).getMaxPP());
 			
 			itemEffect.add(0, effect);
 			item.setItemEffect(itemEffect);
