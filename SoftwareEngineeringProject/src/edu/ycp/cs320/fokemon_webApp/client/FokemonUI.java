@@ -107,7 +107,9 @@ public class FokemonUI implements EntryPoint {
 	  public static void startBattle(){//Instantiates BattleView
 		  if(pokedex!=null){
 			// Call joey's create battle function(s); creating instance of a battle
+			  if(battleView==null){
 			  battleView = new BattleView(); //Instantiate a BattleView
+			  }
 			  battleView.setBattle(Battle.wildPokemonBattle());
 			  RootPanel.get(holderId).remove(map.mapPanel);
 			  RootPanel.get(holderId).add(battleView.battlePanel);
@@ -120,6 +122,7 @@ public class FokemonUI implements EntryPoint {
 			  RootPanel.get(holderId).remove(battleView.battlePanel);
 			  RootPanel.get(holderId).add(map.mapPanel);
 			  battleView.commandOptions.setFocus(true);
+			  map.setFocusCanvas();
 		  }
 	  }
 }

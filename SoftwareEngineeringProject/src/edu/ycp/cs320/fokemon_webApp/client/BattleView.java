@@ -136,6 +136,7 @@ public class BattleView extends Composite{
 	void setBattle(Battle battle){
 		this.battle = battle;
 		onPokemonShift();
+		draw(battleBackBufferContext, battleContext);
 	}
 	
 	void doUpdate() {
@@ -146,6 +147,7 @@ public class BattleView extends Composite{
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
+		updatePokemonStatus();
 	}
 	public void draw(Context2d context, Context2d front) {
 		//context.save();
