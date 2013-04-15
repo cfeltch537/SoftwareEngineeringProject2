@@ -5,4 +5,6 @@
 /war/WEB-INF/lib
 /war/WEB-INF/deploy
 /war/gwtcanvasdemo
+/war/gwtlogindemo
+/war/loginui
 *.tmp

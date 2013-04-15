@@ -1,2 +1,0 @@
-serviceClass: edu.ycp.cs320.fokemon_webApp.client.LoginService
-path: 43434CF4AEFD118F74C229B1665E4519.gwt.rpc
