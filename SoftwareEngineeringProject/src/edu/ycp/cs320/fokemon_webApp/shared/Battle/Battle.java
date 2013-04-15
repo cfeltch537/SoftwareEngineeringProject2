@@ -25,6 +25,7 @@ public class Battle {
 	private ArrayList<String> battleMessage;
 	private Move confused;
 	private Boolean battleOver;
+	private int runCount;
 	
 	
 	
@@ -40,6 +41,7 @@ public class Battle {
 		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		opponent.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
+		runCount=0;
 	}
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
 		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
@@ -220,6 +222,32 @@ public class Battle {
 			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 			break;
 		case RUN:
+			
+			
+			if(otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getInfo().getIsWild()){
+				int a, b;
+				a=(int) (turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getStats().getSpd()*
+						 getStatMod(turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getTempBattleStats().getSPDBoost()));
+				
+				b=(int) (otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getStats().getSpd()*
+						 getStatMod(otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getTempBattleStats().getSPDBoost()))/4%256;
+				int f=a*32/b+30*runCount;
+				if(f>255){
+					battleMessage.add("You got away safely");
+					battleOver=true;
+					
+				}else{
+					if(f>rand.nextInt(255)){
+						battleMessage.add("You got away safely");
+						battleOver=true;
+					}else{
+						battleMessage.add("You couldn't get away");
+					}
+					
+				}
+			}else{
+				battleMessage.add("You can't run away from a trainer battle");
+			}
 			break;
 		default:
 			break;
@@ -298,6 +326,7 @@ public class Battle {
 	private boolean CheckAttackStatus(Pokemon poke) {
 		Random rand=new Random();
 		int Chance=rand.nextInt(100);
+		//if battle.
 		//fainted
 		if(poke.getStats().getStatus()==Status.FNT)return false;
 		//flinched
