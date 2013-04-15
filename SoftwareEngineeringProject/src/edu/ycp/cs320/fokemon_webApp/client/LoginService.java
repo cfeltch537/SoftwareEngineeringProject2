@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 
-@RemoteServiceRelativePath("order")
+@RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService {
 	/**
 	 * 

@@ -52,10 +52,7 @@ public class LoginView extends Composite {
 		textBoxPassword.setDirection(Direction.RTL);
 		flexTable.setWidget(1, 1, textBoxPassword);
 
-		CheckBox checkBox = new CheckBox("Remember me on this computer");
-		checkBox.setStyleName("gwt-Login-CheckBox");
-		flexTable.setWidget(2, 1, checkBox);
-
+	
 		Button btnSignIn = new Button("Sign In");
 		btnSignIn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -78,9 +75,15 @@ public class LoginView extends Composite {
 		RPC.login.submitLogin(model, new AsyncCallback<Login>() {
 			@Override
 			public void onSuccess(Login result) {
-				GWT.log("Login succeeded!");
-				
-				Window.alert("Success");
+				if (result != null) {
+					GWT.log("Login succeeded!");
+					Window.alert("Success");
+					
+					// Switch to some other view
+				} else {
+					GWT.log("Unknown username/password");
+					Window.alert("Unknown username/password");
+				}
 			
 			}
 			

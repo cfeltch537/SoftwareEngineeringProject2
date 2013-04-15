@@ -14,16 +14,16 @@
     <servlet-name>pokedexReaderImpl</servlet-name>
     <url-pattern>/gwtcanvasdemo/pokedexReader</url-pattern>
   </servlet-mapping>
-  <!-- 
+  
   <servlet>
-    <servlet-name>loginServiceImpl</servlet-name>
-    <servlet-class>edu.ycp.cs320.fokemon_webApp.server.loginServiceImpl</servlet-class>
+    <servlet-name>LoginServiceImpl</servlet-name>
+    <servlet-class>edu.ycp.cs320.fokemon_webApp.server.LoginServiceImpl</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>loginServiceImpl</servlet-name>
-    <url-pattern>/gwtlogindemo/loginService</url-pattern>
+    <servlet-name>LoginServiceImpl</servlet-name>
+	<url-pattern>/loginui/login</url-pattern>  
   </servlet-mapping>
- -->
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>FokemonUI.html</welcome-file>

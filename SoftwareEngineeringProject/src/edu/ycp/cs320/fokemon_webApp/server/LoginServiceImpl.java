@@ -16,10 +16,11 @@ package edu.ycp.cs320.fokemon_webApp.server;
 
 
 
+import java.sql.SQLException;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.ycp.cs320.fokemon_webApp.client.LoginService;
-import edu.ycp.cs320.fokemon_webApp.server.sql.DBUtil;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 
 
@@ -30,9 +31,16 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 	@Override
 	public Login submitLogin(Login _login) {
-		_login.setId(0);
-		//TODO: Get check the login database for the username password combo and return the key integer
-		return _login;
+		
+		try {
+			return DBUtil.instance().performLogin(_login);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException", e);
+		}
+		
+//		_login.setId(0);
+//		//TODO: Get check the login database for the username password combo and return the key integer
+//		return _login;
 	}
 
 }
