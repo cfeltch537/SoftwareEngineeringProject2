@@ -20,7 +20,6 @@ public class Player {
 	private int moveIndex;
 	private int itemIndex;
 	private int turnOrder;
-	private PlayerType Type;
 	
 	
 
@@ -32,7 +31,6 @@ public class Player {
 		this.moveIndex=0;
 		this.itemIndex=0;
 		this.choice=TurnChoice.MOVE;
-		this.setType(PlayerType.User);
 		this.turnOrder=0;
 		
 		team=new ArrayList<Pokemon>();
@@ -133,11 +131,4 @@ public class Player {
 		turnOrder = TurnOrder;
 	}
 
-	public PlayerType getType() {
-		return Type;
-	}
-
-	public void setType(PlayerType type) {
-		Type = type;
-	}
 }

@@ -11,6 +11,8 @@ public class PokeInfo {
 	private String PokeName;
 	private String Nickname;
 	private Boolean Gender;
+	private Boolean UsedInBattle;
+	private Boolean isWild;
 	private ArrayList <PokeType> type;
 	private int lvl;
 	private int xp;
@@ -24,6 +26,8 @@ public class PokeInfo {
 		this.type=type;
 		this.lvl=lvl;
 		this.xp=xp;
+		this.UsedInBattle=false;
+		this.setIsWild(false);
 	}
 
 	public int getPlayerID() {
@@ -88,6 +92,22 @@ public class PokeInfo {
 
 	public void setID(PokeID iD) {
 		ID = iD;
+	}
+
+	public Boolean getUsedInBattle() {
+		return UsedInBattle;
+	}
+
+	public void setUsedInBattle(Boolean usedInBattle) {
+		UsedInBattle = usedInBattle;
+	}
+
+	public Boolean getIsWild() {
+		return isWild;
+	}
+
+	public void setIsWild(Boolean isWild) {
+		this.isWild = isWild;
 	}
 	
 

@@ -39,15 +39,30 @@ public class Pokemon {
 		Pokemon pokemon=new Pokemon(information, battleStats, moves);
 		pokemon.UpdateStats();
 		pokemon.getStats().setCurHp(pokemon.getStats().getMaxHp());
+		
+		int xp=(int) Math.pow(pokemon.info.getLvl(), 3);
+		pokemon.getInfo().setXp(xp);
+		
+		
 		return pokemon;
 		
 		
 
 	}
-	public void LevelUp(){
+	public ArrayList<String> CheckLevelUp(){
+		ArrayList <String>message=new ArrayList<String>();
+		int xp=(int) Math.pow(info.getLvl()+1, 3);
+		if (xp<info.getXp())message.addAll(LevelUp());
+		return message;
+	}
+	public ArrayList<String> LevelUp(){
+		ArrayList <String>message=new ArrayList<String>();
+		info.setLvl(info.getLvl()+1);
+		message.add(info.getNickname()+" has grown to level "+info.getLvl());
 		CheckEvolve();
 		CheckLearnMove();
 		UpdateStats();
+		return message;
 	}
 	public void UpdateStats() {
 		// TODO Auto-generated method stub

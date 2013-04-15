@@ -10,6 +10,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.PlayerType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
@@ -36,10 +37,13 @@ public class Battle {
 		setInitialCurrentPokemon(opponent,0);
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
+		opponent.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
 	}
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
 		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
+		wildPoke.getInfo().setIsWild(true);
 		Player wildPlayer=new Player(wildPoke.getInfo().getPlayerID(), wildPoke.getInfo().getNickname(), wildPoke.getInfo().getGender(), TempBattle.getUser().getPlayerLocation());
 		wildPlayer.getTeam().add(wildPoke);
 		return new Battle(TempBattle.getUser(),wildPlayer);
@@ -107,7 +111,7 @@ public class Battle {
 		applyStatusDamage(userPoke);
 	}
 
-public void findTurnOrder(){
+	public void findTurnOrder(){
 	Pokemon userPoke=user.getTeam(user.getCurrentPokemonIndex());
 	Pokemon oppPoke=opponent.getTeam(opponent.getCurrentPokemonIndex());
 	switch(user.getChoice()){
@@ -154,12 +158,12 @@ public void findTurnOrder(){
 		 break;
 	}
 }
-public boolean CheckTurnValidity(){
+	public boolean CheckTurnValidity(){
 	if(isTurnOk(user)==false)return false;
 	if(isTurnOk(opponent)==false)return false;
 	return true;
 }
-public boolean isTurnOk(Player player){
+	public boolean isTurnOk(Player player){
 	Pokemon curPoke=player.getTeam(player.getCurrentPokemonIndex());
 	switch(player.getChoice()){
 	case MOVE:
@@ -181,7 +185,7 @@ public boolean isTurnOk(Player player){
 
 	return true;
 }
-public void Turn(int turnNumber){
+	public void Turn(int turnNumber){
 	battleMessage=new ArrayList<String>();
 	boolean canAttack=false;
 	Player turnPlayer, otherPlayer;
@@ -205,7 +209,6 @@ public void Turn(int turnNumber){
 			 if(canAttack==true){
 				 battleMessage.add(userPoke.getInfo().getNickname()+" used "+userPoke.getMove(turnPlayer.getMoveIndex()).getMoveName().toString()+".  ");
 				 attack(userPoke,oppPoke,userPoke.getMove(turnPlayer.getMoveIndex()));
-				 battleMessage.addAll(EffectDataBase.moveEffect(userPoke, oppPoke, userPoke.getMove(turnPlayer.getMoveIndex()).getEffect()));
 				 userPoke.getMove(turnPlayer.getMoveIndex()).setCurPP(userPoke.getMove(turnPlayer.getMoveIndex()).getCurPP()-1);
 			 }
 			break;
@@ -214,6 +217,7 @@ public void Turn(int turnNumber){
 		case SWITCH:
 			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
 			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 			break;
 		case RUN:
 			break;
@@ -230,34 +234,47 @@ public void Turn(int turnNumber){
 	}
 	
 }
-private void CheckFaintedPokemon() {
+	private void CheckFaintedPokemon() {
 	// TODO Auto-generated method stub
-	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
-		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
+		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
+		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
-	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.NRM){
-		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" as fainted.  ");
+	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
+		CalculateXP(user.getTeam(),opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
 		battleOver=true;
 	}
 	
 }
-public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
+	public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 	//a is wild or trainer, t=traded, b=base, e=luckyegg,L=lvl of opp, Lp=lvl of poke
 	//s is 2 times the number of non fainted used pokemon, or 2 if holding xpshare
 	double a, b, L,Lp,s,t,e;
 	int xp;
 	a=1;
-	b=40;
+	if(loser.getInfo().getIsWild()==true)a=1.5;
+	b=loser.getStats().getBaseXP();
 	L=loser.getInfo().getLvl();
+	s=0;
+	for(int i=0;i<team.size();i++){
+		if(team.get(i).getInfo().getUsedInBattle()==true)s+=2;
+	}
 	for(int i=0;i<team.size();i++){
 		Lp=team.get(i).getInfo().getLvl();
 		if (user.getPlayerID()==team.get(i).getInfo().getPlayerID()) t=1;
 		else t=1.5;
 		s=2;
 		e=1;
-		
-		xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
+		if(team.get(i).getInfo().getUsedInBattle()==true){
+			xp=(int)((a*t*b*e*L)/(5*s)*(L+2)/(Lp+2)+1);
+			team.get(i).getInfo().setXp(xp+team.get(i).getInfo().getXp());
+			battleMessage.add(team.get(i).getInfo().getNickname()+" has gained "+xp+" experience points.  ");
+			team.get(i).CheckLevelUp();
+		}
+		team.get(i).getInfo().setUsedInBattle(false);
 	}
 }
 	private void applyStatusDamage(Pokemon userPoke) {
@@ -283,6 +300,12 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		int Chance=rand.nextInt(100);
 		//fainted
 		if(poke.getStats().getStatus()==Status.FNT)return false;
+		//flinched
+		if(poke.getTempBattleStats().isFlinched()==true){
+			battleMessage.add(poke.getInfo().getNickname()+" flinched. ");
+			poke.getTempBattleStats().setFlinched(false);
+			return false;
+		}
 		//Paralyzed
 		if(poke.getStats().getStatus()==Status.PRL && Chance<=25){
 			battleMessage.add(poke.getInfo().getNickname()+" is paralyzed and can't move! ");
@@ -336,8 +359,6 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		if(CH==2)battleMessage.add("It's a critical hit ");
 		R-=rand.nextInt(15);
 		type=CalcSuperEffective(defender,move);
-		if(type>1)battleMessage.add("The attack was super effective. ");
-		if(type<1)battleMessage.add("The attack was not very effective. ");
 		basePower=move.getDamage();//times itemmultiplier,user and foe ability
 		if(attacker.getStats().getStatus()==Status.BRN)mod1*=.5;
 		if((move.getPokeType()==PokeType.FIRE && weather==Weather.SUNNY)|| (move.getPokeType()==PokeType.WATER && weather==Weather.RAINY))mod1*=1.5;
@@ -379,7 +400,10 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		
 		if(move.getAccuracy()*accuracy/evasion>=rand.nextInt(100) || move.getAccuracy()<0){//move hits
 			damage=CalcDamage(attacker, defender, move);
-			defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			if(move.getDamage()!=0){
+				defender.getStats().setCurHp(defender.getStats().getCurHp()-damage);
+			}
+			battleMessage.addAll(EffectDataBase.moveEffect(attacker, defender, move.getEffect()));
 			//effect
 			if(defender.getStats().getCurHp()<=0){
 				battleMessage.add(defender.getInfo().getNickname()+" has fainted. ");
@@ -392,7 +416,189 @@ public void CalculateXP(ArrayList<Pokemon> team, Pokemon loser){
 		}
 	}
 	public double CalcSuperEffective(Pokemon defender, Move move){
-		return 1;
+		double damage=1;
+		switch(move.getPokeType())	{
+		case BUG:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case DARK:
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case DRAGON:
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case ELECTRIC:
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=0;
+			break;
+		case FIGHTING:
+			if(defender.getInfo().getType().contains(PokeType.NORMAL))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=0;
+			break;
+		case FIRE:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			break;
+		case FLYING:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case GHOST:
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.NORMAL))damage*=0;
+			break;
+		case GRASS:
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case GROUND:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=0;
+			break;
+		case ICE:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case NORMAL:
+			
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=0;
+			break;
+		case POISON:
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GHOST))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=0;
+			break;
+		case PSYCHIC:
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.POISON))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.PSYCHIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			
+			if(defender.getInfo().getType().contains(PokeType.DARK))damage*=0;
+			break;
+		case ROCK:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.FLYING))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.BUG))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.FIGHTING))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case STEEL:
+			if(defender.getInfo().getType().contains(PokeType.ICE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+			
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.ELECTRIC))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.STEEL))damage*=.5;
+			break;
+		case WATER:
+			if(defender.getInfo().getType().contains(PokeType.FIRE))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.GROUND))damage*=2;
+			if(defender.getInfo().getType().contains(PokeType.ROCK))damage*=2;
+						
+			if(defender.getInfo().getType().contains(PokeType.WATER))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.GRASS))damage*=.5;
+			if(defender.getInfo().getType().contains(PokeType.DRAGON))damage*=.5;
+			break;
+		default:
+			break;
+		}
+		if(damage==0)battleMessage.add("It had no effect");
+		else if(damage<1)battleMessage.add("It's not very effective");
+		else if(damage>1)battleMessage.add("It's super effective");
+		return damage;
 	}
 	public double getStatMod(int modLevel){
 		if (modLevel>=0){
