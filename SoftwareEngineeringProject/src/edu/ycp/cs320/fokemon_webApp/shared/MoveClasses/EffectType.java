@@ -26,5 +26,6 @@ public enum EffectType {
 	BOOSTACCUR,
 	REST,
 	RECOVERFULL,
-	PP_UP
+	PP_UP,
+	LVL_UP
 }
