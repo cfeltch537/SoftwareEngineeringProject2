@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
-import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class ItemDatabase {
 	public static Item generateItem(ItemName itemName, Pokemon attacker, int moveIndex)	{
 		ArrayList<Effect> itemEffect = new ArrayList<Effect>(); 
 		Effect effect = new Effect(EffectType.NONE,0,0,"");
 		itemEffect.add(effect);
-		Item item = new Item(0, 0, false, false, itemName, itemEffect);
+		Item item = new Item(0, 0, 0, false, false, itemName, itemEffect);
 		itemEffect.clear();
 		
 		switch(itemName)	{
@@ -182,7 +181,7 @@ public class ItemDatabase {
 				effect.setEffectChance(100);
 				effect.setMagnitude(attacker.getMove(i).getMaxPP());
 				
-				itemEffect.add(effect);
+				itemEffect.add(0, effect);
 			}
 			item.setItemEffect(itemEffect);
 			break;
@@ -339,7 +338,13 @@ public class ItemDatabase {
 			item.setSellPrice(475);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(false);
-			attacker.getTempBattleStats().setACCBoost(attacker.getTempBattleStats().getACCBoost() + 1);
+			
+			effect.setEffectIndex(EffectType.STAT_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(1);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 			break;
 		case X_ATTACK:
 			item.setQuantity(1);
@@ -347,7 +352,13 @@ public class ItemDatabase {
 			item.setSellPrice(250);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(false);
-			attacker.getTempBattleStats().setATKBoost(attacker.getTempBattleStats().getATKBoost() + 1);
+			
+			effect.setEffectIndex(EffectType.STAT_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(2);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 			break;
 		case X_DEFEND:
 			item.setQuantity(1);
@@ -355,7 +366,13 @@ public class ItemDatabase {
 			item.setSellPrice(275);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(false);
-			attacker.getTempBattleStats().setDEFBoost(attacker.getTempBattleStats().getDEFBoost() + 1);
+			
+			effect.setEffectIndex(EffectType.STAT_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(3);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 			break;
 		case X_SPECIAL:
 			item.setQuantity(1);
@@ -363,7 +380,13 @@ public class ItemDatabase {
 			item.setSellPrice(175);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(false);
-			attacker.getTempBattleStats().setSPATKBoost(attacker.getTempBattleStats().getSPATKBoost() + 1);
+			
+			effect.setEffectIndex(EffectType.STAT_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(4);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 			break;
 		case X_SPEED:
 			item.setQuantity(1);
@@ -371,7 +394,13 @@ public class ItemDatabase {
 			item.setSellPrice(175);
 			item.setUseInBattle(true);
 			item.setUseOutOfBattle(false);
-			attacker.getTempBattleStats().setSPDBoost(attacker.getTempBattleStats().getSPDBoost() + 1);
+			
+			effect.setEffectIndex(EffectType.STAT_UP);
+			effect.setEffectChance(100);
+			effect.setMagnitude(5);
+			
+			itemEffect.add(0, effect);
+			item.setItemEffect(itemEffect);
 			break;
 		case GREAT_BALL:
 			item.setQuantity(1);

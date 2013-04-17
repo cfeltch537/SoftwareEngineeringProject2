@@ -16,7 +16,7 @@ public class Item {
 	private double catchRate = 0;
 	private int quantity = 0;
 
-	public Item(int sellPrice, int buyPrice, boolean useInBattle, boolean useOutOfBattle, ItemName itemName, ArrayList<Effect> itemEffect)	{
+	public Item(int quantity, int sellPrice, int buyPrice, boolean useInBattle, boolean useOutOfBattle, ItemName itemName, ArrayList<Effect> itemEffect)	{
 		this.sellPrice = sellPrice;
 		this.buyPrice = buyPrice;
 		this.useInBattle = useInBattle;

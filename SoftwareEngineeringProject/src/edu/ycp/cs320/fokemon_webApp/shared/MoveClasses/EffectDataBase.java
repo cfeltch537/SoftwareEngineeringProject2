@@ -91,6 +91,18 @@ public class EffectDataBase {
 		        case FLINCH:  //RecoverConstant HP
 			        Defender.getTempBattleStats().setFlinched(true);
 		            break;  
+		        case STAT_UP:
+		        	if(effect.get(i).getMagnitude() == 1)	{
+		        		Attacker.getTempBattleStats().setACCBoost(Attacker.getTempBattleStats().getACCBoost() + 1);
+		        	} else if(effect.get(i).getMagnitude() == 2)	{
+		        		Attacker.getTempBattleStats().setATKBoost(Attacker.getTempBattleStats().getATKBoost() + 1);
+		        	} else if(effect.get(i).getMagnitude() == 3)	{
+		        		Attacker.getTempBattleStats().setDEFBoost(Attacker.getTempBattleStats().getDEFBoost() + 1);
+		        	} else if(effect.get(i).getMagnitude() == 4)	{
+		        		Attacker.getTempBattleStats().setSPATKBoost(Attacker.getTempBattleStats().getSPATKBoost() + 1);
+		        	} else if(effect.get(i).getMagnitude() == 5)	{
+		        		Attacker.getTempBattleStats().setSPDBoost(Attacker.getTempBattleStats().getSPDBoost() + 1);
+		        	}
 		        default: //no effect
 		            break;
 				}
