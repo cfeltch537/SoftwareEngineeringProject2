@@ -21,7 +21,7 @@ public class Battle {
 	private Player user;
 	private Player opponent;
 	private Weather weather;
-	private Random rand;
+	private Random rand = new Random();
 	private ArrayList<String> battleMessage;
 	private Move confused;
 	private Boolean battleOver;
