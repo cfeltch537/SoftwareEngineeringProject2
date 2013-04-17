@@ -87,7 +87,10 @@ public class EffectDataBase {
 		        		battleMessage.add(Attacker.getInfo().getNickname() + " is already at the maximum level");
 		        	}
 		        	
-		        	break;
+		        	break;  
+		        case FLINCH:  //RecoverConstant HP
+			        Defender.getTempBattleStats().setFlinched(true);
+		            break;  
 		        default: //no effect
 		            break;
 				}

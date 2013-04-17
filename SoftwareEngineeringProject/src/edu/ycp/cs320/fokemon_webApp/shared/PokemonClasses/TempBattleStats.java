@@ -14,6 +14,7 @@ public class TempBattleStats {
 	private int ConfusedCount;
 	private int ConfusedTurns;
 	private boolean confused;
+	private boolean flinched;
 	private boolean skipTurn;
 	private boolean skipNextTurn;
 	private boolean seeded;
@@ -31,6 +32,7 @@ public class TempBattleStats {
 		setACCBoost(0);
 		setEVABoost(0);
 		setCRITBoost(0);
+		setFlinched(false);
 		setConfused(false);
 		setSkipTurn(false);
 		setSkipNextTurn(false);
@@ -188,6 +190,16 @@ public class TempBattleStats {
 
 	public void setConfusedCount(int confusedCount) {
 		ConfusedCount = confusedCount;
+	}
+
+
+	public boolean isFlinched() {
+		return flinched;
+	}
+
+
+	public void setFlinched(boolean flinched) {
+		this.flinched = flinched;
 	}
 	
 	

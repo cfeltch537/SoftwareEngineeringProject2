@@ -136,6 +136,7 @@ public class BattleView extends Composite{
 	void setBattle(Battle battle){
 		this.battle = battle;
 		onPokemonShift();
+		draw(battleBackBufferContext, battleContext);
 	}
 	
 	void doUpdate() {
@@ -146,6 +147,7 @@ public class BattleView extends Composite{
 	void onPokemonShift(){
 		updatePokemonLabels();
 		updatePokemonImages();
+		updatePokemonStatus();
 	}
 	public void draw(Context2d context, Context2d front) {
 		//context.save();
@@ -261,7 +263,7 @@ public class BattleView extends Composite{
 				break;
 			case 2: setItemOptions(); // BAG Selected			
 				break;
-			case 3: runAway();// RUN Selected
+			case 3: handleTurn(index,TurnChoice.RUN);;// RUN Selected
 				break;
 			default:
 				break;
@@ -282,13 +284,14 @@ public class BattleView extends Composite{
 			case 0: // TURN 1 SCREEN ... Message from Turn 1 Printing
 				if(messageIndex==0){
 					handleTurn1(index,userTurnChoice);
-					switchToNextScreen();	
+					switchToNextScreen();
 					}
 				if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
 					setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 					messageIndex++; //Move on too next message
 				}else{ // When no more messages to be displayed
 					messageIndex=0; //reset message index
+					checkEndBattle();
 					handleTurn2(); // Trigger turn 2 (Slower Pokemon)
 					switchToNextScreen(); // remain at next screen
 					turnIndex = 1; // Switch to Turn 2 Case
@@ -300,6 +303,7 @@ public class BattleView extends Composite{
 					messageIndex++;  //Move on too next message
 				}else{ // When no more messages to be displayed
 					messageIndex=0; // Reset message index
+					checkEndBattle();
 					handleTurn3(); // Trigger turn 3 (Post Battle Damage and Announcements)
 					if(battle.getBattleMessage().size()!=0){
 						 setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
@@ -493,10 +497,10 @@ public class BattleView extends Composite{
 		}
 	 }
 	void handleTurn2(){
-		 battle.Turn(2);
-		 updatePokemonStatus();
-		 setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
-		 messageIndex++;
+		battle.Turn(2);
+		updatePokemonStatus();
+		setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
+		messageIndex++;
 	 }
 	void handleTurn3(){
 		 battle.Turn(3);

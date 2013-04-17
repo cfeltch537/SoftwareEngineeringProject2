@@ -21,10 +21,11 @@ public class Battle {
 	private Player user;
 	private Player opponent;
 	private Weather weather;
-	private Random rand;
+	private Random rand = new Random();
 	private ArrayList<String> battleMessage;
 	private Move confused;
 	private Boolean battleOver;
+	private int runCount;
 	
 	
 	
@@ -36,10 +37,11 @@ public class Battle {
 		setInitialCurrentPokemon(user,0);
 		setInitialCurrentPokemon(opponent,0);
 		user.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
-		opponent.getTeam(user.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
-		opponent.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
+		runCount=0;
 	}
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
 		Pokemon wildPoke=Pokemon.GeneratePokemon(id,lvl);
@@ -220,6 +222,32 @@ public class Battle {
 			turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 			break;
 		case RUN:
+			
+			
+			if(otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getInfo().getIsWild()){
+				int a, b;
+				a=(int) (turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getStats().getSpd()*
+						 getStatMod(turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getTempBattleStats().getSPDBoost()));
+				
+				b=(int) (otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getStats().getSpd()*
+						 getStatMod(otherPlayer.getTeam(otherPlayer.getCurrentPokemonIndex()).getTempBattleStats().getSPDBoost()))/4%256;
+				int f=a*32/b+30*runCount;
+				if(f>255){
+					battleMessage.add("You got away safely");
+					battleOver=true;
+					
+				}else{
+					if(f>rand.nextInt(255)){
+						battleMessage.add("You got away safely");
+						battleOver=true;
+					}else{
+						battleMessage.add("You couldn't get away");
+					}
+					
+				}
+			}else{
+				battleMessage.add("You can't run away from a trainer battle");
+			}
 			break;
 		default:
 			break;
@@ -298,8 +326,15 @@ public class Battle {
 	private boolean CheckAttackStatus(Pokemon poke) {
 		Random rand=new Random();
 		int Chance=rand.nextInt(100);
+		//if battle.
 		//fainted
 		if(poke.getStats().getStatus()==Status.FNT)return false;
+		//flinched
+		if(poke.getTempBattleStats().isFlinched()==true){
+			battleMessage.add(poke.getInfo().getNickname()+" flinched. ");
+			poke.getTempBattleStats().setFlinched(false);
+			return false;
+		}
 		//Paralyzed
 		if(poke.getStats().getStatus()==Status.PRL && Chance<=25){
 			battleMessage.add(poke.getInfo().getNickname()+" is paralyzed and can't move! ");
@@ -604,7 +639,7 @@ public class Battle {
 	}
 	public void setInitialCurrentPokemon(Player player, int index){
 		if(player.getTeam(index).getStats().getStatus()==Status.FNT){
-			setInitialCurrentPokemon(player, index++);
+			setInitialCurrentPokemon(player, index+1);
 		}else{
 			player.setCurrentPokemonIndex(index);
 		}
@@ -612,18 +647,12 @@ public class Battle {
 	public Player getUser() {
 		return user;
 	}
-
-
 	public void setUser(Player user) {
 		this.user = user;
 	}
-
-
 	public Player getOpponent() {
 		return opponent;
 	}
-
-
 	public void setOpponent(Player opponent) {
 		this.opponent = opponent;
 	}

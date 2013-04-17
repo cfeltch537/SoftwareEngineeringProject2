@@ -27,5 +27,6 @@ public enum EffectType {
 	REST,
 	RECOVERFULL,
 	PP_UP,
-	LVL_UP
+	LVL_UP, 
+	FLINCH
 }
