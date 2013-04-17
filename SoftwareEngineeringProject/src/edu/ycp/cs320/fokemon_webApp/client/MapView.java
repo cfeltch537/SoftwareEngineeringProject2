@@ -7,6 +7,7 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
@@ -108,14 +109,15 @@ public class MapView extends Composite{
           		if(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isTallGrassPresent()){
           			//img.setVisibleRect(0, 0, img.getWidth(), img.getHeight()/2);
           			context.drawImage((ImageElement) img.getElement().cast(), 16*player.getPlayerLocation().getX()-3, 16*player.getPlayerLocation().getY()-15+2);
-          			FokemonUI.startBattle();
+          			if(Random.nextInt(100)<=12){
+          				FokemonUI.startBattle();
+          			}
           		}else{
 	            	context.drawImage((ImageElement) img.getElement().cast(), 16*player.getPlayerLocation().getX()-3, 16*player.getPlayerLocation().getY()-15+2);
           		}
         	  } 	
           	}
           }
-		
 		context.restore();
 		front.drawImage(context.getCanvas(), 0, 0);
 	}
