@@ -43,6 +43,13 @@ public class Battle {
 		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 		battleMessage=new ArrayList<String>();
+		if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getIsWild()){
+			battleMessage.add("A wild "+opponent.getName()+" appeared");
+		}else{
+			battleMessage.add("You encountered a battle with " +opponent.getName());
+			battleMessage.add(opponent.getName()+" send out "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
+		}
+		battleMessage.add("You send out "+user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname());
 		runCount=0;
 	}
 	public static Battle wildPokemonBattle(PokeID id, int lvl){
