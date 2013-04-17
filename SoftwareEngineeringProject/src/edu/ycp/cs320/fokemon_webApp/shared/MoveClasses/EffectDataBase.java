@@ -63,8 +63,13 @@ public class EffectDataBase {
 			        battleMessage.add(Defender.getInfo().getNickname()+" was One-Hit KOed.  ");
 		            break;
 		        case RECOVERCONST:  //RecoverConstant HP
-			        Attacker.getStats().setCurHp(Attacker.getStats().getCurHp()+effect.get(i).getMagnitude());
-			        battleMessage.add(Attacker.getInfo().getNickname()+" has recovered HP.  ");
+		        	if(Attacker.getStats().getCurHp() + effect.get(i).getMagnitude() > Attacker.getStats().getMaxHp())	{
+		        		Attacker.getStats().setCurHp(Attacker.getStats().getMaxHp());
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s HP was set to the maximum");
+		        	}	else {
+		        		Attacker.getStats().setCurHp(Attacker.getStats().getCurHp()+effect.get(i).getMagnitude());
+				        battleMessage.add(Attacker.getInfo().getNickname()+" has recovered HP.  ");
+		        	}
 		            break;  
 		        case RECOVERFULL:
 		        	if(Attacker.getStats().getStatus() != Status.FNT){
@@ -86,7 +91,6 @@ public class EffectDataBase {
 		        	}	else	{
 		        		battleMessage.add(Attacker.getInfo().getNickname() + " is already at the maximum level");
 		        	}
-		        	
 		        	break;  
 		        case FLINCH:  //RecoverConstant HP
 			        Defender.getTempBattleStats().setFlinched(true);
@@ -94,14 +98,19 @@ public class EffectDataBase {
 		        case STAT_UP:
 		        	if(effect.get(i).getMagnitude() == 1)	{
 		        		Attacker.getTempBattleStats().setACCBoost(Attacker.getTempBattleStats().getACCBoost() + 1);
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s accuracy was increased by 1");
 		        	} else if(effect.get(i).getMagnitude() == 2)	{
 		        		Attacker.getTempBattleStats().setATKBoost(Attacker.getTempBattleStats().getATKBoost() + 1);
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s attack was increased by 1");
 		        	} else if(effect.get(i).getMagnitude() == 3)	{
 		        		Attacker.getTempBattleStats().setDEFBoost(Attacker.getTempBattleStats().getDEFBoost() + 1);
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s defense was increased by 1");
 		        	} else if(effect.get(i).getMagnitude() == 4)	{
 		        		Attacker.getTempBattleStats().setSPATKBoost(Attacker.getTempBattleStats().getSPATKBoost() + 1);
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s special attack was increased by 1");
 		        	} else if(effect.get(i).getMagnitude() == 5)	{
 		        		Attacker.getTempBattleStats().setSPDBoost(Attacker.getTempBattleStats().getSPDBoost() + 1);
+		        		battleMessage.add(Attacker.getInfo().getNickname() + "'s speed was increased by 1");
 		        	}
 		        default: //no effect
 		            break;
