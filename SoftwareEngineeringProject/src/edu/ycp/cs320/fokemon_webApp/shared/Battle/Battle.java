@@ -25,12 +25,14 @@ public class Battle {
 	private ArrayList<String> battleMessage;
 	private Move confused;
 	private Boolean battleOver;
+	private Boolean switchTeam;
 	private int runCount;
 	
 	
 	
 	public Battle(Player user, Player opponent){
 		battleOver=false;
+		switchTeam=false;
 		confused=MoveDataBase.generateMove(MoveName.Confused);
 		this.setUser(user);
 		this.setOpponent(opponent);
@@ -179,6 +181,7 @@ public class Battle {
 		if(player.getTeam(player.getMoveIndex()).getStats().getStatus()==Status.FNT)return false;
 		break;
 	case RUN:
+		if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getIsWild()==false)return false;
 		//not a wild pokemon
 		break;
 	default:
@@ -264,16 +267,44 @@ public class Battle {
 }
 	private void CheckFaintedPokemon() {
 	// TODO Auto-generated method stub
+	boolean teamAlive=false;
 	if(user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
 		user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
-		battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
-		battleOver=true;
+		
+		for(int i=0;i<user.getTeamSize();i++){
+			if (user.getTeam(i).getStats().getStatus()!=Status.FNT)teamAlive=true;
+		}
+		
+		if(teamAlive){
+			switchTeam=true;
+			battleMessage.add("Switch to a non-fainted pokemon");
+			
+		}else{
+			battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
+			battleOver=true;
+		}
 	}
+	teamAlive=false;
 	if(opponent.getTeam(opponent.getCurrentPokemonIndex()).getStats().getStatus()==Status.FNT){
-		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
 		CalculateXP(user.getTeam(),opponent.getTeam(opponent.getCurrentPokemonIndex()));
-		battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
-		battleOver=true;
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
+		for(int i=0;i<opponent.getTeamSize();i++){
+			if (opponent.getTeam(i).getStats().getStatus()!=Status.FNT)teamAlive=true;
+		}
+		if(teamAlive){
+			int pokeIndex=0;
+			while(teamAlive){
+				if(opponent.getTeam(pokeIndex).getStats().getStatus()!=Status.FNT){
+					teamAlive=false;
+					opponent.setCurrentPokemonIndex(pokeIndex);
+				}
+				pokeIndex++;
+			}
+		}else{
+			
+			battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has lost the battle.  ");
+			battleOver=true;
+		}
 	}
 	
 }
@@ -326,7 +357,8 @@ public class Battle {
 	private boolean CheckAttackStatus(Pokemon poke) {
 		Random rand=new Random();
 		int Chance=rand.nextInt(100);
-		//if battle.
+		//if battle is over.
+		if(battleOver)return false;
 		//fainted
 		if(poke.getStats().getStatus()==Status.FNT)return false;
 		//flinched
@@ -667,6 +699,12 @@ public class Battle {
 	}
 	public void setBattleOver(Boolean battleOver) {
 		this.battleOver = battleOver;
+	}
+	public Boolean getSwitchTeam() {
+		return switchTeam;
+	}
+	public void setSwitchTeam(Boolean switchTeam) {
+		this.switchTeam = switchTeam;
 	}
 
 }
