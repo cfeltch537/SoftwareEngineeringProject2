@@ -618,18 +618,12 @@ public class Battle {
 	public Player getUser() {
 		return user;
 	}
-
-
 	public void setUser(Player user) {
 		this.user = user;
 	}
-
-
 	public Player getOpponent() {
 		return opponent;
 	}
-
-
 	public void setOpponent(Player opponent) {
 		this.opponent = opponent;
 	}
