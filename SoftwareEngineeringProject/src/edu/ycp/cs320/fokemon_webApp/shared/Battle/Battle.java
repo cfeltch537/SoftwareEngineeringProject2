@@ -226,6 +226,7 @@ public class Battle {
 			break;
 		case ITEM:
 			battleMessage.add(turnPlayer.getName()+" used "+turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemName());
+			turnPlayer.getItems(turnPlayer.getMoveIndex()).setQuantity(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()-1);
 			//EffectDataBase.moveEffect(userPoke, oppPoke, turnPlayer.getItems(turnPlayer.getMoveIndex()).
 			break;
 		case SWITCH:
