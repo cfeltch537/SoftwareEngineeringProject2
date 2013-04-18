@@ -3,6 +3,7 @@ package edu.ycp.cs320.fokemon_webApp.shared.Player;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.Item;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
@@ -15,10 +16,10 @@ public class Player {
 	private Location PlayerLocation;
 	private int PlayerID;
 	private ArrayList <Pokemon> team;
+	private ArrayList <Item>items;
 	private int currentPokemonIndex;
 	private TurnChoice choice;
 	private int moveIndex;
-	private int itemIndex;
 	private int turnOrder;
 	
 	
@@ -29,11 +30,11 @@ public class Player {
 		this.setGender(gender); // True = Boy; False = Girl
 		this.currentPokemonIndex=0;
 		this.moveIndex=0;
-		this.itemIndex=0;
 		this.choice=TurnChoice.MOVE;
 		this.turnOrder=0;
 		
 		team=new ArrayList<Pokemon>();
+		items=new ArrayList<Item>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
 		//team.add(new Pokemon())
 		
@@ -112,13 +113,6 @@ public class Player {
 		this.moveIndex = moveIndex;
 	}
 
-	public int getItemIndex() {
-		return itemIndex;
-	}
-
-	public void setItemIndex(int itemIndex) {
-		this.itemIndex = itemIndex;
-	}
 	public void addPokemonToTeam(Pokemon pokemon){
 		team.add(pokemon);
 	}
@@ -129,6 +123,17 @@ public class Player {
 
 	public void setTurnOrder(int TurnOrder) {
 		turnOrder = TurnOrder;
+	}
+
+	public ArrayList <Item> getItems() {
+		return items;
+	}
+	public Item getItems(int index) {
+		return items.get(index);
+	}
+
+	public void setItems(ArrayList <Item> items) {
+		this.items = items;
 	}
 
 }

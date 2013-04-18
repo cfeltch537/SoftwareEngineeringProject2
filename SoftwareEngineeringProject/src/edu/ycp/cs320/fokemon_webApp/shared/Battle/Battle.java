@@ -225,6 +225,8 @@ public class Battle {
 			 }
 			break;
 		case ITEM:
+			battleMessage.add(turnPlayer.getName()+" used "+turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemName());
+			//EffectDataBase.moveEffect(userPoke, oppPoke, turnPlayer.getItems(turnPlayer.getMoveIndex()).
 			break;
 		case SWITCH:
 			turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
