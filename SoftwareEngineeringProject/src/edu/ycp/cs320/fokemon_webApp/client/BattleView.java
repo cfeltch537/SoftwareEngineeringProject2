@@ -3,8 +3,6 @@ package edu.ycp.cs320.fokemon_webApp.client;
 
 import java.util.ArrayList;
 
-import org.apache.commons.collections.functors.SwitchTransformer;
-
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -19,12 +17,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
-import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite{
 	static final String holderId = "canvasholder";
@@ -282,49 +278,58 @@ public class BattleView extends Composite{
 	void handleTurn(int userMoveIndex, TurnChoice userTurnChoice){
 		switch(turnIndex){
 			case 0: // TURN 1 SCREEN ... Message from Turn 1 Printing
-				if(messageIndex==0){
-					handleTurn1(index,userTurnChoice);
-					switchToNextScreen();
+				if(!battle.getBattleOver()){
+					if(messageIndex==0){
+						handleTurn1(index,userTurnChoice);
+						switchToNextScreen();
+						}
+					if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
+						setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
+						messageIndex++; //Move on too next message
+					}else{ // When no more messages to be displayed
+						messageIndex=0; //reset message index
+						handleTurn2(); // Trigger turn 2 (Slower Pokemon)
+						switchToNextScreen(); // remain at next screen
+						turnIndex = 1; // Switch to Turn 2 Case
 					}
-				if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
-					setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
-					messageIndex++; //Move on too next message
-				}else{ // When no more messages to be displayed
-					messageIndex=0; //reset message index
+				}else{
 					checkEndBattle();
-					handleTurn2(); // Trigger turn 2 (Slower Pokemon)
-					switchToNextScreen(); // remain at next screen
-					turnIndex = 1; // Switch to Turn 2 Case
 				}
 				break;
 			case 1: // Turn 2 case
-				if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
-					setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
-					messageIndex++;  //Move on too next message
-				}else{ // When no more messages to be displayed
-					messageIndex=0; // Reset message index
-					checkEndBattle();
-					handleTurn3(); // Trigger turn 3 (Post Battle Damage and Announcements)
-					if(battle.getBattleMessage().size()!=0){
-						 setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
-						 turnIndex = 2;
-					}else{
-						messageIndex=0;  // Reset message index
-						turnIndex = 0;
-						setBattleOptions(); // Return to Cattle Options for next turn
+				if(!battle.getBattleOver()){	
+					if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
+						setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
+						messageIndex++;  //Move on too next message
+					}else{ // When no more messages to be displayed
+						messageIndex=0; // Reset message index
+						handleTurn3(); // Trigger turn 3 (Post Battle Damage and Announcements)
+						if(battle.getBattleMessage().size()!=0){
+							 setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
+							 turnIndex = 2;
+						}else{
+							messageIndex=0;  // Reset message index
+							turnIndex = 0;
+							setBattleOptions(); // Return to Cattle Options for next turn
+						}
 					}
+				}else{
+					checkEndBattle();
 				}
 				break;
 			case 2: // Turn 3 Case
-				if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
-					setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
-					messageIndex++;  //Move on too next message
-				}else{ // When no more messages to be displayed
-					messageIndex=0;  //reset message index
-					setBattleOptions(); // Return to Cattle Options for next turn
+				if(!battle.getBattleOver()){
+					if(messageIndex<battle.getBattleMessage().size()){ //While there is still a message to be displayed
+						setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
+						messageIndex++;  //Move on too next message
+					}else{ // When no more messages to be displayed
+						messageIndex=0;  //reset message index
+						setBattleOptions(); // Return to Battle Options for next turn
+					}
+					turnIndex=0;
+				}else{
 					checkEndBattle();
 				}
-				turnIndex=0;
 				break;
 		}
 	}
@@ -503,12 +508,12 @@ public class BattleView extends Composite{
 		messageIndex++;
 	 }
 	void handleTurn3(){
-		 battle.Turn(3);
-		 updatePokemonStatus();
-		 if(battle.getBattleMessage().size()!=0){
+		battle.Turn(3);
+		updatePokemonStatus();
+		if(battle.getBattleMessage().size()!=0){
 		 setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
-		 }
-		 messageIndex++;
+		}
+		messageIndex++;
 	 }
 	void checkEndBattle(){
 		if(battle.getBattleOver()){
