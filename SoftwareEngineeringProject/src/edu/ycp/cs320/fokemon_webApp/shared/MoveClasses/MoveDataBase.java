@@ -19,12 +19,6 @@ public class MoveDataBase {
 		
 		
 		switch (moveName) {
-		case Confused:
-			move.setDamage(40);
-			move.setMaxPP(100000);
-			move.setAccuracy(-1);
-				break;
-   	
 	case Absorb:
 		move.setDamage(20);
 		move.setAccuracy(100);
@@ -644,9 +638,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.NORMAL);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(30);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(30);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -708,9 +702,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.NORMAL);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(10);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(10);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -1182,9 +1176,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.ROCK);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(30);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(30);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -1206,9 +1200,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.FIGHTING);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(30);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(30);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -1304,9 +1298,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.FLYING);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(30);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(30);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -1454,9 +1448,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.NORMAL);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(30);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(30);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);
@@ -1790,9 +1784,9 @@ public class MoveDataBase {
     	move.setPhysical(true);
     	move.setPokeType(PokeType.WATER);
     	
-//    	effect.setEffectIndex(EffectType.FLINCH);
-//    	effect.setEffectChance(20);
-//    	effect.setMagnitude(0);
+    	effect.setEffectIndex(EffectType.FLINCH);
+    	effect.setEffectChance(20);
+    	effect.setMagnitude(0);
     	
     	effectList.add(0, effect);
     	move.setEffect(effectList);

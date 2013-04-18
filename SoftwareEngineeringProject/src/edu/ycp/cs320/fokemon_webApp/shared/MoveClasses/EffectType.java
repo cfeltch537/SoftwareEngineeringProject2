@@ -24,6 +24,10 @@ public enum EffectType {
 	BOOSTSPDEF,
 	BOOSTSPD,
 	BOOSTACCUR,
-	REST, 
+	REST,
+	RECOVERFULL,
+	PP_UP,
+	LVL_UP, 
 	FLINCH,
+	STAT_UP
 }

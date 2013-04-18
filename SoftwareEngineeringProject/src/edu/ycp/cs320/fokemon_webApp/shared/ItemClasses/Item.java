@@ -1,5 +1,9 @@
 package edu.ycp.cs320.fokemon_webApp.shared.ItemClasses;
 
+import java.util.ArrayList;
+
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
+
 
 
 public class Item {
@@ -7,16 +11,18 @@ public class Item {
 	private int buyPrice;
 	private boolean useInBattle;
 	private boolean useOutOfBattle;
+	private ArrayList<Effect> itemEffect;
 	private ItemName itemName;
 	private double catchRate = 0;
 	private int quantity = 0;
 
-	public Item(int sellPrice, int buyPrice, boolean useInBattle, boolean useOutOfBattle, ItemName itemName)	{
+	public Item(int quantity, int sellPrice, int buyPrice, boolean useInBattle, boolean useOutOfBattle, ItemName itemName, ArrayList<Effect> itemEffect)	{
 		this.sellPrice = sellPrice;
 		this.buyPrice = buyPrice;
 		this.useInBattle = useInBattle;
 		this.useOutOfBattle = useOutOfBattle;
 		this.itemName = itemName;
+		this.itemEffect = itemEffect;
 	}
 
 	/**
@@ -106,6 +112,20 @@ public class Item {
 	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	/**
+	 * @return the itemEffect
+	 */
+	public ArrayList<Effect> getItemEffect() {
+		return itemEffect;
+	}
+
+	/**
+	 * @param itemEffect the itemEffect to set
+	 */
+	public void setItemEffect(ArrayList<Effect> itemEffect) {
+		this.itemEffect = itemEffect;
 	}
 
 }
