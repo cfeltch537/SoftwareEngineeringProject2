@@ -46,6 +46,7 @@ public class FokemonUI implements EntryPoint {
 		createPokedexReader();
 		map = new MapView();
 		RootPanel.get(holderId).add(map.mapPanel);
+		map.initialize();
 		map.setFocusCanvas();
 		tempView = new CirculatingImagesView();
 		// System.out.println(pokedex.getPokeMap().firstKey().toString());

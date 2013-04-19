@@ -26,12 +26,15 @@ public class MapView extends Composite {
 	Image img;
 	static int height;
 	static int width;
+	Image playerImage;
+	Image playerImageCovered;
 
 	public MapView() {
 
 		mapPanel = new AbsolutePanel();
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player
-																			// Cody
+		playerImage = new Image("23x25_Trainer_Front.png");															// Cody
+		playerImageCovered = new Image("23x25_Trainer_Front.png");		
 		areaList = new Area[2];
 		areaList[0] = new Area();
 		areaList[0].createTallGrassSquare(5, 5, 10, 4);
@@ -68,15 +71,14 @@ public class MapView extends Composite {
 	}
 
 	void initialize() {
-		// update the back canvas, set to fron canvas
+		// update the back canvas, set to front canvas
+		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 		drawFlooring(backBufferContext, context);
 		drawInteractableObjects(backBufferContext, context);
 		drawPlayer(backBufferContext, context);
 	}
 	void doUpdate() {
 		// update the back canvas, set to fron canvas
-		drawFlooring(backBufferContext, context);
-		drawInteractableObjects(backBufferContext, context);
 		drawPlayer(backBufferContext, context);
 	}
 
@@ -141,25 +143,23 @@ public class MapView extends Composite {
 					.getAreaArrayIndex()].terrain[height].length; width++) {
 				if (height == player.getPlayerLocation().getX()
 						&& width == player.getPlayerLocation().getY()) {
-					img = new Image("23x25_Trainer_Front.png");
 					if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player
 							.getPlayerLocation().getX()][player
 							.getPlayerLocation().getY()].isTallGrassPresent()) {
-						// img.setVisibleRect(0, 0, img.getWidth(),
-						// img.getHeight()/2);
-						context.drawImage((ImageElement) img.getElement()
-								.cast(),
+						mapPanel.remove(playerImage);
+						mapPanel.add(playerImageCovered,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
 						if (Random.nextInt(100) <= 12) {
 							FokemonUI.startBattle();
 						}
 					} else {
-						context.drawImage((ImageElement) img.getElement()
-								.cast(),
+						mapPanel.remove(playerImageCovered);
+						mapPanel.add(playerImage,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
 					}
+				mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 				}
 			}
 		}
