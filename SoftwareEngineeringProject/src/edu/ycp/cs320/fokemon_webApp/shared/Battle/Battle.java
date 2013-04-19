@@ -294,8 +294,8 @@ public class Battle {
 				turnPlayer.getItems(turnPlayer.getMoveIndex()).setQuantity(
 						turnPlayer.getItems(turnPlayer.getMoveIndex())
 								.getQuantity() - 1);
-				// EffectDataBase.moveEffect(userPoke, oppPoke,
-				// turnPlayer.getItems(turnPlayer.getMoveIndex()).
+				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()<1)turnPlayer.getItems().remove(turnPlayer.getMoveIndex());
+				 EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect());
 				break;
 			case SWITCH:
 				turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());

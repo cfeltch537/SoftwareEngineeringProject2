@@ -15,6 +15,8 @@
 package edu.ycp.cs320.fokemon_webApp.client;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
@@ -38,6 +40,13 @@ public class TempBattle {
 		loc = new Location(0, 0, 0);
 		user = new Player(200, "Cody F.", true, loc);
 		opp = new Player(100, "Roberto", true, loc);
+		
+		user.getItems().add(ItemDatabase.generateItem(ItemName.SUPER_POTION,5));
+		user.getItems().add(ItemDatabase.generateItem(ItemName.HYPER_POTION,5));
+		user.getItems().add(ItemDatabase.generateItem(ItemName.REVIVE,5));
+		user.getItems().add(ItemDatabase.generateItem(ItemName.MASTER_BALL,5));
+		user.getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,5));
+		
 		Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
 		Attacker.getInfo().setNickname("Charizizzle");
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
