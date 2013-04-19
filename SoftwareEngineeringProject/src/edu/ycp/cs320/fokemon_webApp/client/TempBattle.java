@@ -24,7 +24,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 public class TempBattle {
-  
+
 	private Pokemon Attacker;
 	private Pokemon Defender;
 	private Move AttackerMove;
@@ -33,27 +33,28 @@ public class TempBattle {
 	private Player opp;
 	private Location loc;
 	private Battle battle;
-	
-  public TempBattle() {
-		loc=new Location(0, 0, 0);
-		user=new Player(200, "Cody F.", true, loc);
-		opp=new Player(100,"Roberto", true, loc);
-		Attacker=Pokemon.GeneratePokemon(PokeID.Charizard, 50);
+
+	public TempBattle() {
+		loc = new Location(0, 0, 0);
+		user = new Player(200, "Cody F.", true, loc);
+		opp = new Player(100, "Roberto", true, loc);
+		Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
 		Attacker.getInfo().setNickname("Charizizzle");
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Bite));
-		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Flamethrower));
+		Attacker.getMoves().add(
+				MoveDataBase.generateMove(MoveName.Flamethrower));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Acid));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Hyper_Beam));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Hydro_Pump));
 		Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.SolarBeam));
-		Defender=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
+		Defender = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
 		Defender.getInfo().setNickname("Pikajew");
 		Defender.getMoves().add(DefenderMove);
-		Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Snorlax, 35);
-		Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Blastoise,30);
-		Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Abra,10);
-		Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Gastly,35);
+		Pokemon Attacker2 = Pokemon.GeneratePokemon(PokeID.Snorlax, 99);
+		Pokemon Attacker3 = Pokemon.GeneratePokemon(PokeID.Blastoise, 30);
+		Pokemon Defender2 = Pokemon.GeneratePokemon(PokeID.Abra, 10);
+		Pokemon Defender3 = Pokemon.GeneratePokemon(PokeID.Gastly, 35);
 		user.getTeam().add(Attacker);
 		user.getTeam().add(Attacker2);
 		user.getTeam().add(Attacker3);
@@ -61,35 +62,34 @@ public class TempBattle {
 		opp.getTeam().add(Defender2);
 		opp.getTeam().add(Defender3);
 		setBattle(new Battle(user, opp));
-  }
-  
+	}
 
-public static Player getUser() {
+	public static Player getUser() {
 
-	return user;
-}
+		return user;
+	}
 
-public void setUser(Player user) {
-	this.user = user;
-}
+	public void setUser(Player user) {
+		this.user = user;
+	}
 
-public Player getOpp() {
-	return opp;
-}
+	public Player getOpp() {
+		return opp;
+	}
 
-public void setOpp(Player opp) {
-	this.opp = opp;
-}
+	public void setOpp(Player opp) {
+		this.opp = opp;
+	}
 
-public void update() {
-    
-  }
+	public void update() {
 
-public Battle getBattle() {
-	return battle;
-}
+	}
 
-public void setBattle(Battle battle) {
-	this.battle = battle;
-}
+	public Battle getBattle() {
+		return battle;
+	}
+
+	public void setBattle(Battle battle) {
+		this.battle = battle;
+	}
 }

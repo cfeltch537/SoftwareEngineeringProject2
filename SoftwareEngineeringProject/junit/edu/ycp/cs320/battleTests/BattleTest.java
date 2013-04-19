@@ -20,100 +20,100 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
+public class BattleTest extends TestCase {
 
-public class BattleTest extends TestCase{
-	
-		// TODO - define test fixture objects
-		private Pokemon Attacker;
-		private Pokemon Defender;
-		private Move AttackerMove;
-		private Move DefenderMove;
-		private Player user;
-		private Player opp;
-		private Location loc;
-		private Battle battle;
-		
-		
-		@Override
-		protected void setUp() throws Exception {
-			// TODO - create test fixture objects
-			loc=new Location(0, 0, 0);
-			AttackerMove=MoveDataBase.generateMove(MoveName.Tackle);
-			DefenderMove=MoveDataBase.generateMove(MoveName.Bite);
-			Attacker=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
-			Defender=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-			Attacker.getMoves().add(AttackerMove);
-			Attacker.getMoves().add(DefenderMove);
-			Defender.getMoves().add(DefenderMove);
+	// TODO - define test fixture objects
+	private Pokemon Attacker;
+	private Pokemon Defender;
+	private Move AttackerMove;
+	private Move DefenderMove;
+	private Player user;
+	private Player opp;
+	private Location loc;
+	private Battle battle;
 
-			Pokemon Attacker2=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
-			Attacker2=Attacker;
-			Pokemon Attacker3=Pokemon.GeneratePokemon(PokeID.Charizard, 40);
-			Attacker3=Attacker;
-			
-			Pokemon Defender2=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-			Defender2=Defender;
-			Pokemon Defender3=Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-			Defender3=Defender;
-			user=new Player(200, "joey", false, loc);
-			user.getTeam().add(Attacker);
-			user.getTeam().add(Attacker2);
-			user.getTeam().add(Attacker3);
-			opp=new Player(100,"tony", false, loc);
-			opp.getTeam().add(Defender);
-			opp.getTeam().add(Defender2);
-			opp.getTeam().add(Defender3);
+	@Override
+	protected void setUp() throws Exception {
+		// TODO - create test fixture objects
+		loc = new Location(0, 0, 0);
+		AttackerMove = MoveDataBase.generateMove(MoveName.Tackle);
+		DefenderMove = MoveDataBase.generateMove(MoveName.Bite);
+		Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
+		Defender = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
+		Attacker.getMoves().add(AttackerMove);
+		Attacker.getMoves().add(DefenderMove);
+		Defender.getMoves().add(DefenderMove);
 
-			user=new Player(200, "joey", false, loc);
-			user.getTeam().add(Attacker);
-			opp=new Player(100,"tony", false, loc);
-			opp.getTeam().add(Defender);
+		Pokemon Attacker2 = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
+		Attacker2 = Attacker;
+		Pokemon Attacker3 = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
+		Attacker3 = Attacker;
 
-			battle=new Battle(user, opp);
+		Pokemon Defender2 = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
+		Defender2 = Defender;
+		Pokemon Defender3 = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
+		Defender3 = Defender;
+		user = new Player(200, "joey", false, loc);
+		user.getTeam().add(Attacker);
+		user.getTeam().add(Attacker2);
+		user.getTeam().add(Attacker3);
+		opp = new Player(100, "tony", false, loc);
+		opp.getTeam().add(Defender);
+		opp.getTeam().add(Defender2);
+		opp.getTeam().add(Defender3);
+
+		user = new Player(200, "joey", false, loc);
+		user.getTeam().add(Attacker);
+		opp = new Player(100, "tony", false, loc);
+		opp.getTeam().add(Defender);
+
+		battle = new Battle(user, opp);
+	}
+
+	// TODO - add test methods
+	public void testCalcDamage() throws Exception {
+		int damage1 = battle.CalcDamage(Attacker, Defender, AttackerMove);
+		int damage2 = battle.CalcDamage(Defender, Attacker, AttackerMove);
+		assertTrue(damage1 > damage2);
+	}
+
+	public void testTurn() throws Exception {
+		user.getTeam(0).getStats().fullHeal();
+		opp.getTeam(0).getStats().fullHeal();
+		int userHP = user.getTeam(0).getStats().getCurHp();
+		int oppHP = opp.getTeam(0).getStats().getCurHp();
+		Attacker.getTempBattleStats().setACCBoost(6);
+		Attacker.getTempBattleStats().setEVABoost(-6);
+		Defender.getTempBattleStats().setACCBoost(6);
+		Defender.getTempBattleStats().setEVABoost(-6);
+		battle.Turn();
+		assertTrue(userHP > battle.getUser().getTeam(0).getStats().getCurHp());
+		assertTrue(userHP > user.getTeam(0).getStats().getCurHp());
+		assertTrue(oppHP > opp.getTeam(0).getStats().getCurHp());
+		assertEquals(Attacker, user.getTeam(0));
+		assertEquals(user, battle.getUser());
+	}
+
+	public void testAttack() throws Exception {
+		user.getTeam(0).getStats().fullHeal();
+		opp.getTeam(0).getStats().fullHeal();
+		int attackerHP = Attacker.getStats().getCurHp();
+		int defenderHP = Attacker.getStats().getCurHp();
+		Attacker.getTempBattleStats().setACCBoost(6);
+		Attacker.getTempBattleStats().setEVABoost(-6);
+		Defender.getTempBattleStats().setACCBoost(6);
+		Defender.getTempBattleStats().setEVABoost(-6);
+
+		battle.attack(Attacker, Defender, Attacker.getMove(0));
+		battle.attack(Defender, Attacker, Defender.getMove(0));
+		assertTrue(attackerHP > Attacker.getStats().getCurHp());
+		assertTrue(defenderHP > Defender.getStats().getCurHp());
+
+		while (Defender.getStats().getCurHp() > 0) {
+			battle.attack(Attacker, Defender, Attacker.getMove(0));
 		}
-		
-		// TODO - add test methods
-		public void testCalcDamage() throws Exception {
-			int damage1=battle.CalcDamage(Attacker, Defender, AttackerMove);
-			int damage2=battle.CalcDamage(Defender, Attacker, AttackerMove);
-			assertTrue(damage1>damage2);
-		}
-		public void testTurn() throws Exception {
-			user.getTeam(0).getStats().fullHeal();
-			opp.getTeam(0).getStats().fullHeal();
-			int userHP=user.getTeam(0).getStats().getCurHp();
-			int oppHP=opp.getTeam(0).getStats().getCurHp();
-			Attacker.getTempBattleStats().setACCBoost(6);
-			Attacker.getTempBattleStats().setEVABoost(-6);
-			Defender.getTempBattleStats().setACCBoost(6);
-			Defender.getTempBattleStats().setEVABoost(-6);
-			battle.Turn();
-			assertTrue(userHP>battle.getUser().getTeam(0).getStats().getCurHp());
-			assertTrue(userHP>user.getTeam(0).getStats().getCurHp());
-			assertTrue(oppHP>opp.getTeam(0).getStats().getCurHp());
-			assertEquals(Attacker, user.getTeam(0));
-			assertEquals(user,battle.getUser());
-		}
-		public void testAttack() throws Exception {
-			user.getTeam(0).getStats().fullHeal();
-			opp.getTeam(0).getStats().fullHeal();
-			int attackerHP=Attacker.getStats().getCurHp();
-			int defenderHP=Attacker.getStats().getCurHp();
-			Attacker.getTempBattleStats().setACCBoost(6);
-			Attacker.getTempBattleStats().setEVABoost(-6);
-			Defender.getTempBattleStats().setACCBoost(6);
-			Defender.getTempBattleStats().setEVABoost(-6);
-			
-			battle.attack(Attacker, Defender,Attacker.getMove(0));
-			battle.attack(Defender, Attacker, Defender.getMove(0));
-			assertTrue(attackerHP>Attacker.getStats().getCurHp());
-			assertTrue(defenderHP>Defender.getStats().getCurHp());
-			
-			while(Defender.getStats().getCurHp()>0){
-				battle.attack(Attacker, Defender, Attacker.getMove(0));
-			}
-			assertEquals(Defender.getStats().getCurHp(), 0);
-			assertEquals(Defender.getStats().getStatus(), Status.FNT);
-		}
-		
+		assertEquals(Defender.getStats().getCurHp(), 0);
+		assertEquals(Defender.getStats().getStatus(), Status.FNT);
+	}
+
 }

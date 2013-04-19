@@ -7,52 +7,48 @@ import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.Item;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
-
-
-
 public class Player {
 	private String name;
 	private boolean gender;
 	private Location PlayerLocation;
 	private int PlayerID;
-	private ArrayList <Pokemon> team;
-	private ArrayList <Item>items;
+	private ArrayList<Pokemon> team;
+	private ArrayList<Item> items;
 	private int currentPokemonIndex;
 	private TurnChoice choice;
 	private int moveIndex;
 	private int turnOrder;
-	
-	
 
-	public Player(int PlayerID, String name, boolean gender, Location playerLocation){
+	public Player(int PlayerID, String name, boolean gender,
+			Location playerLocation) {
 		this.setPlayerID(PlayerID);
 		this.setName(name);
 		this.setGender(gender); // True = Boy; False = Girl
-		this.currentPokemonIndex=0;
-		this.moveIndex=0;
-		this.choice=TurnChoice.MOVE;
-		this.turnOrder=0;
-		
-		team=new ArrayList<Pokemon>();
-		items=new ArrayList<Item>();
-		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(), playerLocation.getX(), playerLocation.getY()));
-		//team.add(new Pokemon())
-		
+		this.currentPokemonIndex = 0;
+		this.moveIndex = 0;
+		this.choice = TurnChoice.MOVE;
+		this.turnOrder = 0;
+
+		team = new ArrayList<Pokemon>();
+		items = new ArrayList<Item>();
+		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(),
+				playerLocation.getX(), playerLocation.getY()));
+		// team.add(new Pokemon())
 
 	}
 
 	public int getTeamSize() {
-		return team.size();	
+		return team.size();
 	}
 
 	public Pokemon getTeam(int i) {
 		return team.get(i);
 	}
-	
+
 	public ArrayList<Pokemon> getTeam() {
 		return team;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -90,8 +86,8 @@ public class Player {
 	}
 
 	public void setCurrentPokemonIndex(int currentPokemonIndex) {
-		if (currentPokemonIndex<getTeamSize()){
-			if(team.get(currentPokemonIndex).getStats().getStatus()!=Status.FNT){
+		if (currentPokemonIndex < getTeamSize()) {
+			if (team.get(currentPokemonIndex).getStats().getStatus() != Status.FNT) {
 				this.currentPokemonIndex = currentPokemonIndex;
 			}
 		}
@@ -113,7 +109,7 @@ public class Player {
 		this.moveIndex = moveIndex;
 	}
 
-	public void addPokemonToTeam(Pokemon pokemon){
+	public void addPokemonToTeam(Pokemon pokemon) {
 		team.add(pokemon);
 	}
 
@@ -125,14 +121,15 @@ public class Player {
 		turnOrder = TurnOrder;
 	}
 
-	public ArrayList <Item> getItems() {
+	public ArrayList<Item> getItems() {
 		return items;
 	}
+
 	public Item getItems(int index) {
 		return items.get(index);
 	}
 
-	public void setItems(ArrayList <Item> items) {
+	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
 
