@@ -175,9 +175,13 @@ public class BattleView extends Composite {
 		playerXPBar.doUpdate(
 				(double) battle.getUser()
 						.getTeam(battle.getUser().getCurrentPokemonIndex())
-						.getStats().getCurHp(), (double) battle.getUser()
-						.getTeam(battle.getUser().getCurrentPokemonIndex())
-						.getStats().getMaxHp());
+						.getInfo().getXp() - Math.pow(battle.getUser()
+								.getTeam(battle.getUser().getCurrentPokemonIndex())
+								.getInfo().getLvl(), 3), (double) Math.pow(battle.getUser()
+								.getTeam(battle.getUser().getCurrentPokemonIndex())
+								.getInfo().getLvl()+1, 3) - Math.pow(battle.getUser()
+										.getTeam(battle.getUser().getCurrentPokemonIndex())
+										.getInfo().getLvl(), 3));
 		updatePlayerHPLabel();
 
 		// context.restore();
@@ -274,10 +278,13 @@ public class BattleView extends Composite {
 	void setItemOptions() { // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 3;
-		commandOptions.addItem("ITEMS");
-		commandOptions.addItem("POKeBALLS");
-		commandOptions.addItem("KEY ITEMS");
-		commandOptions.addItem("BERRIES");
+//		commandOptions.addItem("ITEMS");
+//		commandOptions.addItem("POKeBALLS");
+//		commandOptions.addItem("KEY ITEMS");
+//		commandOptions.addItem("BERRIES");
+		for (int i = 0; i < battle.getUser().getItems().size(); i++) {
+			commandOptions.addItem(battle.getUser().getItems().get(i).toString() + "  " + battle.getUser().getItems().get(i).getQuantity());
+		}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
 	}
