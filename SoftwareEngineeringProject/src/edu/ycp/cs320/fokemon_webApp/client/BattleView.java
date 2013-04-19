@@ -283,7 +283,7 @@ public class BattleView extends Composite {
 //		commandOptions.addItem("KEY ITEMS");
 //		commandOptions.addItem("BERRIES");
 		for (int i = 0; i < battle.getUser().getItems().size(); i++) {
-			commandOptions.addItem(battle.getUser().getItems().get(i).toString() + "  " + battle.getUser().getItems().get(i).getQuantity());
+			commandOptions.addItem(battle.getUser().getItems().get(i).getItemName() + "  " + battle.getUser().getItems().get(i).getQuantity());
 		}
 		commandOptions.setFocus(true);
 		commandOptions.setItemSelected(0, true);
@@ -327,6 +327,9 @@ public class BattleView extends Composite {
 			break;
 		case 2: // Pokemon Screen ... Trigger Move
 			handleTurn(index, TurnChoice.SWITCH);
+			break;
+		case 3: // Pokemon Screen ... Trigger Move
+			handleTurn(index, TurnChoice.ITEM);
 			break;
 		}
 		System.out.println(battle.getOpponent()
