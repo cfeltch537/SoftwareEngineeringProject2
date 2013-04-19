@@ -44,6 +44,7 @@ public class BattleView extends Composite {
 	Image opponentPokemon;
 	HealthBarWidget playerHPBar;
 	HealthBarWidget opponentHPBar;
+	XPBarWidget playerXPBar;
 	// AspectRatios etc.
 	int hpBarWidth = 123; // Pixel
 	static int height;
@@ -110,23 +111,19 @@ public class BattleView extends Composite {
 		battleAnnouncementBox = new TextBox();
 		battleAnnouncementBox.setWidth(width - 150 - 20 + "px");
 		battleAnnouncementBox.setHeight("40px");
-		battleAnnouncementBox
-				.setText("Look at my horse. My horse is amazing!!!");
 		battlePanel.add(battleAnnouncementBox, 5, height - 51);
 		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 
 		// Add HP Bars
 		playerHPBar = new HealthBarWidget();
 		opponentHPBar = new HealthBarWidget();
-		battlePanel.add(playerHPBar.hpBarCanvas, width / 2 - hpBarWidth / 2
-				- 120, height / 2 - 15 - 120);
-		battlePanel.add(opponentHPBar.hpBarCanvas, width / 2 - hpBarWidth / 2
-				+ 120, height / 2 - 15 - 120);
+		playerXPBar = new XPBarWidget();
+		battlePanel.add(playerHPBar.hpBarCanvas, width / 2 - hpBarWidth / 2 - 120, height / 2 - 15 - 120);
+		battlePanel.add(opponentHPBar.hpBarCanvas, width / 2 - hpBarWidth / 2 + 120, height / 2 - 15 - 120);
+		battlePanel.add(playerXPBar.xpBarCanvas, width / 2 - hpBarWidth / 2 - 120, height / 2 - 15 + 10 - 120);
 		battlePanel.getElement().getStyle().setPosition(Position.RELATIVE);
-
 		// Instantiate Images since Pokemon class in not ready yet
 		img1 = new Image("PokemonSprites/Arena.png");
-
 		// Instantiate Battle
 		test = new TempBattle();
 
@@ -139,6 +136,7 @@ public class BattleView extends Composite {
 		this.battle = battle;
 		onPokemonShift();
 		draw(battleBackBufferContext, battleContext);
+		battleAnnouncementBox.setText(this.battle.getBattleMessage().get(0));
 	}
 
 	void doUpdate() {
@@ -173,6 +171,12 @@ public class BattleView extends Composite {
 						.getTeam(battle.getOpponent().getCurrentPokemonIndex())
 						.getStats().getCurHp(), (double) battle.getOpponent()
 						.getTeam(battle.getOpponent().getCurrentPokemonIndex())
+						.getStats().getMaxHp());
+		playerXPBar.doUpdate(
+				(double) battle.getUser()
+						.getTeam(battle.getUser().getCurrentPokemonIndex())
+						.getStats().getCurHp(), (double) battle.getUser()
+						.getTeam(battle.getUser().getCurrentPokemonIndex())
 						.getStats().getMaxHp());
 		updatePlayerHPLabel();
 
