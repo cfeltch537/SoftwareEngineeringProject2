@@ -19,9 +19,9 @@ public class PokeInfoTest extends TestCase {
 		// TODO - create test fixture objects
 		type = new ArrayList<PokeType>();
 		type.add(PokeType.NORMAL);
-		a = new PokeInfo(PokeID.Mew, 2, "Mew", "a", false, type, 10, 3);
+		a = new PokeInfo(PokeID.Mew, 2, "Mew", "a", false, type, 10, 3,255);
 		type.add(PokeType.FIRE);
-		b = new PokeInfo(PokeID.Mewtwo, 3, "Mewtwo", "b", true, type, 11, 4);
+		b = new PokeInfo(PokeID.Mewtwo, 3, "Mewtwo", "b", true, type, 11, 4,255);
 	}
 
 	// TODO - add test methods

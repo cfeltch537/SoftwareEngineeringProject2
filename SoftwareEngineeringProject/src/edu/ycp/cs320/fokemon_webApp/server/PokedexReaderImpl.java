@@ -44,7 +44,7 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements
 		TreeMap<PokeID, PokedexEntry> pokeMap = new TreeMap<PokeID, PokedexEntry>();
 		ArrayList<String> storeValues = new ArrayList<String>();
 		storeValues = loadIt();
-		for (int i = 0; i < storeValues.size(); i += 17) {
+		for (int i = 0; i < storeValues.size(); i += 18) {
 
 			int[] baseStats = { Integer.parseInt(storeValues.get(i + 2)),
 					Integer.parseInt(storeValues.get(i + 3)),
@@ -64,7 +64,7 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements
 				type.add(PokeType.valueOf(storeValues.get(i + 15)));
 			PokedexEntry entry = new PokedexEntry(PokeID.valueOf(storeValues
 					.get(i + 1)), storeValues.get(i + 1), baseStats,
-					Integer.parseInt(storeValues.get(i + 8)), EVyield, type);
+					Integer.parseInt(storeValues.get(i + 8)), EVyield, type,Integer.parseInt(storeValues.get(i + 17)));
 			pokeMap.put(PokeID.valueOf(storeValues.get(i + 1)), entry);
 		}
 

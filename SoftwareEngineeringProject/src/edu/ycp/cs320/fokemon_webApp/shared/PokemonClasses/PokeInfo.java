@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class PokeInfo {
 	private PokeID ID;
 	private int PlayerID;
+	private int catchRate;
 	private String PokeName;
 	private String Nickname;
 	private Boolean Gender;
@@ -15,7 +16,7 @@ public class PokeInfo {
 	private int xp;
 
 	public PokeInfo(PokeID ID, int PlayerID, String PokeName, String Nickname,
-			Boolean Gender, ArrayList<PokeType> type, int lvl, int xp) {
+			Boolean Gender, ArrayList<PokeType> type, int lvl, int xp, int catchRate) {
 		this.setID(ID);
 		this.PlayerID = PlayerID;
 		this.PokeName = PokeName;
@@ -26,6 +27,7 @@ public class PokeInfo {
 		this.xp = xp;
 		this.UsedInBattle = false;
 		this.setIsWild(false);
+		this.catchRate=catchRate;
 	}
 
 	public int getPlayerID() {
@@ -106,6 +108,14 @@ public class PokeInfo {
 
 	public void setIsWild(Boolean isWild) {
 		this.isWild = isWild;
+	}
+
+	public int getCatchRate() {
+		return catchRate;
+	}
+
+	public void setCatchRate(int catchRate) {
+		this.catchRate = catchRate;
 	}
 
 }

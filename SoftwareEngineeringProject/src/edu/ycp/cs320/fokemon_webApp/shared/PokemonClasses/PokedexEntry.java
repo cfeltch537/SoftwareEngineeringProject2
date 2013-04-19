@@ -15,19 +15,21 @@ public class PokedexEntry implements Serializable {
 	private ArrayList<PokeType> type;
 	private int baseXP;
 	private int[] EVyield = new int[6];
+	private int catchRate;
 
 	public PokedexEntry() {
 
 	}
 
 	public PokedexEntry(PokeID ID, String PokeName, int[] baseStats,
-			int baseXP, int[] EVyield, ArrayList<PokeType> type) {
+			int baseXP, int[] EVyield, ArrayList<PokeType> type,int catchRate) {
 		this.ID = ID;
 		this.PokeName = PokeName;
 		this.baseStats = baseStats;
 		this.baseXP = baseXP;
 		this.EVyield = EVyield;
 		this.type = type;
+		this.catchRate=catchRate;
 	}
 
 	public int[] getBaseStats() {
@@ -76,6 +78,14 @@ public class PokedexEntry implements Serializable {
 
 	public void setEVyield(int[] eVyield) {
 		EVyield = eVyield;
+	}
+
+	public int getCatchRate() {
+		return catchRate;
+	}
+
+	public void setCatchRate(int catchRate) {
+		this.catchRate = catchRate;
 	}
 
 	/*

@@ -86,6 +86,7 @@ public class FokemonUI implements EntryPoint {
 			public void onSuccess(PokedexReader result) {
 				// updateTable(result);
 				setPokedex(result);
+				System.out.println("Pokedex is Ready");
 				battleView = new BattleView();
 
 			}

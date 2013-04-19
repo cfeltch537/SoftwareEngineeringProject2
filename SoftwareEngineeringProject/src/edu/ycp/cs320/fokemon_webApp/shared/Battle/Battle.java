@@ -295,7 +295,42 @@ public class Battle {
 						turnPlayer.getItems(turnPlayer.getMoveIndex())
 								.getQuantity() - 1);
 				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()<1)turnPlayer.getItems().remove(turnPlayer.getMoveIndex());
-				 EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect());
+				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()>0){
+					if(oppPoke.getInfo().getIsWild()){
+						if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()==255){
+							CatchPokemon();
+						}
+						else{
+							double catchRate=0,statMod=0;
+							if(oppPoke.getStats().getStatus()==Status.NRM)statMod=1;
+							if(oppPoke.getStats().getStatus()==Status.SLP||oppPoke.getStats().getStatus()==Status.FRZ)statMod=2;
+							if(oppPoke.getStats().getStatus()==Status.BRN||oppPoke.getStats().getStatus()==Status.PSN||oppPoke.getStats().getStatus()==Status.PRL)statMod=1.5;
+							
+							catchRate=(Double)((1+( oppPoke.getStats().getMaxHp()*3 -oppPoke.getStats().getCurHp()*2 ) *oppPoke.getInfo().getCatchRate()* turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate() *statMod )/(oppPoke.getStats().getMaxHp()*3))/256;
+							int B = (int) (1048560/ Math.sqrt(Math.sqrt(16711680/catchRate)));
+							int count=0;
+							for(int i=0;i<4;i++){
+								if(B<=rand.nextInt(65535))count++;
+							}
+							if(count>3)CatchPokemon();
+							//CatchValue = ((Double)(( 3 * oppPoke.getStats().getMaxHp() - 2*oppPoke.getStats().getCurHp()) * (oppPoke.getInfo().getCatchRate() * turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()) / (3 * oppPoke.getStats().getMaxHp()) ) * statMod);
+						//0 and 65535
+						//CatchValue = ((( 3 * Max HP - 2 * HP ) * (Catch Rate * Ball Modifier ) / (3 * Max HP) ) * Status Modifier
+
+						//The Capture Value for that is then put through another equation to determine whether or not the Pokémon is to be captured
+
+						//Catch = 1048560 / √(√(16711680 / CatchValue)) = (220 - 24) / √(√((224 - 216) / CatchValue)
+						}
+					}else{
+						
+					}
+					
+				}
+				
+				
+				else{
+					EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect());
+				}
 				break;
 			case SWITCH:
 				turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
@@ -351,6 +386,15 @@ public class Battle {
 
 		}
 
+	}
+
+	private void CatchPokemon() {
+		battleMessage.add("You have caught the wild "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
+		battleOver=true;
+		user.getTeam().add(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void CheckFaintedPokemon() {
