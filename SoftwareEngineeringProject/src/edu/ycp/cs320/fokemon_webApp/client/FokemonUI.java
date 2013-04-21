@@ -61,10 +61,6 @@ public class FokemonUI implements EntryPoint {
 	}
 
 	static void doUpdate() {
-		// update the back canvas, set to front canvas
-		// System.out.println(pokedex.getPokeMap().firstKey().toString());
-		// map.doUpdate();
-		// tempView.doUpdate();
 		if (battleView != null && battleView.battle != null) {
 			battleView.doUpdate();
 		}
