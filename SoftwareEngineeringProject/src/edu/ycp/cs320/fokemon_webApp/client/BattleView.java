@@ -332,9 +332,9 @@ public class BattleView extends Composite {
 			handleTurn(index, TurnChoice.ITEM);
 			break;
 		}
-		System.out.println(battle.getOpponent()
+		/*System.out.println(battle.getOpponent()
 				.getTeam(battle.getOpponent().getCurrentPokemonIndex())
-				.getStats().getCurHp());
+				.getStats().getCurHp());*/
 
 	}
 
