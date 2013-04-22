@@ -10,4 +10,8 @@ public class RPC {
 	
 	public static final LoginServiceAsync login =
 			GWT.create(LoginService.class);
+	
+	public static final LoadProfileServiceAsync loadProfile =
+			GWT.create(LoadProfileService.class);
+	
 }

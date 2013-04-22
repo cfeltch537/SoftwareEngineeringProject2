@@ -2,15 +2,22 @@ package edu.ycp.cs320.fokemon_webApp.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 
+//import edu.ycp.cs320.fokemon_webApp.server.ColumnPlayer;
+import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 import edu.ycp.cs320.fokemon_webApp.client.RPC;
 
 import com.google.gwt.user.client.ui.FlexTable;
@@ -20,21 +27,24 @@ import com.google.gwt.user.client.ui.CheckBox;
 
 public class LoginView extends Composite {
 
+	AbsolutePanel loginPanel;
 	private TextBox textBoxUsername;
-	private TextBox textBoxPassword;
-	private Login model;
+	private PasswordTextBox textBoxPassword;
+	Login model;
+	Boolean validLogin;
 
 	public LoginView() {
-		FlowPanel panel = new FlowPanel();
-		initWidget(panel);
+		loginPanel = new AbsolutePanel();
+		initWidget(loginPanel);
 		model = new Login();
+		validLogin = false;
 
 		Label lblLoginToYour = new Label("Sign in to your account");
 		lblLoginToYour.setStyleName("gwt-Label-Login");
-		panel.add(lblLoginToYour);
+		loginPanel.add(lblLoginToYour);
 
 		FlexTable flexTable = new FlexTable();
-		panel.add(flexTable);
+		loginPanel.add(flexTable);
 		flexTable.setWidth("345px");
 
 		Label lblUsername = new Label("Username:");
@@ -48,11 +58,10 @@ public class LoginView extends Composite {
 		lblPassword.setStyleName("gwt-Label-Login");
 		flexTable.setWidget(1, 0, lblPassword);
 
-		textBoxPassword = new TextBox();
-		textBoxPassword.setDirection(Direction.RTL);
+		textBoxPassword = new PasswordTextBox();
 		flexTable.setWidget(1, 1, textBoxPassword);
 
-	
+
 		Button btnSignIn = new Button("Sign In");
 		btnSignIn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -64,7 +73,8 @@ public class LoginView extends Composite {
 				{
 					model.setUsername(textBoxUsername.getText());
 					model.setPassword(textBoxPassword.getText());
-					handleLogin();				
+					handleLogin();
+					
 				}
 			}
 		});
@@ -78,22 +88,56 @@ public class LoginView extends Composite {
 				if (result != null) {
 					GWT.log("Login succeeded!");
 					Window.alert("Success");
-					
+					model.setId(result.getId());
+					model.setRole(result.getRole());
 					// Switch to some other view
+					validLogin = true;
+					loadProfile();
 				} else {
 					GWT.log("Unknown username/password");
 					Window.alert("Unknown username/password");
 				}
-			
+
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("Login failure", caught);
-				
+
 				Window.alert("Failure");
-				
+
+			}
+		});
+	}
+
+	protected void loadProfile() {
+		RPC.loadProfile.retrieveProfile(model, new AsyncCallback<ColumnPlayer>() {
+			@Override
+			public void onSuccess(ColumnPlayer result) {
+				if (result != null) {
+					GWT.log("Load succeeded!");
+					Window.alert("Load Success");
+					// Switch to some other view
+					Window.alert(result.getName());
+					
+					validLogin = true;
+				} else {
+					GWT.log("Load Fail");
+					Window.alert("Load Fail");
+				}
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWT.log("Load failure", caught);
+
+				Window.alert("Failure");
+
 			}
 		});
 	}
 }
+
+
+

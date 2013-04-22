@@ -1,10 +1,14 @@
 package edu.ycp.cs320.fokemon_webApp.server;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
+import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
 
 public class FakeDatabase implements IDatabase {
 	private List<Login> loginList;
@@ -40,4 +44,9 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
+	@Override
+	public ColumnPlayer retrieveProfile(Login login) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

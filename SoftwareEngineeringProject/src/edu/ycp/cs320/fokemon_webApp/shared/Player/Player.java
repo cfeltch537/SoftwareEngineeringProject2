@@ -1,5 +1,7 @@
 package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
@@ -9,7 +11,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 
 
-public class Player {
+public class Player implements Serializable {
 	private String name;
 	private boolean gender;
 	private Location PlayerLocation;
@@ -39,11 +41,19 @@ public class Player {
 		
 
 	}
+	
+	public Player() {
+		
+	}
 
 	public int getTeamSize() {
 		return team.size();	
 	}
-
+	
+	public void setTeam(ArrayList<Pokemon> _team) {
+		this.team = _team;
+	}
+	
 	public Pokemon getTeam(int i) {
 		return team.get(i);
 	}

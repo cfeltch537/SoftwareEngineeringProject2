@@ -20,23 +20,25 @@ import java.sql.SQLException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import edu.ycp.cs320.fokemon_webApp.client.LoginService;
+import edu.ycp.cs320.fokemon_webApp.client.LoadProfileService;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
 
 
 
-
-public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
+public class LoadProfileServiceImpl extends RemoteServiceServlet implements LoadProfileService {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Login submitLogin(Login _login) {
+	public ColumnPlayer retrieveProfile(Login login) {
 		
 		try {
-			return DBUtil.instance().performLogin(_login);
+			return DBUtil.instance().retrieveProfile(login);
 		} catch (SQLException e) {
 			throw new RuntimeException("SQLException", e);
 		}		
 	}
+
+	
 }

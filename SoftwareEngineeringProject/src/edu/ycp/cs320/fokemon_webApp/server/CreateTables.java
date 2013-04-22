@@ -7,6 +7,7 @@ public class CreateTables {
 	public static void main(String[] args) throws SQLException {
 		DerbyDatabase db = new DerbyDatabase();
 		db.createTables();
+		db.createInitialData();
 		System.out.println("Successfully created tables");
 	}
 

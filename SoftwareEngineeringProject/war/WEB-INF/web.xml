@@ -23,6 +23,15 @@
     <servlet-name>LoginServiceImpl</servlet-name>
 	<url-pattern>/loginui/login</url-pattern>  
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>LoadProfileServiceImpl</servlet-name>
+    <servlet-class>edu.ycp.cs320.fokemon_webApp.server.LoadProfileServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadProfileServiceImpl</servlet-name>
+	<url-pattern>/loginui/loadProfile</url-pattern>  
+  </servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
