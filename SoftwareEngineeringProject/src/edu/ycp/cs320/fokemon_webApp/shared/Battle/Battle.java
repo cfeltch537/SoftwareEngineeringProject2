@@ -230,6 +230,7 @@ public class Battle {
 			break;
 		case ITEM:
 			// not a use able item, not good target
+			if(player.getItems(player.getMoveIndex()).isUseInBattle()==false)return false;
 			break;
 		case SWITCH:
 			if (player.getCurrentPokemonIndex() == player.getMoveIndex())
@@ -294,7 +295,6 @@ public class Battle {
 				turnPlayer.getItems(turnPlayer.getMoveIndex()).setQuantity(
 						turnPlayer.getItems(turnPlayer.getMoveIndex())
 								.getQuantity() - 1);
-				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()<1)turnPlayer.getItems().remove(turnPlayer.getMoveIndex());
 				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()>0){
 					if(oppPoke.getInfo().getIsWild()){
 						if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()==255){
@@ -312,7 +312,10 @@ public class Battle {
 							for(int i=0;i<4;i++){
 								if(B<=rand.nextInt(65535))count++;
 							}
-							if(count>3)CatchPokemon();
+							if(count>=3)CatchPokemon();
+							else battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has broken free. ");
+							//if((int)catchRate*100>=rand.nextInt(100))CatchPokemon();
+							
 							//CatchValue = ((Double)(( 3 * oppPoke.getStats().getMaxHp() - 2*oppPoke.getStats().getCurHp()) * (oppPoke.getInfo().getCatchRate() * turnPlayer.getItems(turnPlayer.getMoveIndex()).getCatchRate()) / (3 * oppPoke.getStats().getMaxHp()) ) * statMod);
 						//0 and 65535
 						//CatchValue = ((( 3 * Max HP - 2 * HP ) * (Catch Rate * Ball Modifier ) / (3 * Max HP) ) * Status Modifier
@@ -322,11 +325,11 @@ public class Battle {
 						//Catch = 1048560 / √(√(16711680 / CatchValue)) = (220 - 24) / √(√((224 - 216) / CatchValue)
 						}
 					}else{
-						
+						battleMessage.add("You can't catch another trainers pokemon. ");
 					}
 					
 				}
-				
+				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()<1)turnPlayer.getItems().remove(turnPlayer.getMoveIndex());
 				
 				else{
 					EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect());
