@@ -156,10 +156,7 @@ public class BattleView extends Composite {
 		context.fillRect(0, 0, width, height);
 		context.drawImage((ImageElement) img1.getElement().cast(), width / 2
 				- img1.getWidth() / 2, height / 2 - img1.getHeight() / 2);
-		// context.drawImage((ImageElement) img2.getElement().cast(), width/2 -
-		// img2.getWidth()/2 - 120, height/2 - img2.getHeight() - 10);
-		// The following should actually be triggered off of a change in HP, or
-		// turn
+		
 		playerHPBar.doUpdate(
 				(double) battle.getUser()
 						.getTeam(battle.getUser().getCurrentPokemonIndex())
@@ -332,10 +329,6 @@ public class BattleView extends Composite {
 			handleTurn(index, TurnChoice.ITEM);
 			break;
 		}
-		/*System.out.println(battle.getOpponent()
-				.getTeam(battle.getOpponent().getCurrentPokemonIndex())
-				.getStats().getCurHp());*/
-
 	}
 
 	void handleTurn(int userMoveIndex, TurnChoice userTurnChoice) {
@@ -345,14 +338,8 @@ public class BattleView extends Composite {
 				handleTurn1(index, userTurnChoice);
 				switchToNextScreen();
 			}
-			if (messageIndex < battle.getBattleMessage().size()) { // While
-																	// there is
-																	// still a
-																	// message
-																	// to be
-																	// displayed
-				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display
-																				// message
+			if (messageIndex < battle.getBattleMessage().size()) { // While there is still a message to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			} else { // When no more messages to be displayed
 				messageIndex = 0; // reset message index
@@ -363,14 +350,8 @@ public class BattleView extends Composite {
 			}
 			break;
 		case 1: // Turn 2 case
-			if (messageIndex < battle.getBattleMessage().size()) { // While
-																	// there is
-																	// still a
-																	// message
-																	// to be
-																	// displayed
-				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display
-																				// message
+			if (messageIndex < battle.getBattleMessage().size()) { // While there is still a message to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			} else { // When no more messages to be displayed
 				messageIndex = 0; // Reset message index
@@ -378,8 +359,7 @@ public class BattleView extends Composite {
 				handleTurn3(); // Trigger turn 3 (Post Battle Damage and
 								// Announcements)
 				if (battle.getBattleMessage().size() != 0) {
-					setBattleAnnouncement(battle.getBattleMessage(),
-							messageIndex);
+					//setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
 					turnIndex = 2;
 				} else {
 					messageIndex = 0; // Reset message index
@@ -390,21 +370,15 @@ public class BattleView extends Composite {
 			}
 			break;
 		case 2: // Turn 3 Case
-			if (messageIndex < battle.getBattleMessage().size()) { // While
-																	// there is
-																	// still a
-																	// message
-																	// to be
-																	// displayed
-				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display
-																				// message
+			if (messageIndex < battle.getBattleMessage().size()) { // While there is still a message to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			} else { // When no more messages to be displayed
 				messageIndex = 0; // reset message index
 				setBattleOptions(); // Return to Cattle Options for next turn
 				checkEndBattle();
+				turnIndex = 0;
 			}
-			turnIndex = 0;
 			break;
 		}
 	}
@@ -507,9 +481,6 @@ public class BattleView extends Composite {
 
 		// Opponent Battling Pokemon
 
-		// opponentPokemon = new Image("PokemonSprites/" +
-		// battle.getOpponent().getTeam(battle.getOpponent().getCurrentPokemonIndex()).getInfo().getPokeName()
-		// + ".png");//This should set to a pokemons ID specific Image
 		if (opponentPokemon != null) {
 			battlePanel.remove(opponentPokemon);
 		}
