@@ -12,6 +12,10 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 
 public class Player implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private boolean gender;
 	private Location PlayerLocation;

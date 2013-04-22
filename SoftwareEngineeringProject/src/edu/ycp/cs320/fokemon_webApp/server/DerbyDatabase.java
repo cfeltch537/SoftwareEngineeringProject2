@@ -15,8 +15,11 @@ import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
+import com.google.gwt.user.cellview.client.Column;
+
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
-import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class DerbyDatabase implements IDatabase {
 	private static final String DATASTORE = "H:/fokemon";
@@ -88,23 +91,13 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					// TODO: add unique index to username column
 					stmt = conn.prepareStatement(
-							"create table users12 (" +
+							"create table users15 (" +
 									"  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
 									"  username VARCHAR(200) NOT NULL, " +
 									"  password VARCHAR(200) NOT NULL," +
 									"  role VARCHAR(200) NOT NULL," +
-									"  playerName VARCHAR(200)," +
-									"  playerGender BOOLEAN," +
-									"  playerLocationIndex INTEGER," +
-									"  playerLocationX INTEGER," +
-									"  playerLocationY INTEGER," +
-									"  playerPlayerID INTEGER," +
+									"  playerData BLOB " +
 									//LINK THE POKEMON ARRAYLIST"" +
-									"  playerCurrentPokemonIndex INTEGER," +
-									"  playerTurnChoice INTEGER," +
-									"  playerMoveItem INTEGER," +
-									"  playerItemIndex INTEGER," +
-									"  playerTurnOrder INTEGER" +
 									")"
 							);
 
@@ -127,42 +120,55 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							"insert into users12 (username, password, role, playerName, playerGender, playerLocationIndex, playerLocationX, playerLocationY, playerPlayerID, playerCurrentPokemonIndex, playerTurnChoice, playerMoveItem, playerItemIndex, playerTurnOrder) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+							"insert into users15 (username, password, role, playerData) values ( ?, ?, ?, ?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-					    
+
+
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					ObjectOutputStream oos = null;
+
+					Player player2 = new Player(2222,"Jody Faloney",false, new Location(0,0,0));
+
+					try {
+						oos = new ObjectOutputStream(baos);
+						oos.writeObject(player2);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					byte[] tableAsBytes = baos.toByteArray();
+					ByteArrayInputStream bais =
+							new ByteArrayInputStream(tableAsBytes);
+
+
+
+
 					stmt.setString(1, "alice");
 					stmt.setString(2, "abc");
 					stmt.setString(3, "admin");
-					stmt.setString(4, "Jody Faloney");
-					stmt.setBoolean(5, false);
-					stmt.setInt(6, 0);
-					stmt.setInt(7, 0);
-					stmt.setInt(8, 0);
-					stmt.setInt(9, 0);
-					//LINK THE POKEMON ARRAYLIST
-					stmt.setInt(10, 0);
-					stmt.setInt(11, 0);
-					stmt.setInt(12, 0);
-					stmt.setInt(13, 0);
-					stmt.setInt(14, 0);
+					stmt.setBinaryStream(4,bais, (long) tableAsBytes.length);
 					stmt.addBatch();
 
+					Player player3 = new Player(4321,"Coey Meltch",true, new Location(0,0,0));
+					baos = new ByteArrayOutputStream();
+					oos = null;
+
+					try {
+						oos = new ObjectOutputStream(baos);
+						oos.writeObject(player3);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					tableAsBytes = baos.toByteArray();
+					bais = new ByteArrayInputStream(tableAsBytes);
 					stmt.setString(1, "bob");
 					stmt.setString(2, "123");
 					stmt.setString(3, "user");
-					stmt.setString(4, "Coey Meltch");
-					stmt.setBoolean(5, true);
-					stmt.setInt(6, 0);
-					stmt.setInt(7, 0);
-					stmt.setInt(8, 0);
-					stmt.setInt(9, 0);
-					//LINK THE POKEMON ARRAYLIST
-					stmt.setInt(10, 0);
-					stmt.setInt(11, 0);
-					stmt.setInt(12, 0);
-					stmt.setInt(13, 0);
-					stmt.setInt(14, 0);
+					stmt.setBinaryStream(4,bais, (long) tableAsBytes.length);
 					stmt.addBatch();
 
 					stmt.executeBatch();
@@ -186,7 +192,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 				try {
-					stmt = conn.prepareStatement("select users12.* from users12 where users12.username = ?");
+					stmt = conn.prepareStatement("select users15.* from users15 where users15.username = ?");
 
 					stmt.setString(1, login.getUsername());
 
@@ -212,7 +218,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
-	
+
 
 	private void loadLoginFromResultSet(Login user, ResultSet resultSet)
 			throws SQLException {
@@ -223,16 +229,16 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public ColumnPlayer retrieveProfile(final Login login) throws SQLException {
-		return databaseRun(new ITransaction<ColumnPlayer>() {
+	public Player retrieveProfile(final Login login) throws SQLException {
+		return databaseRun(new ITransaction<Player>() {
 			@Override
-			public ColumnPlayer run(Connection conn) throws SQLException {
+			public Player run(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
 
 				try {
-					stmt = conn.prepareStatement("select users12.* from users12 where users12.username = ?");
+					stmt = conn.prepareStatement("select users15.playerData from users15 where users15.username = ?");
 
 					stmt.setString(1, login.getUsername());
 
@@ -242,11 +248,10 @@ public class DerbyDatabase implements IDatabase {
 						return null; // no such user
 					}
 
-					ColumnPlayer player1 = new ColumnPlayer();
-					loadProfileFromResultSet(player1, resultSet);
+					Player player1 = new Player();
+					return loadProfileFromResultSet(player1, resultSet);
 
 
-					return player1;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
@@ -255,39 +260,42 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
-	protected void loadProfileFromResultSet(ColumnPlayer player1,
+	protected Player loadProfileFromResultSet(Player player1,
 			ResultSet resultSet) throws SQLException {
-		String temp = resultSet.getString(4);
-		temp = resultSet.getString(5);
-		
-		player1.setName(resultSet.getString(5));
-		player1.setGender(resultSet.getBoolean(6));
-		player1.setPlayerLocation(resultSet.getInt(7));
-		player1.setPlayerLocationX(resultSet.getInt(8));
-		player1.setPlayerLocationY(resultSet.getInt(9));
-		player1.setPlayerID(resultSet.getInt(10));
-		player1.setCurrentPokemonIndex(resultSet.getInt(11));
-		player1.setChoice(resultSet.getInt(12));
-		player1.setMoveIndex(resultSet.getInt(13));
-		player1.setItemIndex(resultSet.getInt(14));
-		player1.setTurnOrder(resultSet.getInt(15));
-		
-		
+
+
+		//while(resultSet.next()){
+			ByteArrayInputStream bos = new 
+					ByteArrayInputStream(resultSet.getBytes("playerData")) ;
+			ObjectInputStream out = null;
+			try {
+				out = new ObjectInputStream(bos);
+				player1=(Player)out.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return player1;
+		//}
+
+		/*byte[] st = (byte[]) resultSet.getBinaryStream(5);
+		ByteArrayInputStream baip = new ByteArrayInputStream(st);
+		ObjectInputStream ois = null;
+		Player player = null;
+		try {
+			ois = new ObjectInputStream(baip);
+			Player player0 = (Player) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 }
 
 
-
-/*
-stmt.setString(4, "Jody Faloney");
-stmt.setBoolean(5, false);
-stmt.setInt(6, 0);
-stmt.setInt(7, 0);
-stmt.setInt(8, 0);
-//LINK THE POKEMON ARRAYLIST
-stmt.setInt(9, 0);
-stmt.setInt(10, 0);
-stmt.setInt(11, 0);
-stmt.setInt(12, 0);
-stmt.setInt(13, 0);
-*/

@@ -23,7 +23,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import edu.ycp.cs320.fokemon_webApp.client.LoadProfileService;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
-import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
 
 
 
@@ -31,7 +30,7 @@ public class LoadProfileServiceImpl extends RemoteServiceServlet implements Load
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public ColumnPlayer retrieveProfile(Login login) {
+	public Player retrieveProfile(Login login) {
 		
 		try {
 			return DBUtil.instance().retrieveProfile(login);

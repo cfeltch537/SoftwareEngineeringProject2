@@ -8,9 +8,13 @@ import edu.ycp.cs320.fokemon_webApp.client.TempBattle;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+import java.io.Serializable;
 
-
-public class Pokemon {
+public class Pokemon implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//create parameters for each pokemon
 	private BattleStats stats;
 	private PokeInfo info;
@@ -21,6 +25,12 @@ public class Pokemon {
 		this.info=info;
 		this.stats=stats;
 		this.moves=moves;
+	}
+	
+	public Pokemon(){
+		this.info=null;
+		this.stats=null;
+		this.moves=null;
 	}
 
 	

@@ -1,6 +1,12 @@
 package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
-public class Location {
+import java.io.Serializable;
+
+public class  Location implements Serializable {
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		private int AreaArrayIndex;
 		private int x;
 		private int y;
@@ -10,6 +16,13 @@ public class Location {
 		this.x=x;
 		this.y=y;
 		}
+	
+	public Location() {
+		this.AreaArrayIndex = 0;
+		this.x = 0;
+		this.y = 0;
+	}
+	
 	public int getX(){
 		return x;
 	}

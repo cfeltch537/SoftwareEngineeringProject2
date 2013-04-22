@@ -2,28 +2,18 @@ package edu.ycp.cs320.fokemon_webApp.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 
-//import edu.ycp.cs320.fokemon_webApp.server.ColumnPlayer;
-import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
-import edu.ycp.cs320.fokemon_webApp.client.RPC;
-
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.i18n.client.HasDirection.Direction;
-import com.google.gwt.user.client.ui.CheckBox;
 
 public class LoginView extends Composite {
 
@@ -111,9 +101,9 @@ public class LoginView extends Composite {
 	}
 
 	protected void loadProfile() {
-		RPC.loadProfile.retrieveProfile(model, new AsyncCallback<ColumnPlayer>() {
+		RPC.loadProfile.retrieveProfile(model, new AsyncCallback<Player>() {
 			@Override
-			public void onSuccess(ColumnPlayer result) {
+			public void onSuccess(Player result) {
 				if (result != null) {
 					GWT.log("Load succeeded!");
 					Window.alert("Load Success");

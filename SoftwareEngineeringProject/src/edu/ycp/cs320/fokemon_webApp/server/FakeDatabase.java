@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
-import edu.ycp.cs320.fokemon_webApp.shared.Login.ColumnPlayer;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class FakeDatabase implements IDatabase {
 	private List<Login> loginList;
@@ -45,7 +45,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public ColumnPlayer retrieveProfile(Login login) throws SQLException {
+	public Player retrieveProfile(Login login) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
