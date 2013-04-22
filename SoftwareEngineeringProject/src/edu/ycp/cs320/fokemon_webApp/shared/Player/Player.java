@@ -13,6 +13,7 @@ public class Player {
 	private Location PlayerLocation;
 	private int PlayerID;
 	private ArrayList<Pokemon> team;
+	private ArrayList<Pokemon> PC;
 	private ArrayList<Item> items;
 	private int currentPokemonIndex;
 	private TurnChoice choice;
@@ -30,6 +31,7 @@ public class Player {
 		this.turnOrder = 0;
 
 		team = new ArrayList<Pokemon>();
+		PC = new ArrayList<Pokemon>();
 		items = new ArrayList<Item>();
 		setPlayerLocation(new Location(playerLocation.getAreaArrayIndex(),
 				playerLocation.getX(), playerLocation.getY()));
@@ -131,6 +133,14 @@ public class Player {
 
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
+	}
+
+	public ArrayList<Pokemon> getPC() {
+		return PC;
+	}
+
+	public void setPC(ArrayList<Pokemon> pC) {
+		PC = pC;
 	}
 
 }

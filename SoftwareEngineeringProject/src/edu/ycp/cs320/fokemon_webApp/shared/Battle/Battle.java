@@ -392,9 +392,16 @@ public class Battle {
 	}
 
 	private void CatchPokemon() {
-		battleMessage.add("You have caught the wild "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
-		battleOver=true;
-		user.getTeam().add(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		if(user.getTeam().size()<5){
+			battleMessage.add("You have caught the wild "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
+			battleOver=true;
+			user.getTeam().add(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		}else{
+			battleMessage.add("You have caught the wild "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
+			battleMessage.add(opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname()+" has been added to your PC");
+			battleOver=true;
+			user.getPC().add(opponent.getTeam(opponent.getCurrentPokemonIndex()));
+		}
 		
 		// TODO Auto-generated method stub
 		
