@@ -108,7 +108,7 @@ public class LoginView extends Composite {
 					GWT.log("Load succeeded!");
 					Window.alert("Load Success");
 					// Switch to some other view
-					Window.alert(result.getName());
+					Window.alert("Player Name: " + result.getName());
 					
 					validLogin = true;
 				} else {
