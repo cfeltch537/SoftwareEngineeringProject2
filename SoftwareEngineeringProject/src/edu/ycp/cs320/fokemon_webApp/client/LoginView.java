@@ -25,12 +25,18 @@ public class LoginView extends Composite {
 	Player player1;
 
 	public LoginView() {
+		
+
+	}
+	
+	void initialize() {
+		// initialize the login view
 		loginPanel = new AbsolutePanel();
 		initWidget(loginPanel);
 		model = new Login();
 		validLogin = false;
 		player1 = new Player();
-
+		
 		Label lblLoginToYour = new Label("Sign in to your account");
 		lblLoginToYour.setStyleName("gwt-Label-Login");
 		loginPanel.add(lblLoginToYour);
@@ -71,7 +77,6 @@ public class LoginView extends Composite {
 			}
 		});
 		flexTable.setWidget(3, 1, btnSignIn);
-
 	}
 	protected void handleLogin() {
 		RPC.login.submitLogin(model, new AsyncCallback<Login>() {

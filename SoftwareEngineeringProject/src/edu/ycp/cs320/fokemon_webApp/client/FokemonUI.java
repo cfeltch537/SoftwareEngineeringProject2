@@ -34,7 +34,7 @@ public class FokemonUI implements EntryPoint {
 
 	static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
 
-
+	static LoginView loginView;
 
 	static CirculatingImagesView tempView;
 	static MapView map;
@@ -48,11 +48,13 @@ public class FokemonUI implements EntryPoint {
 
 		createPokedexReader();
 		map = new MapView();
-		RootPanel.get(holderId).add(map.mapPanel);
-		map.initialize();
-		map.setFocusCanvas();
+		//RootPanel.get(holderId).add(map.mapPanel);
+		//map.initialize();
+		//map.setFocusCanvas();
 		tempView = new CirculatingImagesView();
-		// System.out.println(pokedex.getPokeMap().firstKey().toString());
+		loginView = new LoginView();
+		loginView.initialize();
+		RootPanel.get(holderId).add(loginView.loginPanel);
 
 		final Timer timer = new Timer() {
 			@Override
@@ -105,7 +107,6 @@ public class FokemonUI implements EntryPoint {
 	public static void setPokedex(PokedexReader pokedex) {
 		FokemonUI.pokedex = pokedex;
 	}
-
 
 	public static void startBattle() {// Instantiates BattleView
 		if (pokedex != null) {
