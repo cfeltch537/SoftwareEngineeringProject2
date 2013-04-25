@@ -9,6 +9,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.PlayerType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
@@ -67,9 +68,9 @@ public class Battle {
 		wildPoke.getInfo().setIsWild(true);
 		Player wildPlayer = new Player(wildPoke.getInfo().getPlayerID(),
 				wildPoke.getInfo().getNickname(), wildPoke.getInfo()
-						.getGender(), TempBattle.getUser().getPlayerLocation());
+						.getGender(), Game.getUser().getPlayerLocation());
 		wildPlayer.getTeam().add(wildPoke);
-		return new Battle(TempBattle.getUser(), wildPlayer);
+		return new Battle(Game.getUser(), wildPlayer);
 	}
 
 	public static Battle wildPokemonBattle() {
