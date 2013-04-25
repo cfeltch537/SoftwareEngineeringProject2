@@ -2,6 +2,7 @@ package edu.ycp.cs320.fokemon_webApp.client;
 
 import java.sql.SQLException;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -18,4 +19,6 @@ public interface LoadProfileService extends RemoteService {
 	 * @throws SQLException 
 	 */
 	public Player retrieveProfile(Login login);	
+	
+	public Player saveProfile(Login model, Player player1);	
 }

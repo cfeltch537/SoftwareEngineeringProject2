@@ -49,4 +49,10 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Player saveProfile(Login login, Player player1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

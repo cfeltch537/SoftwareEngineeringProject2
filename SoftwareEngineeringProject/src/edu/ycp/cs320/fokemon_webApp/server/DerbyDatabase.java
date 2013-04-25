@@ -91,7 +91,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					// TODO: add unique index to username column
 					stmt = conn.prepareStatement(
-							"create table users15 (" +
+							"create table users (" +
 									"  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
 									"  username VARCHAR(200) NOT NULL, " +
 									"  password VARCHAR(200) NOT NULL," +
@@ -120,7 +120,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							"insert into users15 (username, password, role, playerData) values ( ?, ?, ?, ?)",
+							"insert into users (username, password, role, playerData) values ( ?, ?, ?, ?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 
@@ -192,7 +192,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 				try {
-					stmt = conn.prepareStatement("select users15.* from users15 where users15.username = ?");
+					stmt = conn.prepareStatement("select users.* from users where users.username = ?");
 
 					stmt.setString(1, login.getUsername());
 
@@ -238,7 +238,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 				try {
-					stmt = conn.prepareStatement("select users15.playerData from users15 where users15.username = ?");
+					stmt = conn.prepareStatement("select users.playerData from users where users.username = ?");
 
 					stmt.setString(1, login.getUsername());
 
@@ -259,12 +259,63 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	@Override
+	public Player saveProfile(final Login login, final Player player1) throws SQLException {
+		return databaseRun(new ITransaction<Player>() {
+			@Override
+			public Player run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
+
+				try {
+					stmt = conn.prepareStatement(
+							"update users set playerData = ? where users.username = ?",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+
+
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					ObjectOutputStream oos = null;
+
+
+					try {
+						oos = new ObjectOutputStream(baos);
+						oos.writeObject(player1);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					byte[] tableAsBytes = baos.toByteArray();
+					ByteArrayInputStream bais =
+							new ByteArrayInputStream(tableAsBytes);
+
+
+
+					stmt.setBinaryStream(1,bais, (long) tableAsBytes.length);
+					stmt.setString(2, login.getUsername());
+					
+					stmt.addBatch();
+
+					stmt.executeBatch();
+					
+					return retrieveProfile(login);
+
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+		
+	}
 	protected Player loadProfileFromResultSet(Player player1,
 			ResultSet resultSet) throws SQLException {
 
 
-		//while(resultSet.next()){
+		
 			ByteArrayInputStream bos = new 
 					ByteArrayInputStream(resultSet.getBytes("playerData")) ;
 			ObjectInputStream out = null;
@@ -279,23 +330,11 @@ public class DerbyDatabase implements IDatabase {
 				e.printStackTrace();
 			}
 			return player1;
-		//}
-
-		/*byte[] st = (byte[]) resultSet.getBinaryStream(5);
-		ByteArrayInputStream baip = new ByteArrayInputStream(st);
-		ObjectInputStream ois = null;
-		Player player = null;
-		try {
-			ois = new ObjectInputStream(baip);
-			Player player0 = (Player) ois.readObject();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
+		
 	}
+
+
 }
 
 

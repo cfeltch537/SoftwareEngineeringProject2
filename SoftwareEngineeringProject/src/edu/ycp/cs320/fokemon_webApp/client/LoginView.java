@@ -22,12 +22,14 @@ public class LoginView extends Composite {
 	private PasswordTextBox textBoxPassword;
 	Login model;
 	Boolean validLogin;
+	Player player1;
 
 	public LoginView() {
 		loginPanel = new AbsolutePanel();
 		initWidget(loginPanel);
 		model = new Login();
 		validLogin = false;
+		player1 = new Player();
 
 		Label lblLoginToYour = new Label("Sign in to your account");
 		lblLoginToYour.setStyleName("gwt-Label-Login");
@@ -64,7 +66,7 @@ public class LoginView extends Composite {
 					model.setUsername(textBoxUsername.getText());
 					model.setPassword(textBoxPassword.getText());
 					handleLogin();
-					
+
 				}
 			}
 		});
@@ -109,7 +111,25 @@ public class LoginView extends Composite {
 					Window.alert("Load Success");
 					// Switch to some other view
 					Window.alert("Player Name: " + result.getName());
-					
+
+					player1.setChoice(result.getChoice());
+					player1.setGender(result.getGender());
+					player1.setItemIndex(result.getItemIndex());
+					player1.setMoveIndex(result.getMoveIndex());
+					player1.setName(result.getName());
+					player1.setPlayerID(result.getPlayerID());
+					player1.setPlayerLocation(result.getPlayerLocation());
+					if (result.getTeamSize() != 0) {
+						player1.setTeam(result.getTeam());
+						player1.setCurrentPokemonIndex(result.getCurrentPokemonIndex());
+					}
+					player1.setTurnOrder(result.getTurnOrder());
+
+
+					player1.setName("Jody Faloney Jr.");
+
+					saveProfile();
+
 					validLogin = true;
 				} else {
 					GWT.log("Load Fail");
@@ -121,6 +141,32 @@ public class LoginView extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("Load failure", caught);
+
+				Window.alert("Failure");
+
+			}
+		});
+	}
+	protected void saveProfile() {
+		RPC.loadProfile.saveProfile(model,player1, new AsyncCallback<Player>() {
+			@Override
+			public void onSuccess(Player result) {
+				if (result != null) {
+					GWT.log("Save succeeded!");
+					Window.alert("Save Success");
+
+					Window.alert("Player Name: " + result.getName());
+					validLogin = true;
+				} else {
+					GWT.log("Save Fail");
+					Window.alert("Save Fail");
+				}
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWT.log("Save failure", caught);
 
 				Window.alert("Failure");
 

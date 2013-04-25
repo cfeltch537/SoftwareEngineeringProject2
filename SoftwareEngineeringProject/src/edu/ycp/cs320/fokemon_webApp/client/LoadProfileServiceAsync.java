@@ -13,4 +13,6 @@ public interface LoadProfileServiceAsync {
 	 * @throws SQLException 
 	 */
 	public void retrieveProfile(Login login, AsyncCallback<Player> callback);	
+	
+	public void saveProfile(Login model, Player player1, AsyncCallback<Player> callback);	
 }

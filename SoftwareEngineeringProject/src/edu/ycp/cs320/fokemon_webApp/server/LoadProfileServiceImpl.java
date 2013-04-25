@@ -18,6 +18,7 @@ package edu.ycp.cs320.fokemon_webApp.server;
 
 import java.sql.SQLException;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.ycp.cs320.fokemon_webApp.client.LoadProfileService;
@@ -34,6 +35,16 @@ public class LoadProfileServiceImpl extends RemoteServiceServlet implements Load
 		
 		try {
 			return DBUtil.instance().retrieveProfile(login);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException", e);
+		}		
+	}
+
+	@Override
+	public Player saveProfile(Login login, Player player1) {
+		
+		try {
+			return DBUtil.instance().saveProfile(login, player1);
 		} catch (SQLException e) {
 			throw new RuntimeException("SQLException", e);
 		}		
