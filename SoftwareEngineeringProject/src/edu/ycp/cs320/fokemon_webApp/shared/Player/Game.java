@@ -42,7 +42,7 @@ public class Game {
 		//setBattle(Battle.wildPokemonBattle(PokeID.Pikachu, 35));
 	}
 	public Game(Player user){
-		this.user=user;
+		Game.user=user;
 	}
 
 
