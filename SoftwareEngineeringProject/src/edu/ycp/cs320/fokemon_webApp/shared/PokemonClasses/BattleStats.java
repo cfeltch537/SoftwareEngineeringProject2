@@ -15,8 +15,10 @@ public class BattleStats {
 	private int[] baseStats;
 	private int[] EVyield;
 	private Status status;
-	
-	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk, int spDef, int spd, Status status,int baseXP,int[] baseStats,int[] EVyield) {
+
+	public BattleStats(int curHp, int maxHp, int atk, int def, int spAtk,
+			int spDef, int spd, Status status, int baseXP, int[] baseStats,
+			int[] EVyield) {
 		this.setCurHp(curHp);
 		this.setMaxHp(maxHp);
 		this.setAtk(atk);
@@ -28,7 +30,7 @@ public class BattleStats {
 		this.setBaseXP(baseXP);
 		this.setBaseStats(baseStats);
 		this.setEVyield(EVyield);
-		SLPCount=0;
+		SLPCount = 0;
 	}
 
 	public int getCurHp() {
@@ -94,17 +96,17 @@ public class BattleStats {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+
 	public void fullHeal() {
 		curHp = maxHp;
 		status = Status.NRM;
-		SLPCount=0;
+		SLPCount = 0;
 	}
-	
+
 	public void partialHeal(int x) {
 		curHp += x;
 	}
-	
+
 	public void changeStatus(Status x) {
 		status = x;
 	}

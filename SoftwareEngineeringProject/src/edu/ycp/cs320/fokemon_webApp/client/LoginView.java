@@ -111,10 +111,11 @@ public class LoginView extends Composite {
 					Window.alert("Load Success");
 					// Switch to some other view
 					Window.alert("Player Name: " + result.getName());
-
+					//Need to set a copy constructor for Player class
+					/*
 					player1.setChoice(result.getChoice());
 					player1.setGender(result.getGender());
-					player1.setItemIndex(result.getItemIndex());
+					//player1.setItemIndex(result.getItemIndex());
 					player1.setMoveIndex(result.getMoveIndex());
 					player1.setName(result.getName());
 					player1.setPlayerID(result.getPlayerID());
@@ -127,7 +128,7 @@ public class LoginView extends Composite {
 
 
 					player1.setName("Jody Faloney Jr.");
-
+					 */
 					saveProfile();
 
 					validLogin = true;

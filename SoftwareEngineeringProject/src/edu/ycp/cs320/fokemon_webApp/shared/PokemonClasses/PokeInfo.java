@@ -2,32 +2,32 @@ package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
 import java.util.ArrayList;
 
-
-
-
 public class PokeInfo {
 	private PokeID ID;
 	private int PlayerID;
+	private int catchRate;
 	private String PokeName;
 	private String Nickname;
 	private Boolean Gender;
 	private Boolean UsedInBattle;
 	private Boolean isWild;
-	private ArrayList <PokeType> type;
+	private ArrayList<PokeType> type;
 	private int lvl;
 	private int xp;
-	
-	public PokeInfo(PokeID ID, int PlayerID, String PokeName, String Nickname, Boolean Gender, ArrayList <PokeType> type, int lvl, int xp){
+
+	public PokeInfo(PokeID ID, int PlayerID, String PokeName, String Nickname,
+			Boolean Gender, ArrayList<PokeType> type, int lvl, int xp, int catchRate) {
 		this.setID(ID);
-		this.PlayerID=PlayerID;
-		this.PokeName=PokeName;
-		this.Nickname=Nickname;
-		this.Gender=Gender;
-		this.type=type;
-		this.lvl=lvl;
-		this.xp=xp;
-		this.UsedInBattle=false;
+		this.PlayerID = PlayerID;
+		this.PokeName = PokeName;
+		this.Nickname = Nickname;
+		this.Gender = Gender;
+		this.type = type;
+		this.lvl = lvl;
+		this.xp = xp;
+		this.UsedInBattle = false;
 		this.setIsWild(false);
+		this.catchRate=catchRate;
 	}
 
 	public int getPlayerID() {
@@ -109,6 +109,13 @@ public class PokeInfo {
 	public void setIsWild(Boolean isWild) {
 		this.isWild = isWild;
 	}
-	
+
+	public int getCatchRate() {
+		return catchRate;
+	}
+
+	public void setCatchRate(int catchRate) {
+		this.catchRate = catchRate;
+	}
 
 }
