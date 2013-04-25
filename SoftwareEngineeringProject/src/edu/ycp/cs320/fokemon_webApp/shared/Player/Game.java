@@ -1,9 +1,7 @@
 package edu.ycp.cs320.fokemon_webApp.shared.Player;
 
-import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
