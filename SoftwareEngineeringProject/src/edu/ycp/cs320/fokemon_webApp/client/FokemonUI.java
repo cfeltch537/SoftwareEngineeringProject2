@@ -37,7 +37,6 @@ public class FokemonUI implements EntryPoint {
 	static final String holderId = "canvasholder";
 
 	static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
-
 	static CirculatingImagesView tempView;
 	static LoginView loginView;
 	Login login;
