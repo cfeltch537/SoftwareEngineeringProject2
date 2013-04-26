@@ -21,6 +21,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 
 /**
@@ -32,7 +33,7 @@ public class FokemonUI implements EntryPoint {
 	static final String holderId = "canvasholder";
 
 	static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
-
+	
 	static CirculatingImagesView tempView;
 	static MapView map;
 	static BattleView battleView;
@@ -83,6 +84,7 @@ public class FokemonUI implements EntryPoint {
 				// updateTable(result);
 				setPokedex(result);
 				System.out.println("Pokedex is Ready");
+				new Game();
 				battleView = new BattleView();
 
 			}
