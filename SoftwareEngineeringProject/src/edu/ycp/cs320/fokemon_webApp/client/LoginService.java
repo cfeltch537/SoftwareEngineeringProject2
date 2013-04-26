@@ -17,5 +17,7 @@ public interface LoginService extends RemoteService {
 	 * @return true if successful, false otherwise
 	 * @throws SQLException 
 	 */
-	public Login submitLogin(Login login);	
+	public Login submitLogin(Login login);
+	
+	public Login checkUsername(Login login);
 }

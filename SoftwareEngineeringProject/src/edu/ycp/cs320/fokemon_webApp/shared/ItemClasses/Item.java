@@ -1,10 +1,15 @@
 package edu.ycp.cs320.fokemon_webApp.shared.ItemClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
 
-public class Item {
+public class Item implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int sellPrice;
 	private int buyPrice;
 	private boolean useInBattle;
@@ -24,7 +29,14 @@ public class Item {
 		this.itemName = itemName;
 		this.itemEffect = itemEffect;
 	}
-
+	public Item() {
+		this.sellPrice = 0;
+		this.buyPrice = 0;
+		this.useInBattle = false;
+		this.useOutOfBattle = false;
+		this.itemName = null;
+		this.itemEffect = null;	
+	}
 	/**
 	 * @return the sellPrice
 	 */

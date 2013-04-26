@@ -20,5 +20,7 @@ public interface LoadProfileService extends RemoteService {
 	 */
 	public Player retrieveProfile(Login login);	
 	
+	public Login createProfile(Login login, Player player1);	
+	
 	public Player saveProfile(Login model, Player player1);	
 }

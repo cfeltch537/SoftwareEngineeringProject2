@@ -12,5 +12,7 @@ public interface LoginServiceAsync {
 	 * @param callback the callback to return true if successful, false otherwise
 	 * @throws SQLException 
 	 */
-	public void submitLogin(Login login, AsyncCallback<Login> callback);	
+	public void submitLogin(Login login, AsyncCallback<Login> callback);
+	
+	public void checkUsername(Login login, AsyncCallback<Login> callback);
 }

@@ -1,8 +1,14 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
+import java.io.Serializable;
+
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
-public class BattleStats {
+public class BattleStats implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int curHp;
 	private int maxHp;
 	private int atk;
@@ -30,6 +36,21 @@ public class BattleStats {
 		this.setBaseXP(baseXP);
 		this.setBaseStats(baseStats);
 		this.setEVyield(EVyield);
+		SLPCount = 0;
+	}
+	
+	public BattleStats() {
+		this.setCurHp(0);
+		this.setMaxHp(0);
+		this.setAtk(0);
+		this.setDef(0);
+		this.setSpAtk(0);
+		this.setSpDef(0);
+		this.setSpd(0);
+		this.setStatus(null);
+		this.setBaseXP(0);
+		this.setBaseStats(new int[1]);
+		this.setEVyield(new int[1]);
 		SLPCount = 0;
 	}
 

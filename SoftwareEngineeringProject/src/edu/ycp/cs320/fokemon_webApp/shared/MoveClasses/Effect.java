@@ -1,6 +1,12 @@
 package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
-public class Effect {
+import java.io.Serializable;
+
+public class Effect implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EffectType EffectIndex;
 	private int EffectChance;
 	private int Magnitude;
@@ -13,7 +19,12 @@ public class Effect {
 		this.setMagnitude(Magnitude);
 		this.EffectText = EffectText;
 	}
-
+	public Effect() {
+		this.setEffectIndex(null);
+		this.setEffectChance(0);
+		this.setMagnitude(0);
+		this.EffectText = null;		
+	}
 	public EffectType getEffectIndex() {
 		return EffectIndex;
 	}

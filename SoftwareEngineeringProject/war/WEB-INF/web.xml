@@ -12,7 +12,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>pokedexReaderImpl</servlet-name>
-    <url-pattern>/gwtcanvasdemo/pokedexReader</url-pattern>
+    <url-pattern>/loginui/pokedexReader</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -39,3 +39,4 @@
 	</welcome-file-list>
 
 </web-app>
+

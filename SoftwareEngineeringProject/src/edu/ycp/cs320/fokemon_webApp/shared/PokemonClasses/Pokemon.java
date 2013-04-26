@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import edu.ycp.cs320.fokemon_webApp.client.FokemonUI;
-import edu.ycp.cs320.fokemon_webApp.client.TempBattle;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
+
 import java.io.Serializable;
 
 
@@ -44,7 +45,7 @@ public class Pokemon implements Serializable {
 			gender = false;
 		else
 			gender = true;
-		PokeInfo information = new PokeInfo(entry.getPokeID(), TempBattle
+		PokeInfo information = new PokeInfo(entry.getPokeID(), Game
 				.getUser().getPlayerID(), entry.getPokeName(),
 				entry.getPokeName(), gender, entry.getType(), lvl, 0,255);
 		Move move1 = MoveDataBase.generateMove(MoveName.Tackle);

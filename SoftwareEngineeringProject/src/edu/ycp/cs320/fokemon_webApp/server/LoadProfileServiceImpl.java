@@ -50,5 +50,15 @@ public class LoadProfileServiceImpl extends RemoteServiceServlet implements Load
 		}		
 	}
 
+	@Override
+	public Login createProfile(Login login, Player player1) {
+		try {
+			return DBUtil.instance().createProfile(login, player1);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException", e);
+		}	
+	}
+
+
 	
 }

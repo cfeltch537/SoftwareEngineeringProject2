@@ -55,4 +55,16 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Login createProfile(Login login, Player player1) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Login checkUsername(Login _login) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

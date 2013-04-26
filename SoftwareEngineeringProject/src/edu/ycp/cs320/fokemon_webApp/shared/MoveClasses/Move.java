@@ -1,10 +1,15 @@
 package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 
-public class Move {
+public class Move implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int curPP;
 	private int maxPP;
 	private ArrayList<Effect> effect;
@@ -29,6 +34,18 @@ public class Move {
 		this.movePriority = movePriority;
 	}
 
+	public Move() {
+		this.curPP = 0;
+		this.maxPP = 0;
+		this.effect = null; // make a copy of the list
+		this.accuracy = 0;
+		this.moveName = null;
+		this.damage = 0;
+		this.pokeType = null;
+		this.physical = false;
+		this.movePriority = 0;
+	}
+	
 	public int getCurPP() {
 		return curPP;
 	}

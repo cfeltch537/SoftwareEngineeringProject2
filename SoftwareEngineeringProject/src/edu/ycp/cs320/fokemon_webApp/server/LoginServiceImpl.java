@@ -39,4 +39,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			throw new RuntimeException("SQLException", e);
 		}		
 	}
+
+	@Override
+	public Login checkUsername(Login _login) {
+		try {
+			return DBUtil.instance().checkUsername(_login);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException", e);
+		}	
+	}
 }

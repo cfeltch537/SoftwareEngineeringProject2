@@ -1,6 +1,8 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
-public class TempBattleStats {
+import java.io.Serializable;
+
+public class TempBattleStats implements Serializable {
 
 	private int ATKBoost;
 	private int DEFBoost;

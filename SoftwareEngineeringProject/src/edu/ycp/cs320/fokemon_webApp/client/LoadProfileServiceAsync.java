@@ -14,5 +14,7 @@ public interface LoadProfileServiceAsync {
 	 */
 	public void retrieveProfile(Login login, AsyncCallback<Player> callback);	
 	
+	public void createProfile(Login login, Player player1, AsyncCallback<Login> callback);	
+	
 	public void saveProfile(Login model, Player player1, AsyncCallback<Player> callback);	
 }

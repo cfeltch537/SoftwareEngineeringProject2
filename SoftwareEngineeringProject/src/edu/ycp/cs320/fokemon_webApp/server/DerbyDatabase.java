@@ -17,9 +17,15 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import com.google.gwt.user.cellview.client.Column;
 
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 public class DerbyDatabase implements IDatabase {
 	private static final String DATASTORE = "H:/fokemon";
@@ -129,7 +135,8 @@ public class DerbyDatabase implements IDatabase {
 					ObjectOutputStream oos = null;
 
 					Player player2 = new Player(2222,"Jody Faloney",false, new Location(0,0,0));
-
+					
+					
 					try {
 						oos = new ObjectOutputStream(baos);
 						oos.writeObject(player2);
@@ -332,6 +339,108 @@ public class DerbyDatabase implements IDatabase {
 			return player1;
 		
 		
+	}
+
+	@Override
+	public Login createProfile(final Login login, final Player player1) throws SQLException {
+		return databaseRun(new ITransaction<Login>() {
+			@Override
+			public Login run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+
+				try {
+					stmt = conn.prepareStatement(
+							"insert into users (username, password, role, playerData) values ( ?, ?, ?, ?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+
+
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					ObjectOutputStream oos = null;
+
+					
+					
+					try {
+						oos = new ObjectOutputStream(baos);
+						oos.writeObject(player1);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					byte[] tableAsBytes = baos.toByteArray();
+					ByteArrayInputStream bais =
+							new ByteArrayInputStream(tableAsBytes);
+
+
+
+
+					stmt.setString(1, login.getUsername());
+					stmt.setString(2, login.getPassword());
+					stmt.setString(3, login.getRole());
+					stmt.setBinaryStream(4,bais, (long) tableAsBytes.length);
+					stmt.addBatch();
+					
+
+					stmt.executeBatch();
+					
+					stmt = conn.prepareStatement("select users.* from users where users.username = ?");
+
+					stmt.setString(1, login.getUsername());
+
+					resultSet = stmt.executeQuery();
+
+					if (!resultSet.next()) {
+						return null; // no such user
+					}
+
+					Login user = new Login();
+					loadLoginFromResultSet(user, resultSet);
+
+					
+
+					return user;
+
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Login checkUsername(final Login _login) throws SQLException {
+		return databaseRun(new ITransaction<Login>() {
+			@Override
+			public Login run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+
+				try {
+					stmt = conn.prepareStatement("select users.* from users where users.username = ?");
+
+					stmt.setString(1, _login.getUsername());
+
+					resultSet = stmt.executeQuery();
+
+					if (resultSet.next()) {
+						return null;	//user exists
+					}
+
+					Login user = new Login();
+					user.setUsername(_login.getUsername());
+
+					return user;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
 	}
 
 

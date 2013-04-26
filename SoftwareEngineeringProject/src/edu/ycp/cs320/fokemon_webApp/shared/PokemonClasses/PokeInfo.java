@@ -1,8 +1,13 @@
 package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PokeInfo {
+public class PokeInfo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private PokeID ID;
 	private int PlayerID;
 	private int catchRate;
@@ -28,6 +33,20 @@ public class PokeInfo {
 		this.UsedInBattle = false;
 		this.setIsWild(false);
 		this.catchRate=catchRate;
+	}
+	
+	public PokeInfo() {
+		this.setID(null);
+		this.PlayerID = 0;
+		this.PokeName = null;
+		this.Nickname = null;
+		this.Gender = false;
+		this.type = null;
+		this.lvl = 0;
+		this.xp = 0;
+		this.UsedInBattle = false;
+		this.setIsWild(false);
+		this.catchRate=0;
 	}
 
 	public int getPlayerID() {

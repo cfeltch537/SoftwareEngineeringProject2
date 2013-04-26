@@ -14,4 +14,8 @@ public interface IDatabase {
 	public Player retrieveProfile(Login login) throws SQLException;
 
 	public Player saveProfile(Login login, Player player1) throws SQLException;
+	
+	public Login createProfile(Login login, Player player1) throws SQLException;
+
+	public Login checkUsername(Login _login) throws SQLException;
 }

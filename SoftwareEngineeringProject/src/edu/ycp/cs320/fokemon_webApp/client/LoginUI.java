@@ -14,12 +14,19 @@ import com.google.gwt.user.client.ui.Label;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class LoginUI implements EntryPoint {
+	static RootPanel rootPanel;
+	static LoginView loginView;
 	static final String holderId = "loginholder";
 	public void onModuleLoad() {
-		RootPanel rootPanel = RootPanel.get();
+		rootPanel = RootPanel.get();
 		
-		LoginView loginView = new LoginView();
+		loginView = new LoginView();
 		rootPanel.add(loginView, 10, 10);
+		loginView.textBoxUsername.setFocus(true);
+		loginView.rdbtnBoy.setValue(true);
 		
+	}
+	public static void removePanel(){
+		rootPanel.remove(loginView);
 	}
 }
