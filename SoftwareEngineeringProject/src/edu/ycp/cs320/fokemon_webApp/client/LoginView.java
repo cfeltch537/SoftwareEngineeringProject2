@@ -35,12 +35,18 @@ public class LoginView extends Composite {
 	Login model;
 	Boolean validLogin;
 	Player player1;
+	Label lblLoginToYour;
+	Label lblUsername;
+	Label lblPassword;
+	Label lblPassword2;
 	Label lblName;
 	Label lblGender;
 	Label lblAreYouA;
 	RadioButton rdbtnBoy;
 	RadioButton rdbtnGirl; 
 	Button btnStartYourAdventure;
+	Button btnRegister;
+	Button btnSignIn;
 
 	public LoginView() {
 		loginPanel = new AbsolutePanel();
@@ -50,7 +56,7 @@ public class LoginView extends Composite {
 		validLogin = false;
 		player1 = new Player();
 
-		Label lblLoginToYour = new Label("Sign in to your account");
+		lblLoginToYour = new Label("Sign in to your account");
 		lblLoginToYour.setStyleName("gwt-Label-Login");
 		loginPanel.add(lblLoginToYour);
 
@@ -58,18 +64,18 @@ public class LoginView extends Composite {
 		loginPanel.add(flexTable, 0, 24);
 		flexTable.setWidth("345px");
 
-		Label lblUsername = new Label("Username:");
+		lblUsername = new Label("Username:");
 		lblUsername.setStyleName("gwt-Label-Login");
 		flexTable.setWidget(0, 0, lblUsername);
 
 		textBoxUsername = new TextBox();
 		flexTable.setWidget(0, 1, textBoxUsername);
 
-		Label lblPassword = new Label("Password:");
+		lblPassword = new Label("Password:");
 		lblPassword.setStyleName("gwt-Label-Login");
 		flexTable.setWidget(1, 0, lblPassword);
 
-		final Label lblPassword2 = new Label("Confirm Password");
+		lblPassword2 = new Label("Confirm Password");
 		lblPassword.setStyleName("gwt-Label-Login");
 		flexTable.setWidget(0, 2, lblPassword2);
 		lblPassword2.setVisible(false);
@@ -108,8 +114,7 @@ public class LoginView extends Composite {
 					else if (!textBoxPassword.getText().equals(textBoxPassword2.getText())){
 						Window.alert("Passwords do not match."); 
 					} else {
-						//Check Username
-						//if good, register
+						checkUsername();
 					}
 				}
 			}
@@ -120,7 +125,7 @@ public class LoginView extends Composite {
 
 		lblUsername.setStyleName("gwt-Label-Login");
 
-		Button btnSignIn = new Button("Sign In");
+		btnSignIn = new Button("Sign In");
 		btnSignIn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (textBoxUsername.getText().length() == 0	|| textBoxPassword.getText().length() == 0) 
@@ -137,7 +142,7 @@ public class LoginView extends Composite {
 			}
 		});
 
-		Button btnRegister = new Button("Register");
+		btnRegister = new Button("Register");
 		btnRegister.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				//Register Line
@@ -145,6 +150,7 @@ public class LoginView extends Composite {
 				{
 					textBoxPassword2.setVisible(true);
 					lblPassword2.setVisible(true);
+					textBoxPassword2.setFocus(true);
 				}
 				else
 				{
@@ -178,6 +184,20 @@ public class LoginView extends Composite {
 		textBoxName = new TextBox();
 		flexTable.setWidget(5, 0, textBoxName);
 		textBoxName.setVisible(false);
+		textBoxName.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					if (textBoxName.getText().length() == 0	) 
+					{
+						Window.alert("You have a name, don't you?"); 
+					} else {
+						player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,0,0));
+						createProfile();
+					}
+				}
+			}
+		});
 
 		lblName = new Label("Name:");
 		flexTable.setWidget(4, 0, lblName);
@@ -227,7 +247,6 @@ public class LoginView extends Composite {
 					model.setId(result.getId());
 					model.setRole(result.getRole());
 					// Switch to some other view
-					validLogin = true;
 					loadProfile();
 				} else {
 					GWT.log("Unknown username/password");
@@ -262,8 +281,18 @@ public class LoginView extends Composite {
 					rdbtnBoy.setVisible(true);
 					rdbtnGirl.setVisible(true);
 					btnStartYourAdventure.setVisible(true);
+					lblLoginToYour.setVisible(false);
+					lblUsername.setVisible(false);
+					lblPassword.setVisible(false);
+					lblPassword2.setVisible(false);
+					textBoxUsername.setVisible(false);
+					textBoxPassword.setVisible(false);
+					textBoxPassword2.setVisible(false);
+					btnRegister.setVisible(false);
+					btnSignIn.setVisible(false);
+					textBoxName.setFocus(true);
 					if (model.getPassword().length()>=3){
-						if (model.getPassword().substring(0,4).equals("lol"))
+						if (model.getPassword().substring(0,3).equals("lol"))
 							model.setRole("admin");
 						else
 							model.setRole("user");
@@ -296,16 +325,14 @@ public class LoginView extends Composite {
 					new Game(result, model);
 
 					//saveProfile();
-
+					LoginUI.removePanel();
+					FokemonUI fokeUI = new FokemonUI();
+					fokeUI.initialize();
 					//validLogin = true;
 				} else {
 					GWT.log("Load Fail");
 					Window.alert("Load Fail");
 				}
-				LoginUI.removePanel();
-				FokemonUI banana = new FokemonUI();
-				banana.initialize();
-
 
 			}
 
@@ -379,7 +406,7 @@ public class LoginView extends Composite {
 
 					model.setId(result.getId());
 					//Window.alert("Player Name: " + result.getName());
-
+					loadProfile();
 				} else {
 					GWT.log("Create Fail");
 					Window.alert("Create Fail");

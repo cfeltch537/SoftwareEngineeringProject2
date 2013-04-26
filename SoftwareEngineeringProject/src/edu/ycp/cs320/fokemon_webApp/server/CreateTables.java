@@ -8,7 +8,7 @@ public class CreateTables {
 		DerbyDatabase db = new DerbyDatabase();
 		db.createTables();
 		//db.createInitialData();
-		System.out.println("Successfully created tables and data");
+		System.out.println("Successfully created tables");
 	}
 
 }
