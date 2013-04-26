@@ -45,8 +45,7 @@ public class Pokemon implements Serializable {
 			gender = false;
 		else
 			gender = true;
-		PokeInfo information = new PokeInfo(entry.getPokeID(), Game
-				.getUser().getPlayerID(), entry.getPokeName(),
+		PokeInfo information = new PokeInfo(entry.getPokeID(), Game.getUser().getPlayerID(), entry.getPokeName(),
 				entry.getPokeName(), gender, entry.getType(), lvl, 0,255);
 		Move move1 = MoveDataBase.generateMove(MoveName.Tackle);
 		ArrayList<Move> moves = new ArrayList<Move>();

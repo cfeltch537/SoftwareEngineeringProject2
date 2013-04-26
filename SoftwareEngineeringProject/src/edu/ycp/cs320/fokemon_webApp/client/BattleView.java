@@ -124,6 +124,7 @@ public class BattleView extends Composite {
 		// Instantiate Images since Pokemon class in not ready yet
 		img1 = new Image("PokemonSprites/Arena.png");
 		// Instantiate Battle
+
 		battleBackBufferContext.setFillStyle(CssColor.make("rgba(224,224,224,0.1)"));
 		initHandlers();
 

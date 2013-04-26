@@ -36,6 +36,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
+
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokedexReader;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
@@ -52,6 +53,7 @@ public class FokemonUI {
 	static LoginView loginView;
 
 	static Button saveButton;
+
 	static CirculatingImagesView tempView;
 	static MapView map;
 	static BattleView battleView;
@@ -149,7 +151,6 @@ public class FokemonUI {
 					Game.getUser().getTeam().add(Attacker);
 				}
 				//Wall of text over
-
 
 				battleView = new BattleView();
 
