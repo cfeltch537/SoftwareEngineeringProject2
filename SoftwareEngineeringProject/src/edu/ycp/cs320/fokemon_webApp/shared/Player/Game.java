@@ -50,6 +50,11 @@ public class Game {
 		user.getTeam().add(Attacker3);
 		//setBattle(Battle.wildPokemonBattle(PokeID.Pikachu, 35));
 	}
+	public static void HealTeam(){
+		for(int i=0;i<user.getTeamSize();i++){
+			user.getTeam(i).getStats().fullHeal();
+		}
+	}
 	public Game(Player user){
 		Game.user=user;
 	}
