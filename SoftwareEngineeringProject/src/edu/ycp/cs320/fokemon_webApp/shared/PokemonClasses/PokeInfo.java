@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
+
 public class PokeInfo implements Serializable {
 	/**
 	 * 
@@ -21,9 +23,10 @@ public class PokeInfo implements Serializable {
 	private int lvl;
 	private int xp;
 	private TreeMap<Integer,PokeID> evolution;
+	private TreeMap<Integer,MoveName> moveList;
 
 	public PokeInfo(PokeID ID, int PlayerID, String PokeName, String Nickname,
-			Boolean Gender, ArrayList<PokeType> type, int lvl, int xp, int catchRate,TreeMap<Integer,PokeID> evolution) {
+			Boolean Gender, ArrayList<PokeType> type, int lvl, int xp, int catchRate,TreeMap<Integer,PokeID> evolution,TreeMap<Integer,MoveName> moveList) {
 		this.setID(ID);
 		this.PlayerID = PlayerID;
 		this.PokeName = PokeName;
@@ -36,6 +39,7 @@ public class PokeInfo implements Serializable {
 		this.setIsWild(false);
 		this.catchRate=catchRate;
 		this.evolution=evolution;
+		this.moveList=moveList;
 	}
 	
 	public PokeInfo() {
@@ -51,6 +55,7 @@ public class PokeInfo implements Serializable {
 		this.setIsWild(false);
 		this.catchRate=0;
 		evolution=new TreeMap<Integer,PokeID>();
+		moveList=new TreeMap<Integer,MoveName>();
 	}
 
 	public int getPlayerID() {
@@ -147,6 +152,14 @@ public class PokeInfo implements Serializable {
 
 	public void setEvolution(TreeMap<Integer,PokeID> evolution) {
 		this.evolution = evolution;
+	}
+
+	public TreeMap<Integer,MoveName> getMoveList() {
+		return moveList;
+	}
+
+	public void setMoveList(TreeMap<Integer,MoveName> moveList) {
+		this.moveList = moveList;
 	}
 
 }
