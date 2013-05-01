@@ -8,27 +8,35 @@ public enum InteractableObject {
 	Default(new Interaction[] {}, null),
 	// Tall Grass Types********************************
 	TallGrass(new Interaction[] { Interaction.Battle_Wild,
-			Interaction.TallGrass }, "TallGrass.png"), TallGrassLeftEdge(
+			Interaction.TallGrass }, "TallGrass.png"), 
+	TallGrassLeftEdge(
 			new Interaction[] { Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_LeftEdge.png"), TallGrassRightEdge(new Interaction[] {
-			Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_RightEdge.png"), TallGrassLowerEdge(new Interaction[] {
-			Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_LowerEdge.png"), TallGrassUpperEdge(new Interaction[] {
-			Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_UpperEdge.png"), TallGrassUpperLeftEdge(
+			"TallGrass_LeftEdge.png"), 
+	TallGrassRightEdge(
+			new Interaction[] {	Interaction.Battle_Wild, Interaction.TallGrass },
+			"TallGrass_RightEdge.png"), 
+	TallGrassLowerEdge(
+			new Interaction[] {	Interaction.Battle_Wild, Interaction.TallGrass },
+			"TallGrass_LowerEdge.png"), 
+	TallGrassUpperEdge(
+			new Interaction[] {	Interaction.Battle_Wild, Interaction.TallGrass },
+			"TallGrass_UpperEdge.png"), 
+	TallGrassUpperLeftEdge(
 			new Interaction[] { Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_UpperLeftEdge.png"), TallGrassUpperRightEdge(
+			"TallGrass_UpperLeftEdge.png"), 
+	TallGrassUpperRightEdge(
 			new Interaction[] { Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_UpperRightEdge.png"), TallGrassLowerLeftEdge(
+			"TallGrass_UpperRightEdge.png"), 
+	TallGrassLowerLeftEdge(
 			new Interaction[] { Interaction.Battle_Wild, Interaction.TallGrass },
-			"TallGrass_LowerLeftEdge.png"), TallGrassLowerRightEdge(
+			"TallGrass_LowerLeftEdge.png"), 
+	TallGrassLowerRightEdge(
 			new Interaction[] { Interaction.Battle_Wild, Interaction.TallGrass },
 			"TallGrass_LowerRightEdge.png"),
 	// Structures***************************************
 	PokeCenter(new Interaction[] { Interaction.MovementBlocked },
-			".\\src/TerrainImages/PokeCenter.png"), Trainer(
-			new Interaction[] { Interaction.Battle_Wild }, null);
+			"PokeCenter.png"), 
+	Trainer(new Interaction[] { Interaction.Battle_Wild }, null);
 	// InteractableFlooring*****************************
 
 	public LinkedList<Interaction> interactionList = new LinkedList<Interaction>();

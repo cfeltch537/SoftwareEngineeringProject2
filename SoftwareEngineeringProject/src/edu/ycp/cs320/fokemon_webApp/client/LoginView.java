@@ -291,12 +291,12 @@ public class LoginView extends Composite {
 					btnRegister.setVisible(false);
 					btnSignIn.setVisible(false);
 					textBoxName.setFocus(true);
-					if (model.getPassword().length()>=3){
-						if (model.getPassword().substring(0,3).equals("lol"))
-							model.setRole("admin");
-						else
-							model.setRole("user");
-					} else 
+//					if (model.getPassword().length()>=3){
+//						if (model.getPassword().substring(0,3).equals("lol"))
+//							model.setRole("admin");
+//						else
+//							model.setRole("user");
+//					} else 
 						model.setRole("user");
 				} else {
 					GWT.log("Username Already Exists");
