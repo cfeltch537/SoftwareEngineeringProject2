@@ -1,13 +1,5 @@
 package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.event.dom.client.LoadEvent;
-import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.ui.Image;
 
 public class Area {
