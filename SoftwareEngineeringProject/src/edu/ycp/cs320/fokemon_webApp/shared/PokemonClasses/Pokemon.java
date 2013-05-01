@@ -147,7 +147,7 @@ public class Pokemon implements Serializable {
 		// TODO Auto-generated method stub
 		if(info.getLvl()>info.getEvolution().lastKey()){
 			PokedexEntry entry = new PokedexEntry();
-			entry = FokemonUI.getPokedex().getPokeMap().get(info.getEvolution().lastEntry());
+			entry = FokemonUI.getPokedex().getPokeMap().get(info.getEvolution().get(info.getEvolution().lastKey()));
 			message.add(info.getNickname() + " has evolved into " + entry.getPokeName());
 			info.setEvolution(entry.getEvolution());
 			info.setMoveList(entry.getMoveList());
@@ -159,7 +159,7 @@ public class Pokemon implements Serializable {
 			info.setPokeName(entry.getPokeName());
 			
 			BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
-					getStats().getStatus(), entry.getBaseXP(), entry.getBaseStats(),
+					Status.NRM, entry.getBaseXP(), entry.getBaseStats(),
 					entry.getEVyield());
 			stats=battleStats;
 			
