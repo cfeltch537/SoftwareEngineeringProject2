@@ -33,7 +33,7 @@ public class MapView extends Composite {
 
 	public MapView() {
 
-
+		//Change
 		mapPanel = new AbsolutePanel();
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player
 		playerImage = new Image("23x25_Trainer_Front.png");															// Cody
