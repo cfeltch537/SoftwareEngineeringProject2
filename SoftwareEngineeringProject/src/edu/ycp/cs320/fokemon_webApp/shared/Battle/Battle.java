@@ -392,6 +392,10 @@ public class Battle {
 	}
 
 	private void CatchPokemon() {
+		for (int i = 0; i < user.getTeam().size(); i++) {
+			user.getTeam().get(i).getInfo().setUsedInBattle(false);
+			}
+		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().setUsedInBattle(false);
 		if(user.getTeam().size()<6){
 			battleMessage.add("You have caught the wild "+opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo().getNickname());
 			battleOver=true;

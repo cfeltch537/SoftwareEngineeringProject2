@@ -48,9 +48,15 @@ public class Pokemon implements Serializable {
 			gender = true;
 		PokeInfo information = new PokeInfo(entry.getPokeID(), Game.getUser().getPlayerID(), entry.getPokeName(),
 				entry.getPokeName(), gender, entry.getType(), lvl, 0,255, entry.getEvolution(),entry.getMoveList());
-		Move move1 = MoveDataBase.generateMove(MoveName.Tackle);
 		ArrayList<Move> moves = new ArrayList<Move>();
-		moves.add(move1);
+		//Move move1 = MoveDataBase.generateMove(MoveName.Tackle);
+		//moves.add(move1);
+		for(int i=0;i<=lvl;i++){
+			if(information.getMoveList().containsKey(i)){
+				moves.add(MoveDataBase.generateMove(information.getMoveList().get(i)));
+			}
+		}
+		
 		BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
 				Status.NRM, entry.getBaseXP(), entry.getBaseStats(),
 				entry.getEVyield());
@@ -77,8 +83,8 @@ public class Pokemon implements Serializable {
 		ArrayList<String> message = new ArrayList<String>();
 		info.setLvl(info.getLvl() + 1);
 		message.add(info.getNickname() + " has grown to level " + info.getLvl());
-		CheckEvolve();
-		CheckLearnMove();
+		CheckEvolve(message);
+		CheckLearnMove(message);
 		UpdateStats();
 		return message;
 	}
@@ -128,13 +134,36 @@ public class Pokemon implements Serializable {
 
 	}
 
-	private void CheckLearnMove() {
+	private void CheckLearnMove(ArrayList<String> message) {
 		// TODO Auto-generated method stub
+		if(info.getMoveList().containsKey(info.getLvl())){
+			moves.add(MoveDataBase.generateMove(info.getMoveList().get(info.getLvl())));
+			message.add(info.getNickname() + " has learned " + info.getMoveList().get(info.getLvl()).toString());
+		}
 
 	}
 
-	private void CheckEvolve() {
+	private void CheckEvolve(ArrayList<String> message) {
 		// TODO Auto-generated method stub
+		if(info.getLvl()>info.getEvolution().lastKey()){
+			PokedexEntry entry = new PokedexEntry();
+			entry = FokemonUI.getPokedex().getPokeMap().get(info.getEvolution().lastEntry());
+			message.add(info.getNickname() + " has evolved into " + entry.getPokeName());
+			info.setEvolution(entry.getEvolution());
+			info.setMoveList(entry.getMoveList());
+			info.setType(entry.getType());
+			if(info.getNickname()==info.getPokeName()){
+				info.setNickname(entry.getPokeName());
+			}
+			info.setID(entry.getPokeID());
+			info.setPokeName(entry.getPokeName());
+			
+			BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
+					getStats().getStatus(), entry.getBaseXP(), entry.getBaseStats(),
+					entry.getEVyield());
+			stats=battleStats;
+			
+		}
 
 	}
 
