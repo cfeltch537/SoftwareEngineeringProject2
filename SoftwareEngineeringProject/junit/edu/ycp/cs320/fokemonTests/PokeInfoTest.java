@@ -1,6 +1,7 @@
 package edu.ycp.cs320.fokemonTests;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeInfo;
@@ -19,9 +20,9 @@ public class PokeInfoTest extends TestCase {
 		// TODO - create test fixture objects
 		type = new ArrayList<PokeType>();
 		type.add(PokeType.NORMAL);
-		a = new PokeInfo(PokeID.Mew, 2, "Mew", "a", false, type, 10, 3,255);
+		a = new PokeInfo(PokeID.Mew, 2, "Mew", "a", false, type, 10, 3,255,new TreeMap<Integer,PokeID>());
 		type.add(PokeType.FIRE);
-		b = new PokeInfo(PokeID.Mewtwo, 3, "Mewtwo", "b", true, type, 11, 4,255);
+		b = new PokeInfo(PokeID.Mewtwo, 3, "Mewtwo", "b", true, type, 11, 4,255,new TreeMap<Integer,PokeID>());
 	}
 
 	// TODO - add test methods

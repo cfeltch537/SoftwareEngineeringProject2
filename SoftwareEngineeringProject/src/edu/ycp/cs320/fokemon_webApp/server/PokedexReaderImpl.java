@@ -44,8 +44,10 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements
 		TreeMap<PokeID, PokedexEntry> pokeMap = new TreeMap<PokeID, PokedexEntry>();
 		ArrayList<String> storeValues = new ArrayList<String>();
 		storeValues = loadIt();
-		for (int i = 0; i < storeValues.size(); i += 18) {
-
+		for (int i = 0; i < storeValues.size(); i += 20) {
+			System.out.println(i);
+			System.out.println(storeValues.get(i + 19));
+			TreeMap<Integer, PokeID> evolution=new TreeMap<Integer,PokeID>();
 			int[] baseStats = { Integer.parseInt(storeValues.get(i + 2)),
 					Integer.parseInt(storeValues.get(i + 3)),
 					Integer.parseInt(storeValues.get(i + 4)),
@@ -60,11 +62,14 @@ public class PokedexReaderImpl extends RemoteServiceServlet implements
 					Integer.parseInt(storeValues.get(i + 14)) };
 			ArrayList<PokeType> type = new ArrayList<PokeType>();
 			type.add(PokeType.valueOf(storeValues.get(i + 15)));
-			if (storeValues.get(i + 16) != "NONE")
-				type.add(PokeType.valueOf(storeValues.get(i + 15)));
+			if (storeValues.get(i + 16) != "NONE")type.add(PokeType.valueOf(storeValues.get(i + 15)));
+			//18 is level of evolution 19 is evolved pokemon
+			//if (storeValues.get(i + 19) != "Mew"){
+				evolution.put(Integer.parseInt(storeValues.get(i + 18)), (PokeID.valueOf(storeValues.get(i + 19))));
+			//else evolution.put(999, PokeID.Bulbasaur);
 			PokedexEntry entry = new PokedexEntry(PokeID.valueOf(storeValues
 					.get(i + 1)), storeValues.get(i + 1), baseStats,
-					Integer.parseInt(storeValues.get(i + 8)), EVyield, type,Integer.parseInt(storeValues.get(i + 17)));
+					Integer.parseInt(storeValues.get(i + 8)), EVyield, type,Integer.parseInt(storeValues.get(i + 17)), evolution);
 			pokeMap.put(PokeID.valueOf(storeValues.get(i + 1)), entry);
 		}
 

@@ -2,6 +2,7 @@ package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 import edu.ycp.cs320.fokemon_webApp.client.FokemonUI;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
@@ -46,7 +47,7 @@ public class Pokemon implements Serializable {
 		else
 			gender = true;
 		PokeInfo information = new PokeInfo(entry.getPokeID(), Game.getUser().getPlayerID(), entry.getPokeName(),
-				entry.getPokeName(), gender, entry.getType(), lvl, 0,255);
+				entry.getPokeName(), gender, entry.getType(), lvl, 0,255, entry.getEvolution());
 		Move move1 = MoveDataBase.generateMove(MoveName.Tackle);
 		ArrayList<Move> moves = new ArrayList<Move>();
 		moves.add(move1);
