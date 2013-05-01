@@ -70,7 +70,14 @@ public class Area {
 				terrain[x_start+i][y_start+j].blockMovement();
 			}
 		}
-		System.out.println("stuff");
+		
+		switch (structure) {
+		case PokeCenter:
+			terrain[x_start+2][y_start+4].interactableObjectList.add(InteractableObject.HealingSpace);
+			break;
+		default:
+			break;
+		}
 	}
 
 }

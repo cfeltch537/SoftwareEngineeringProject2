@@ -35,7 +35,9 @@ public enum InteractableObject {
 			"TallGrass_LowerRightEdge.png"),
 	// Structures***************************************
 	PokeCenter(new Interaction[] { Interaction.MovementBlocked },
-			"PokeCenter.png"), 
+			"PokeCenter.png"),
+	HealingSpace(new Interaction[] { Interaction.MovementBlocked },
+					"PinkFlowers.png"), //Created to prompt for healing of pokemon
 	Trainer(new Interaction[] { Interaction.Battle_Wild }, null);
 	// InteractableFlooring*****************************
 
