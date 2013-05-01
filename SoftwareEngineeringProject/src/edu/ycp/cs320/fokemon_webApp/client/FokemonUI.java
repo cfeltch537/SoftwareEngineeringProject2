@@ -53,9 +53,7 @@ public class FokemonUI {
 		LoginUI.rootPanel.add(map.mapPanel);
 		map.initialize();      
 		map.setFocusCanvas();
-		tempView = new CirculatingImagesView();
-
-
+		//tempView = new CirculatingImagesView();
 
 		final Timer timer = new Timer() {
 			@Override
@@ -100,27 +98,34 @@ public class FokemonUI {
 					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,5));
 					
 					Pokemon Attacker = null;
-					switch(Random.nextInt(3)){
+					switch(Random.nextInt(4)){
 					case 0:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
-						Attacker.getInfo().setNickname("Charizizzle");
+						Attacker.getInfo().setNickname("Charizard");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Flamethrower));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Dragon_Rage));
 						break;
 					case 1:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Blastoise, 75);
-						Attacker.getInfo().setNickname("Bluntoise");
+						Attacker.getInfo().setNickname("Blastoise");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Hydro_Pump));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Waterfall));
 						break;
 					case 2:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Venusaur, 75);
-						Attacker.getInfo().setNickname("Vaposaur");
+						Attacker.getInfo().setNickname("Venusaur");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.SolarBeam));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Razor_Leaf));
+						break;
+					case 3:
+						Attacker = Pokemon.GeneratePokemon(PokeID.Snorlax, 99);
+						Attacker.getInfo().setNickname("JoMo");
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Body_Slam));
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Earthquake));
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Mega_Punch));
 						break;
 					}
 					

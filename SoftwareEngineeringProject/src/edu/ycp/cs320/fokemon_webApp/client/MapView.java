@@ -7,11 +7,13 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.InteractableObject;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
@@ -86,8 +88,8 @@ public class MapView extends Composite {
 
 	void doUpdate() {
 		// update the back canvas, set to fron canvas
-
 		drawPlayer(backBufferContext, context);
+		checkForInteractions();
 	}
 
 	public void drawFlooring(Context2d context, Context2d front) {
@@ -160,9 +162,6 @@ public class MapView extends Composite {
 						mapPanel.add(playerImageCovered,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
-						if (Random.nextInt(100) <= 12) {
-							FokemonUI.startBattle();
-						}
 					} else {
 						mapPanel.remove(playerImageCovered);
 						mapPanel.add(playerImage,
@@ -235,18 +234,32 @@ public class MapView extends Composite {
 	public boolean validMove(String direction){
 		
 		if (direction.equals("right")
-				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()) {
+				&&player.getPlayerLocation().getX()+1 < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length
+				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()){
 			return true;
 		} else if (direction.equals("left")
+				&&player.getPlayerLocation().getX()-1 >= 0
 				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
 			return true;
 		} else if (direction.equals("up")
+				&&player.getPlayerLocation().getY()-1 > 0
 				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
 			return true;
 		} else if (direction.equals("down")
-				&&(areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable())){
+				&&player.getPlayerLocation().getY()+1 < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[0].length
+				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable()){
 			return true;
 		}
 		return false;
+	}
+	public void checkForInteractions(){
+		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isHealAllSpace()) {
+			Game.getUser().getTeam(Game.getUser().getCurrentPokemonIndex()).getStats().setCurHp(Game.getUser().getTeam(Game.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
+			Window.alert("Pokemon HP Fully Restored!!!");
+		} //Healing Interaction
+		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isWildPokemon()
+				&&(Random.nextInt(100) <= 12)) { //12% change of entering battle
+			FokemonUI.startBattle();
+		} //Enter Random Battle Interaction
 	}
 }

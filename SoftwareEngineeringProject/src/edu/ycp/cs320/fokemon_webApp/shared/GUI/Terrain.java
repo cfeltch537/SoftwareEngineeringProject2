@@ -43,6 +43,27 @@ public class Terrain {
 		}
 		return false;
 	}
+	
+	public boolean isWildPokemon() {
+
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.Battle_Wild)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean isHealAllSpace() {
+
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.HealAll)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	// ^isMovable returns true when the player can move to the terrain location
 	// i.e. it does not contain a 'MovementBlocked' Interaction

@@ -73,7 +73,7 @@ public class Area {
 		
 		switch (structure) {
 		case PokeCenter:
-			terrain[x_start+2][y_start+4].interactableObjectList.add(InteractableObject.HealingSpace);
+			terrain[x_start+2][y_start+5].interactableObjectList.add(InteractableObject.HealingSpace);
 			break;
 		default:
 			break;
