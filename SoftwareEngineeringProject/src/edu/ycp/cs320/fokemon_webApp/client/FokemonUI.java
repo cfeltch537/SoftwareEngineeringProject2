@@ -2,6 +2,7 @@
 package edu.ycp.cs320.fokemon_webApp.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Random;
@@ -33,7 +34,8 @@ public class FokemonUI {
 	static Button saveButton;
 
 	static CirculatingImagesView tempView;
-	static MapView map;
+	static MapView map = new MapView();
+	static PCStorageView pcView;
 	static BattleView battleView;
 	private static PokedexReader pokedex;
 	private PokedexReaderServiceAsync pokedexReaderSvc = GWT
@@ -46,14 +48,13 @@ public class FokemonUI {
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				saveCurrentProfile();
-				//LoginView.saveProfile();
 			}
 		});
-		LoginUI.rootPanel.add(saveButton);
 		createPokedexReader();
-		map = new MapView();
-		LoginUI.rootPanel.add(map.mapPanel);
-		map.initialize();      
+		map.initialize(); //This MUST go after map initializer
+		pcView = new PCStorageView();
+		LoginUI.rootPanel.add(map.mapPanel); 
+		LoginUI.rootPanel.add(saveButton);
 		map.setFocusCanvas();
 		//tempView = new CirculatingImagesView();
 
@@ -163,6 +164,7 @@ public class FokemonUI {
 			}
 			battleView.setBattle(Battle.wildPokemonBattle());
 			LoginUI.rootPanel.remove(map.mapPanel);
+			LoginUI.rootPanel.remove(saveButton);
 			LoginUI.rootPanel.add(battleView.battlePanel);
 			battleView.commandOptions.setFocus(true);
 		}
@@ -174,6 +176,7 @@ public class FokemonUI {
 			// battle
 			LoginUI.rootPanel.remove(battleView.battlePanel);
 			LoginUI.rootPanel.add(map.mapPanel);
+			LoginUI.rootPanel.add(saveButton);
 			battleView.commandOptions.setFocus(true);
 			map.setFocusCanvas();
 		}
@@ -203,6 +206,20 @@ public class FokemonUI {
 
 			}
 		});
+	}
+
+	public static void enterPCView() {
+		LoginUI.rootPanel.remove(map.mapPanel);
+		LoginUI.rootPanel.remove(saveButton);
+		LoginUI.rootPanel.add(pcView.storagePanel);
+		pcView.fillTextBoxs();
+	}
+
+	public static void closePCview() {
+		LoginUI.rootPanel.remove(pcView.storagePanel);
+		LoginUI.rootPanel.add(map.mapPanel);
+		map.mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+		LoginUI.rootPanel.add(saveButton);
 	}
 
 }

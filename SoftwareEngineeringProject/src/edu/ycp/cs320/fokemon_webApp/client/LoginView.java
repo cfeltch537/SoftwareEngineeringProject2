@@ -1,4 +1,3 @@
-
 package edu.ycp.cs320.fokemon_webApp.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -425,7 +424,5 @@ public class LoginView extends Composite {
 		});
 	}
 }
-
-
 
 
