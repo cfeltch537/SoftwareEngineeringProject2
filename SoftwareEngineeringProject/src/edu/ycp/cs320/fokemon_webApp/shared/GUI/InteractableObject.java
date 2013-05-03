@@ -43,7 +43,6 @@ public enum InteractableObject {
 					"PC.png"),
 	PCexchange(new Interaction[] { Interaction.EnterPCview },
 			"PinkFlowers.png"),
-
 	Trainer(new Interaction[] { Interaction.Battle_Wild }, null);
 	// InteractableFlooring*****************************
 

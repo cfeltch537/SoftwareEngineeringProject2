@@ -39,7 +39,6 @@ public class MapView extends Composite {
 	}
 	void initialize() {
 		
-
 		//Change
 		mapPanel = new AbsolutePanel();
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player
@@ -165,7 +164,6 @@ public class MapView extends Composite {
 						mapPanel.add(playerImageCovered,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
-
 						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 					}else {
 

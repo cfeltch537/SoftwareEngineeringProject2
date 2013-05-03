@@ -78,7 +78,6 @@ public class Area {
 		case PC:
 			terrain[x_start][y_start+2].interactableObjectList.add(InteractableObject.PCexchange);
 			break;
-
 		default:
 			break;
 		}
