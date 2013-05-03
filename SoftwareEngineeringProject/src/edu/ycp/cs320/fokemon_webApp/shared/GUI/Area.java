@@ -1,13 +1,11 @@
 package edu.ycp.cs320.fokemon_webApp.shared.GUI;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import com.google.gwt.user.client.ui.Image;
 
 public class Area {
 	int HEIGHT = 30;
 	int WIDTH = 60;
+	Image img;
 
 	public Terrain[][] terrain = new Terrain[WIDTH][HEIGHT];
 
@@ -63,27 +61,23 @@ public class Area {
 			}
 		}
 	}
-	// public void placeStructure(int x_start, int y_start, InteractableObject
-	// structure){
-	// terrain[x_start][y_start].interactableObjectList.add(structure);
-	// //^add structure to map; Top left corder at (x_start,y_start)
-	// BufferedImage bimg;
-	// int pixelWidth=0;
-	// int pixelHeight=0;
-	// try {
-	// bimg = ImageIO.read(new File(structure.imageSource));
-	// pixelWidth = bimg.getWidth();
-	// pixelHeight = bimg.getHeight();
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// //^Defines the height and width of the structure; in pixels
-	// for(int i=0; i<pixelWidth/16; i++){
-	// for(int j=0; j<pixelHeight/16; j++){
-	// terrain[x_start+i][y_start+j].blockMovement();
-	// }
-	// }
-	// }
+	public void placeStructure(final int x_start, final int y_start, InteractableObject structure){
+		terrain[x_start][y_start].interactableObjectList.add(structure);
+		//^add structure to map; Top left corder at (x_start,y_start)
+		//"TerrainImages/PokeCenter"
+		for(int i=0; i<structure.img.getWidth()/16; i++){
+			for(int j=0; j<structure.img.getHeight()/16; j++){
+				terrain[x_start+i][y_start+j].blockMovement();
+			}
+		}
+		
+		switch (structure) {
+		case PokeCenter:
+			terrain[x_start+2][y_start+5].interactableObjectList.add(InteractableObject.HealingSpace);
+			break;
+		default:
+			break;
+		}
+	}
 
 }

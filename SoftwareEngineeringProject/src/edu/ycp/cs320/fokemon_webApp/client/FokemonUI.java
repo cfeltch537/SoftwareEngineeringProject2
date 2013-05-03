@@ -1,36 +1,17 @@
-/*******************************************************************************
- * Copyright 2011 Google Inc. All Rights Reserved.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
+
 package edu.ycp.cs320.fokemon_webApp.client;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
-
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
-import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
@@ -47,11 +28,8 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 public class FokemonUI {
 
 	static final String holderId = "canvasholder";
-
 	static final String upgradeMessage = "Your browser does not support the HTML5 Canvas. Please upgrade your browser to view this demo.";
-
 	static LoginView loginView;
-
 	static Button saveButton;
 
 	static CirculatingImagesView tempView;
@@ -77,9 +55,7 @@ public class FokemonUI {
 		LoginUI.rootPanel.add(map.mapPanel);
 		map.initialize();      
 		map.setFocusCanvas();
-		tempView = new CirculatingImagesView();
-
-
+		//tempView = new CirculatingImagesView();
 
 		final Timer timer = new Timer() {
 			@Override
@@ -124,27 +100,34 @@ public class FokemonUI {
 					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,5));
 					
 					Pokemon Attacker = null;
-					switch(Random.nextInt(3)){
+					switch(Random.nextInt(4)){
 					case 0:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
-						Attacker.getInfo().setNickname("Charizizzle");
+						Attacker.getInfo().setNickname("Charizard");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Flamethrower));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Dragon_Rage));
 						break;
 					case 1:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Blastoise, 75);
-						Attacker.getInfo().setNickname("Bluntoise");
+						Attacker.getInfo().setNickname("Blastoise");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Hydro_Pump));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Waterfall));
 						break;
 					case 2:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Venusaur, 75);
-						Attacker.getInfo().setNickname("Vaposaur");
+						Attacker.getInfo().setNickname("Venusaur");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.SolarBeam));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Razor_Leaf));
+						break;
+					case 3:
+						Attacker = Pokemon.GeneratePokemon(PokeID.Snorlax, 99);
+						Attacker.getInfo().setNickname("JoMo");
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Body_Slam));
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Earthquake));
+						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Mega_Punch));
 						break;
 					}
 					

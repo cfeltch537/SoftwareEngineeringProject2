@@ -6,18 +6,16 @@ import com.google.gwt.user.client.ui.Image;
 
 public enum Flooring {
 	// Flooring Unblocked*******************************
-	Grass(new Interaction[] { Interaction.MovementAllowed }, "Grass.png"), Ground(
-			new Interaction[] { Interaction.MovementAllowed }, null), Sand(
-			new Interaction[] { Interaction.MovementAllowed }, "Sand.png"),
+	Grass(new Interaction[] { Interaction.MovementAllowed }, "Grass.png"), 
+	Ground(new Interaction[] { Interaction.MovementAllowed }, null), 
+	Sand(new Interaction[] { Interaction.MovementAllowed }, "Sand.png"),
 	// Flooring Blocked*********************************
-	Blocked_Grass(new Interaction[] { Interaction.MovementBlocked },
-			"Grass.png"), Blocked_Ground(
-			new Interaction[] { Interaction.MovementBlocked }, null), Blocked_Sand(
-			new Interaction[] { Interaction.MovementBlocked }, "Sand.png"),
+	Blocked_Grass(new Interaction[] { Interaction.MovementBlocked },"Grass.png"), 
+	Blocked_Ground(	new Interaction[] { Interaction.MovementBlocked }, null), 
+	Blocked_Sand(new Interaction[] { Interaction.MovementBlocked }, "Sand.png"),
 	// Water Types**************************************
-	FreshWater(new Interaction[] { Interaction.MovementBlocked },
-			"FreshWater.png"), SaltWater(
-			new Interaction[] { Interaction.MovementBlocked }, "SaltWater.png");
+	FreshWater(new Interaction[] { Interaction.MovementBlocked },"FreshWater.png"), 
+	SaltWater(new Interaction[] { Interaction.MovementBlocked }, "SaltWater.png");
 
 	public LinkedList<Interaction> interactionList = new LinkedList<Interaction>();
 	public String imageSource;
