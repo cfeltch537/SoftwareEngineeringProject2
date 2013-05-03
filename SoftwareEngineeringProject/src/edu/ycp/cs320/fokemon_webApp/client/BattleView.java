@@ -27,7 +27,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite {
 	static final String holderId = "canvasholder";
-	static AbsolutePanel battlePanel;
+	AbsolutePanel battlePanel;
 	Canvas battleCanvasBackBuffer;
 	Canvas battleCanvas;
 	Context2d battleContext;

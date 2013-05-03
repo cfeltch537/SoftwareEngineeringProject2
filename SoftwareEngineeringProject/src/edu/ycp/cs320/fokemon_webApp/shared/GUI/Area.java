@@ -75,6 +75,9 @@ public class Area {
 		case PokeCenter:
 			terrain[x_start+2][y_start+5].interactableObjectList.add(InteractableObject.HealingSpace);
 			break;
+		case PC:
+			terrain[x_start][y_start+2].interactableObjectList.add(InteractableObject.PCexchange);
+			break;
 		default:
 			break;
 		}

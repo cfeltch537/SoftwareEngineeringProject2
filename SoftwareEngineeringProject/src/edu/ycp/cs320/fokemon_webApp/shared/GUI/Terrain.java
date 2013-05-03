@@ -25,7 +25,6 @@ public class Terrain {
 		}
 		// ^Try to set object image; catch null pointer exceptions
 	}
-
 	// ^Constructor. Sets flooring of each terrain space in the area
 	// Interactable objects can be added here too, but don't need to be
 	public boolean isMovable() {
@@ -81,5 +80,15 @@ public class Terrain {
 		default:
 			break;
 		}
+	}
+
+	public boolean isEnterPCView() {
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.EnterPCview)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

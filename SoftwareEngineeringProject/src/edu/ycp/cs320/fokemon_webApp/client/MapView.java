@@ -35,6 +35,9 @@ public class MapView extends Composite {
 
 	public MapView() {
 
+	}
+	void initialize() {
+		
 		//Change
 		mapPanel = new AbsolutePanel();
 		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player
@@ -46,7 +49,7 @@ public class MapView extends Composite {
 		areaList[0].createTallGrassSquare(5, 10, 10, 4);
 		areaList[0].createTallGrassSquare(5, 15, 10, 4);
 		areaList[0].placeStructure(25, 10, InteractableObject.PokeCenter);
-		areaList[1] = new Area();
+		areaList[0].placeStructure(38, 14, InteractableObject.PC);
 
 
 		height = 16 * areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[0].length;
@@ -75,10 +78,7 @@ public class MapView extends Composite {
 
 		doUpdate();
 		initHandlers();
-	}
 
-
-	void initialize() {
 		// update the back canvas, set to front canvas
 		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 		drawFlooring(backBufferContext, context);
@@ -162,13 +162,15 @@ public class MapView extends Composite {
 						mapPanel.add(playerImageCovered,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
-					} else {
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+					}else {
 						mapPanel.remove(playerImageCovered);
 						mapPanel.add(playerImage,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 					}
-				mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+				//mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 				}
 			}
 		}
@@ -261,5 +263,8 @@ public class MapView extends Composite {
 				&&(Random.nextInt(100) <= 12)) { //12% change of entering battle
 			FokemonUI.startBattle();
 		} //Enter Random Battle Interaction
+		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isEnterPCView()){ //12% change of entering battle
+			FokemonUI.enterPCView();
+		} //Enter PC View
 	}
 }

@@ -37,7 +37,11 @@ public enum InteractableObject {
 	PokeCenter(new Interaction[] { Interaction.MovementBlocked },
 			"PokeCenter.png"),
 	HealingSpace(new Interaction[] { Interaction.HealAll },
-					"PinkFlowers.png"), //Created to prompt for healing of pokemon
+			"PinkFlowers.png"), //Created to prompt for healing of pokemon
+	PC(new Interaction[] { Interaction.MovementBlocked },
+					"PC.png"),
+	PCexchange(new Interaction[] { Interaction.EnterPCview },
+			"PinkFlowers.png"),
 	Trainer(new Interaction[] { Interaction.Battle_Wild }, null);
 	// InteractableFlooring*****************************
 
