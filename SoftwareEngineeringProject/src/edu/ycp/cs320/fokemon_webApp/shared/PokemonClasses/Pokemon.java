@@ -81,11 +81,16 @@ public class Pokemon implements Serializable {
 
 	public ArrayList<String> LevelUp() {
 		ArrayList<String> message = new ArrayList<String>();
+		int maxHealth=stats.getMaxHp();
 		info.setLvl(info.getLvl() + 1);
 		message.add(info.getNickname() + " has grown to level " + info.getLvl());
 		CheckEvolve(message);
 		CheckLearnMove(message);
 		UpdateStats();
+		stats.setCurHp(stats.getCurHp()+(stats.getMaxHp()-maxHealth));
+		if(stats.getCurHp()>stats.getMaxHp()){
+			stats.setCurHp(stats.getMaxHp());
+		}
 		return message;
 	}
 
@@ -161,6 +166,7 @@ public class Pokemon implements Serializable {
 			BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
 					Status.NRM, entry.getBaseXP(), entry.getBaseStats(),
 					entry.getEVyield());
+			battleStats.setCurHp(stats.getCurHp());
 			stats=battleStats;
 			
 		}
