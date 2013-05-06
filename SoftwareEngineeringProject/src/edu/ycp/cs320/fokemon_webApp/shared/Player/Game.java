@@ -53,6 +53,9 @@ public class Game {
 	public static void HealTeam(){
 		for(int i=0;i<user.getTeamSize();i++){
 			user.getTeam(i).getStats().fullHeal();
+			for(int j=0;j<user.getTeam(i).getMoves().size();j++){
+				user.getTeam(i).getMove(j).setCurPP(user.getTeam(i).getMove(j).getMaxPP());
+			}
 		}
 	}
 	public Game(Player user){
