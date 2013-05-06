@@ -159,18 +159,20 @@ public class MapView extends Composite {
 							.getPlayerLocation().getX()][player
 							.getPlayerLocation().getY()].isTallGrassPresent()) {
 						mapPanel.remove(playerImage);
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 						mapPanel.add(playerImageCovered,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
 						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 					}else {
 						mapPanel.remove(playerImageCovered);
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 						mapPanel.add(playerImage,
 								16 * player.getPlayerLocation().getX() - 3,
 								16 * player.getPlayerLocation().getY() - 15 + 2);
 						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 					}
-				//mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+				mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 				}
 			}
 		}
