@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Fri Apr 26 08:31:25 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-013e-4653-9f40-000003034e00 
-on database directory H:\fokemon  with class loader sun.misc.Launcher$AppClassLoader@19035ff9 
-Loaded from file:/H:/git/SoftwareEngineeringProject/SoftwareEngineeringProject/derby.jar
+Fri Apr 26 09:19:06 EDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-013e-467f-4498-000006ef8bc0 
+on database directory C:\Users\Cody\PokemonDatabase2  with class loader sun.misc.Launcher$AppClassLoader@1393537d 
+Loaded from file:/C:/Users/Cody/git/SoftwareEngineeringProject2/SoftwareEngineeringProject/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_07-b11
-user.dir=H:\git\SoftwareEngineeringProject\SoftwareEngineeringProject
+java.runtime.version=1.7.0_17-b02
+user.dir=C:\Users\Cody\git\SoftwareEngineeringProject2\SoftwareEngineeringProject
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
