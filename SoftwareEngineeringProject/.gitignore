@@ -8,3 +8,4 @@
 /war/gwtlogindemo
 /war/loginui
 *.tmp
+*.class
