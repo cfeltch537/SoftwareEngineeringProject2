@@ -1,6 +1,7 @@
 package edu.ycp.cs320.fokemon_webApp.client;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.apache.commons.collections.functors.SwitchTransformer;
 
@@ -27,6 +28,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite {
 	static final String holderId = "canvasholder";
+	Random rand = new Random();
 	AbsolutePanel battlePanel;
 	Canvas battleCanvasBackBuffer;
 	Canvas battleCanvas;
@@ -132,7 +134,7 @@ public class BattleView extends Composite {
 
 	void setBattle(Battle battle) {
 		this.battle = battle;
-		onPokemonShift();
+		updatePokemonDisplayedInfo();
 		draw(battleBackBufferContext, battleContext);
 		battleAnnouncementBox.setText(this.battle.getBattleMessage().get(0));
 	}
@@ -143,7 +145,7 @@ public class BattleView extends Composite {
 
 	}
 
-	void onPokemonShift() {
+	void updatePokemonDisplayedInfo() {
 		updatePokemonLabels();
 		updatePokemonImages();
 		updatePokemonStatus();
@@ -482,8 +484,6 @@ public class BattleView extends Composite {
 		if (opponentPokemon != null) {
 			battlePanel.remove(opponentPokemon);
 		}
-		// opponentPokemon = new Image("PokemonSprites/Snorlax.png");//This
-		// should set to a pokemons ID specific Image
 		opponentPokemon = new Image("PokemonSprites/"
 				+ battle.getOpponent()
 						.getTeam(battle.getOpponent().getCurrentPokemonIndex())
@@ -592,14 +592,14 @@ public class BattleView extends Composite {
 
 	void handleTurn1(int moveIndex, TurnChoice userChoice) {
 		battle.getUser().setMoveIndex(moveIndex);
-		battle.getOpponent().setMoveIndex(0);
+		battle.getOpponent().setMoveIndex(returnRandomMoveIndex());
 		battle.getUser().setChoice(userChoice);
 		battle.getOpponent().setChoice(TurnChoice.MOVE);
 		battle.Turn(1);
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		if (userChoice.equals(TurnChoice.SWITCH)) {
-			onPokemonShift();
+			updatePokemonDisplayedInfo();
 		}
 	}
 
@@ -617,11 +617,18 @@ public class BattleView extends Composite {
 			setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		}
 		messageIndex++;
+		updatePokemonDisplayedInfo();
 	}
 
 	void checkEndBattle() {
 		if (battle.getBattleOver()) {
 			FokemonUI.endBattle();
 		}
+	}
+	int returnRandomMoveIndex(){
+		return rand.nextInt(
+				battle.getOpponent().getTeam(
+						battle.getOpponent().getCurrentPokemonIndex()
+						).getMoves().size());
 	}
 }

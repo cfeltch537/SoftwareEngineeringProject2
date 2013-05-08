@@ -58,8 +58,5 @@ public class Login  implements Serializable {
 		this.role = role;
 	}
 
-
-
-	
 }
 
