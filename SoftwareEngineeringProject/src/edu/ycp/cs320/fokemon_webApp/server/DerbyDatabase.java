@@ -29,8 +29,8 @@ import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 public class DerbyDatabase implements IDatabase {
 
-	//private static final String DATASTORE = "C:/Users/Cody/PokemonDatabase2";
-	private static final String DATASTORE = "H:/fokemon";
+	private static final String DATASTORE = "C:/Users/Cody/PokemonDatabase2";
+	//private static final String DATASTORE = "H:/fokemon";
 
 
 	static {

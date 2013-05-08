@@ -14,8 +14,6 @@ import com.google.gwt.user.client.ui.Image;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.InteractableObject;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
-import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
-import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class MapView extends Composite {
 	static final String holderId = "canvasholder";
@@ -25,7 +23,6 @@ public class MapView extends Composite {
 	Context2d context;
 	Context2d backBufferContext;
 	Area[] areaList;
-	Player player;
 	Image img;
 	static int height;
 	static int width;
@@ -41,7 +38,6 @@ public class MapView extends Composite {
 		
 		//Change
 		mapPanel = new AbsolutePanel();
-		player = new Player(00004, "Cody", true, new Location(0, 20, 20)); // Player
 		playerImage = new Image("23x25_Trainer_Front.png");															// Cody
 		playerImageCovered = new Image("23x25_Trainer_Front.png");		
 		areaList = new Area[2];
@@ -54,8 +50,8 @@ public class MapView extends Composite {
 		areaList[0].placeStructure(38, 14, InteractableObject.PC);
 
 
-		height = 16 * areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[0].length;
-		width = 16 * areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length;
+		height = 16 * areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[0].length;
+		width = 16 * areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain.length;
 
 
 		canvas = Canvas.createIfSupported();
@@ -99,12 +95,12 @@ public class MapView extends Composite {
 		context.save();
 
 		// DrawFlooring
-		for (int height = 0; height < areaList[player.getPlayerLocation()
+		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
 				.getAreaArrayIndex()].terrain.length; height++) {
-			for (int width = 0; width < areaList[player.getPlayerLocation()
+			for (int width = 0; width < areaList[Game.getUser().getPlayerLocation()
 					.getAreaArrayIndex()].terrain[height].length; width++) {
-				if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img != null) {
-					img = areaList[player.getPlayerLocation()
+				if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img != null) {
+					img = areaList[Game.getUser().getPlayerLocation()
 							.getAreaArrayIndex()].terrain[height][width].flooring.img;
 					context.drawImage((ImageElement) img.getElement().cast(),
 							16 * height, 16 * width);
@@ -119,20 +115,20 @@ public class MapView extends Composite {
 
 		context.save();	
 		// InteractableObjects
-		for (int height = 0; height < areaList[player.getPlayerLocation()
+		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
 				.getAreaArrayIndex()].terrain.length; height++) {
-			for (int width = 0; width < areaList[player.getPlayerLocation()
+			for (int width = 0; width < areaList[Game.getUser().getPlayerLocation()
 					.getAreaArrayIndex()].terrain[height].length; width++) {
 				// ^Iterate through each terrain in the area
-				for (int objectIndex = 0; objectIndex < areaList[player
+				for (int objectIndex = 0; objectIndex < areaList[Game.getUser()
 						.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList
 						.size(); objectIndex++) {
-					if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList
+					if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[height][width].interactableObjectList
 							.get(objectIndex).img != null) {
-						if (areaList[player.getPlayerLocation()
+						if (areaList[Game.getUser().getPlayerLocation()
 								.getAreaArrayIndex()].terrain[height][width].interactableObjectList
 								.get(objectIndex).img != null) {
-							img = areaList[player.getPlayerLocation()
+							img = areaList[Game.getUser().getPlayerLocation()
 									.getAreaArrayIndex()].terrain[height][width].interactableObjectList
 									.get(objectIndex).img;
 							context.drawImage((ImageElement) img.getElement()
@@ -151,29 +147,30 @@ public class MapView extends Composite {
 
 		context.save();	
 		// Player
-		for (int height = 0; height < areaList[player.getPlayerLocation()
+		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
 				.getAreaArrayIndex()].terrain.length; height++) {
-			for (int width = 0; width < areaList[player.getPlayerLocation()
+			for (int width = 0; width < areaList[Game.getUser().getPlayerLocation()
 					.getAreaArrayIndex()].terrain[height].length; width++) {
-				if (height == player.getPlayerLocation().getX()
-						&& width == player.getPlayerLocation().getY()) {
-					if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player
-							.getPlayerLocation().getX()][player
+				if (height == Game.getUser().getPlayerLocation().getX()
+						&& width == Game.getUser().getPlayerLocation().getY()) {
+					if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser()
+							.getPlayerLocation().getX()][Game.getUser()
 							.getPlayerLocation().getY()].isTallGrassPresent()) {
 						mapPanel.remove(playerImage);
-						mapPanel.add(playerImageCovered,
-								16 * player.getPlayerLocation().getX() - 3,
-								16 * player.getPlayerLocation().getY() - 15 + 2);
 						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
-					}else {
-
+						mapPanel.add(playerImageCovered,
+								16 * Game.getUser().getPlayerLocation().getX() - 3,
+								16 * Game.getUser().getPlayerLocation().getY() - 15 + 2);
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+					}else{
 						mapPanel.remove(playerImageCovered);
+						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 						mapPanel.add(playerImage,
-								16 * player.getPlayerLocation().getX() - 3,
-								16 * player.getPlayerLocation().getY() - 15 + 2);
+								16 * Game.getUser().getPlayerLocation().getX() - 3,
+								16 * Game.getUser().getPlayerLocation().getY() - 15 + 2);
 						mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 					}
-				//mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+				
 				}
 			}
 		}
@@ -227,47 +224,47 @@ public class MapView extends Composite {
 	}
 	public void movePlayer(String direction){
 		if(direction.equals("up")&&validMove(direction)){
-			player.getPlayerLocation().setY(player.getPlayerLocation().getY() - 1);
+			Game.getUser().getPlayerLocation().setY(Game.getUser().getPlayerLocation().getY() - 1);
 		}else if(direction.equals("down")&&validMove(direction)){
-			player.getPlayerLocation().setY(player.getPlayerLocation().getY() + 1);
+			Game.getUser().getPlayerLocation().setY(Game.getUser().getPlayerLocation().getY() + 1);
 		}else if(direction.equals("left")&&validMove(direction)){
-			player.getPlayerLocation().setX(player.getPlayerLocation().getX() - 1);
+			Game.getUser().getPlayerLocation().setX(Game.getUser().getPlayerLocation().getX() - 1);
 		}else if(direction.equals("right")&&validMove(direction)){
-			player.getPlayerLocation().setX(player.getPlayerLocation().getX() + 1);
+			Game.getUser().getPlayerLocation().setX(Game.getUser().getPlayerLocation().getX() + 1);
 		}
 	}
 	public boolean validMove(String direction){
 		
 		if (direction.equals("right")
-				&&player.getPlayerLocation().getX()+1 < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain.length
-				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()+1][player.getPlayerLocation().getY()].isMovable()){
+				&&Game.getUser().getPlayerLocation().getX()+1 < areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain.length
+				&&areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()+1][Game.getUser().getPlayerLocation().getY()].isMovable()){
 			return true;
 		} else if (direction.equals("left")
-				&&player.getPlayerLocation().getX()-1 >= 0
-				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()-1][player.getPlayerLocation().getY()].isMovable()) {
+				&&Game.getUser().getPlayerLocation().getX()-1 >= 0
+				&&areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()-1][Game.getUser().getPlayerLocation().getY()].isMovable()) {
 			return true;
 		} else if (direction.equals("up")
-				&&player.getPlayerLocation().getY()-1 > 0
-				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()-1].isMovable()) {
+				&&Game.getUser().getPlayerLocation().getY()-1 > 0
+				&&areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()-1].isMovable()) {
 			return true;
 		} else if (direction.equals("down")
-				&&player.getPlayerLocation().getY()+1 < areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[0].length
-				&&areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()+1].isMovable()){
+				&&Game.getUser().getPlayerLocation().getY()+1 < areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[0].length
+				&&areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()+1].isMovable()){
 			return true;
 		}
 		return false;
 	}
 	public void checkForInteractions(){
-		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isHealAllSpace()) {
-			Game.getUser().getTeam(Game.getUser().getCurrentPokemonIndex()).getStats().setCurHp(Game.getUser().getTeam(Game.getUser().getCurrentPokemonIndex()).getStats().getMaxHp());
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isHealAllSpace()) {
+			Game.HealTeam();
 			Window.alert("Pokemon HP Fully Restored!!!");
 		} //Healing Interaction
-		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isWildPokemon()
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isWildPokemon()
 				&&(Random.nextInt(100) <= 12)) { //12% change of entering battle
 			FokemonUI.startBattle();
 		} //Enter Random Battle Interaction
 
-		if (areaList[player.getPlayerLocation().getAreaArrayIndex()].terrain[player.getPlayerLocation().getX()][player.getPlayerLocation().getY()].isEnterPCView()){ //12% change of entering battle
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isEnterPCView()){ //12% change of entering battle
 			FokemonUI.enterPCView();
 		} //Enter PC View
 

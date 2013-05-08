@@ -12,6 +12,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class Game {
 	private static Player user;
@@ -20,8 +21,7 @@ public class Game {
 
 
 	public Game(){
-		Location loc=new Location(0, 0, 0);
-		
+		Location loc=new Location(0, 20, 20);
 		
 		user = new Player(200, "Cody F.", true, loc);
 		
@@ -29,7 +29,7 @@ public class Game {
 		user.getItems().add(ItemDatabase.generateItem(ItemName.HYPER_POTION,5));
 		user.getItems().add(ItemDatabase.generateItem(ItemName.REVIVE,5));
 		user.getItems().add(ItemDatabase.generateItem(ItemName.MASTER_BALL,5));
-		user.getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,5));
+		user.getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,20));
 		
 		Pokemon Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
 		Attacker.getInfo().setNickname("Charizizzle");
@@ -48,11 +48,11 @@ public class Game {
 		user.getTeam().add(Attacker);
 		user.getTeam().add(Attacker2);
 		user.getTeam().add(Attacker3);
-		//setBattle(Battle.wildPokemonBattle(PokeID.Pikachu, 35));
 	}
 	public static void HealTeam(){
 		for(int i=0;i<user.getTeamSize();i++){
 			user.getTeam(i).getStats().fullHeal();
+			user.getTeam(i).getStats().setStatus(Status.NRM);
 			for(int j=0;j<user.getTeam(i).getMoves().size();j++){
 				user.getTeam(i).getMove(j).setCurPP(user.getTeam(i).getMove(j).getMaxPP());
 			}
