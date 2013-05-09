@@ -83,7 +83,7 @@ public class EffectDataBase {
 					if (Attacker.getStats().getStatus() != Status.FNT) {
 						Attacker.getStats().setStatus(Status.NRM);
 						Attacker.getStats().setCurHp(
-								effect.get(i).getMagnitude());
+								Attacker.getStats().getMaxHp());
 						battleMessage
 								.add(Attacker.getInfo().getNickname()
 										+ " has recovered full HP and is back to normal. ");
