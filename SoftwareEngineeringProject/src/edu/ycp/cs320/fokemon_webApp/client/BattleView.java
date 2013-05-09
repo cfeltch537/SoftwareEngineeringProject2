@@ -277,10 +277,6 @@ public class BattleView extends Composite {
 	void setItemOptions() { // Shows Pokemon Moves
 		commandOptions.clear();
 		commandOptionsIndex = 3;
-//		commandOptions.addItem("ITEMS");
-//		commandOptions.addItem("POKeBALLS");
-//		commandOptions.addItem("KEY ITEMS");
-//		commandOptions.addItem("BERRIES");
 		for (int i = 0; i < battle.getUser().getItems().size(); i++) {
 			commandOptions.addItem(battle.getUser().getItems().get(i).getItemName() + "  " + battle.getUser().getItems().get(i).getQuantity());
 		}
@@ -626,7 +622,7 @@ public class BattleView extends Composite {
 		
 		if (!battle.getUserLost()&&battle.getBattleOver()&&battle.getOpponent().getName().equals("Jody Faloney")){
 			//You BEAT LANCE!!!!!
-			Window.alert("Congratulations You WIN!!!!" + "Developed by: Cody Fetlch, Joseph Maloney, Derrike Hill and Thomas Powell");
+			Window.alert("Congratulations You WIN!!!!" + "\n\n" + "Developed by: " + "\n" + "Cody Fetlch, " + "\n" + "Joseph Maloney, " + "\n" + "Derrike Hill and " + "\n" + "Thomas Powell" + "\n\n" +  "CS320 Spring 2013");
 		}
 		if (battle.getUserLost()){
 			Game.getUser().getPlayerLocation().setAreaArrayIndex(0);
