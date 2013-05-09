@@ -2,12 +2,9 @@ package edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.TreeMap;
-
 import edu.ycp.cs320.fokemon_webApp.client.FokemonUI;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 
 import java.io.Serializable;
@@ -18,7 +15,6 @@ public class Pokemon implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//create parameters for each pokemon
 
 	private BattleStats stats;
 	private PokeInfo info;
@@ -49,8 +45,6 @@ public class Pokemon implements Serializable {
 		PokeInfo information = new PokeInfo(entry.getPokeID(), Game.getUser().getPlayerID(), entry.getPokeName(),
 				entry.getPokeName(), gender, entry.getType(), lvl, 0,255, entry.getEvolution(),entry.getMoveList());
 		ArrayList<Move> moves = new ArrayList<Move>();
-		//Move move1 = MoveDataBase.generateMove(MoveName.Tackle);
-		//moves.add(move1);
 		for(int i=0;i<=lvl;i++){
 			if(information.getMoveList().containsKey(i)){
 				moves.add(MoveDataBase.generateMove(information.getMoveList().get(i)));
@@ -90,7 +84,6 @@ public class Pokemon implements Serializable {
 	}
 
 	public void UpdateStats() {
-		// TODO Auto-generated method stub
 		UpdateHPStat();
 		int stat;
 		int IV = 0;
@@ -124,18 +117,22 @@ public class Pokemon implements Serializable {
 	}
 
 	private void UpdateHPStat() {
+		int max=getStats().getMaxHp();
 		int HP;
 		int IV = 0;
 		int EV = 0;
 		HP = (IV + 2 * getStats().getBaseStats()[0] + EV / 4 + 100)
 				* getInfo().getLvl() / 100 + 10;
 		getStats().setMaxHp(HP);
-		// TODO Auto-generated method stub
+		getStats().setCurHp(getStats().getCurHp()+(HP-max));
+		if(getStats().getCurHp()>getStats().getMaxHp()){
+			getStats().setCurHp(getStats().getMaxHp());
+		}
 
 	}
 
 	private void CheckLearnMove(ArrayList<String> message) {
-		// TODO Auto-generated method stub
+
 		if(info.getMoveList().containsKey(info.getLvl())){
 			moves.add(MoveDataBase.generateMove(info.getMoveList().get(info.getLvl())));
 			message.add(info.getNickname() + " has learned " + info.getMoveList().get(info.getLvl()).toString());
@@ -144,24 +141,32 @@ public class Pokemon implements Serializable {
 	}
 
 	private void CheckEvolve(ArrayList<String> message) {
-		// TODO Auto-generated method stub
 		if(info.getLvl()>info.getEvolution().lastKey()){
-			PokedexEntry entry = new PokedexEntry();
-			entry = FokemonUI.getPokedex().getPokeMap().get(info.getEvolution().get(info.getEvolution().lastKey()));
-			message.add(info.getNickname() + " has evolved into " + entry.getPokeName());
-			info.setEvolution(entry.getEvolution());
-			info.setMoveList(entry.getMoveList());
-			info.setType(entry.getType());
+			Pokemon evo=Pokemon.GeneratePokemon(info.getEvolution().get(info.getEvolution().lastKey()), info.getLvl());
+			info.setEvolution(evo.getInfo().getEvolution());
+			info.setMoveList(evo.getInfo().getMoveList());
+			evo.getStats().setCurHp(stats.getCurHp());
+			stats=evo.getStats();
+			info.setType(evo.getInfo().getType());
+			//PokedexEntry entry = new PokedexEntry();
+			//entry = FokemonUI.getPokedex().getPokeMap().get(info.getEvolution().get(info.getEvolution().lastKey()));
+			message.add(info.getNickname() + " has evolved into " + evo.getInfo().getPokeName());
+			//info.setEvolution(entry.getEvolution());
+			//info.setMoveList(entry.getMoveList());
+			//info.setType(entry.getType());
 			if(info.getNickname()==info.getPokeName()){
-				info.setNickname(entry.getPokeName());
+				//info.setNickname(entry.getPokeName());
+				info.setNickname(evo.getInfo().getPokeName());
 			}
-			info.setID(entry.getPokeID());
-			info.setPokeName(entry.getPokeName());
+			//info.setID(entry.getPokeID());
+			//info.setPokeName(entry.getPokeName());
+			info.setID(evo.getInfo().getID());
+			info.setPokeName(evo.getInfo().getPokeName());
 			
-			BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
-					Status.NRM, entry.getBaseXP(), entry.getBaseStats(),
-					entry.getEVyield());
-			stats=battleStats;
+			//BattleStats battleStats = new BattleStats(0, 0, 0, 0, 0, 0, 0,
+				//	Status.NRM, entry.getBaseXP(), entry.getBaseStats(),
+					//entry.getEVyield());
+			//stats=battleStats;
 			
 		}
 
