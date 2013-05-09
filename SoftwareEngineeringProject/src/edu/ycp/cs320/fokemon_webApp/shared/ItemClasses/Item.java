@@ -100,18 +100,21 @@ public class Item implements Serializable{
 	/**
 	 * @return the itemName
 	 */
-	public ItemName getItemName() {
-		return itemName;
+	
+	/**
+	 * @return the itemName
+	 */
+	public String getItemName() {
+		return itemName.name;
 	}
 
 	/**
 	 * @param itemName
 	 *            the itemName to set
 	 */
-	public void setItemName(ItemName itemName) {
-		this.itemName = itemName;
+	public void setItemName(String itemName) {
+		this.itemName.name = itemName;
 	}
-
 	/**
 	 * @return the catchRate
 	 */

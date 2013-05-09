@@ -99,7 +99,9 @@ public class EffectDataBase {
 							+ " has recoverd some  PP. ");
 					break;
 				case LVL_UP:
-					if (Attacker.getInfo().getLvl() + 1 <= 100) {
+					Attacker.getInfo().setXp((int)Math.pow(Attacker.getInfo().getLvl() + 1, 3));
+					battleMessage.addAll(Attacker.LevelUp());
+					/*if (Attacker.getInfo().getLvl() + 1 <= 100) {
 						Attacker.getInfo().setLvl(
 								Attacker.getInfo().getLvl()
 										+ effect.get(i).getMagnitude());
@@ -108,7 +110,7 @@ public class EffectDataBase {
 					} else {
 						battleMessage.add(Attacker.getInfo().getNickname()
 								+ " is already at the maximum level");
-					}
+					}*/
 					break;
 				case FLINCH: // RecoverConstant HP
 					Defender.getTempBattleStats().setFlinched(true);
