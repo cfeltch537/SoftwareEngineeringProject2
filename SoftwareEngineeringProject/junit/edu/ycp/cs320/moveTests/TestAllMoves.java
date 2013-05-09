@@ -1,3 +1,4 @@
+
 package edu.ycp.cs320.moveTests;
 
 import org.junit.Test;
@@ -14,3 +15,4 @@ public class TestAllMoves {
 		}
 	}
 }
+

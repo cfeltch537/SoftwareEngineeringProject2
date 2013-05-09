@@ -1,5 +1,11 @@
 package edu.ycp.cs320.fokemon_webApp.shared.MoveClasses;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
+
 public enum MoveName {
 	Confused("Confused"), Pound("Pound"), Karate_Chop("Karate Chop"), DoubleSlap(
 			"DoubleSlap"), Comet_Punch("Comet Punch"), Mega_Punch("Mega Punch"), Pay_Day(
@@ -57,9 +63,26 @@ public enum MoveName {
 			"Conversion"), Tri_Attack("Tri Attack"), Super_Fang("Super Fang"), Slash(
 			"Slash"), Substitute("Substitute"), Struggle("Struggle");
 
+	private static final List<MoveName> MOVES = Collections
+			.unmodifiableList(Arrays.asList(values()));
+	private static final int length = MOVES.size();
+	
+	public static MoveName getMove(int i)	{
+		return MOVES.get(i);
+	}
+
 	public String name;
+
 
 	private MoveName(String moveName) {
 		this.name = moveName;
+	}
+
+
+	/**
+	 * @return the length
+	 */
+	public static int getLength() {
+		return length;
 	}
 }
