@@ -30,8 +30,6 @@ public class BattleTest extends TestCase {
 	// TODO - define test fixture objects
 	private Pokemon Attacker;
 	private Pokemon Defender;
-	private Move AttackerMove;
-	private Move DefenderMove;
 	private Player user;
 	private Player opp;
 	private Location loc;
@@ -44,44 +42,43 @@ public class BattleTest extends TestCase {
 		Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
 		Defender = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
 
-		Pokemon Attacker2 = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
-		Attacker2 = Attacker;
-		Pokemon Attacker3 = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
-		Attacker3 = Attacker;
-
-		Pokemon Defender2 = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-		Defender2 = Defender;
-		Pokemon Defender3 = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-		Defender3 = Defender;
 		user = new Player(200, "joey", false, loc);
 		user.getTeam().add(Attacker);
-		user.getTeam().add(Attacker2);
-		user.getTeam().add(Attacker3);
-		opp = new Player(100, "tony", false, loc);
-		opp.getTeam().add(Defender);
-		opp.getTeam().add(Defender2);
-		opp.getTeam().add(Defender3);
 
-		user = new Player(200, "joey", false, loc);
-		user.getTeam().add(Attacker);
 		opp = new Player(100, "tony", false, loc);
 		opp.getTeam().add(Defender);
 
 		battle = new Battle(user, opp);
 	}
 	
-		
+	@Test
+	// TODO - add test methods
+	public void testwildPokemonBattle() throws Exception {
+		//Battle.wildPokemonBattle();
+		battle=Battle.wildPokemonBattle(PokeID.Abra, 10);
+		assertEquals(battle.getOpponent().getName(),"Abra");
+	}
+	
+	@Test
+	// TODO - add test methods
+	public void testfindTurnOrder() throws Exception {
+		battle.findTurnOrder();
+	}
 		
 	@Test
 	// TODO - add test methods
-	public void testCalcDamage() throws Exception {
-		int damage1 = battle.CalcDamage(Attacker, Defender, AttackerMove);
-		int damage2 = battle.CalcDamage(Defender, Attacker, AttackerMove);
-		assertTrue(damage1 > damage2);
+	public void testCheckTurnValidity() throws Exception {
+		battle.CheckTurnValidity();
+	}
+	@Test
+	// TODO - add test methods
+	public void IsTurnOK() throws Exception {
+		battle.isTurnOk(user);
 	}
 
-	
 
+	
+/*
 	public void testAttack() throws Exception {
 		user.getTeam(0).getStats().fullHeal();
 		opp.getTeam(0).getStats().fullHeal();
@@ -103,5 +100,5 @@ public class BattleTest extends TestCase {
 		assertEquals(Defender.getStats().getCurHp(), 0);
 		assertEquals(Defender.getStats().getStatus(), Status.FNT);
 	}
-
+*/
 }

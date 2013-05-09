@@ -391,7 +391,7 @@ public class Battle {
 
 	}
 
-	private void CatchPokemon() {
+	public void CatchPokemon() {
 		for (int i = 0; i < user.getTeam().size(); i++) {
 			user.getTeam().get(i).getInfo().setUsedInBattle(false);
 			}
@@ -409,7 +409,7 @@ public class Battle {
 		
 	}
 
-	private void CheckFaintedPokemon() {
+	public void CheckFaintedPokemon() {
 		boolean teamAlive = false;
 		if (user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus() == Status.FNT) {
 			user.getTeam(user.getCurrentPokemonIndex()).getInfo()
@@ -503,7 +503,7 @@ public class Battle {
 		}
 	}
 
-	private void applyStatusDamage(Pokemon userPoke) {
+	public void applyStatusDamage(Pokemon userPoke) {
 		int damage = 0;
 		damage = userPoke.getStats().getMaxHp() / 8;
 		if (damage == 0)
@@ -527,7 +527,7 @@ public class Battle {
 
 	}
 
-	private boolean CheckAttackStatus(Pokemon poke) {
+	public boolean CheckAttackStatus(Pokemon poke) {
 		Random rand = new Random();
 		int Chance = rand.nextInt(100);
 		// if battle is over.
