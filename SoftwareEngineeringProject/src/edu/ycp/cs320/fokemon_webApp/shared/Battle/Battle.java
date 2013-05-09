@@ -78,7 +78,7 @@ public class Battle {
 		return wildPokemonBattle(PokeID.randomPokeID(), lvl);
 
 	}
-
+/*
 	public void Turn() {
 		Pokemon userPoke = user.getTeam(user.getCurrentPokemonIndex());
 		Pokemon oppPoke = opponent.getTeam(opponent.getCurrentPokemonIndex());
@@ -157,7 +157,7 @@ public class Battle {
 		applyStatusDamage(oppPoke);
 		applyStatusDamage(userPoke);
 	}
-
+*/
 	public void findTurnOrder() {
 		Pokemon userPoke = user.getTeam(user.getCurrentPokemonIndex());
 		Pokemon oppPoke = opponent.getTeam(opponent.getCurrentPokemonIndex());

@@ -6,9 +6,14 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
+import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Effect;
+import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
@@ -32,17 +37,12 @@ public class BattleTest extends TestCase {
 	private Location loc;
 	private Battle battle;
 
-	@Override
-	protected void setUp() throws Exception {
-		// TODO - create test fixture objects
+	
+	@Before
+	public void setUp()	{
 		loc = new Location(0, 0, 0);
-		AttackerMove = MoveDataBase.generateMove(MoveName.Tackle);
-		DefenderMove = MoveDataBase.generateMove(MoveName.Bite);
 		Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
 		Defender = Pokemon.GeneratePokemon(PokeID.Pikachu, 35);
-		Attacker.getMoves().add(AttackerMove);
-		Attacker.getMoves().add(DefenderMove);
-		Defender.getMoves().add(DefenderMove);
 
 		Pokemon Attacker2 = Pokemon.GeneratePokemon(PokeID.Charizard, 40);
 		Attacker2 = Attacker;
@@ -69,7 +69,10 @@ public class BattleTest extends TestCase {
 
 		battle = new Battle(user, opp);
 	}
-
+	
+		
+		
+	@Test
 	// TODO - add test methods
 	public void testCalcDamage() throws Exception {
 		int damage1 = battle.CalcDamage(Attacker, Defender, AttackerMove);
@@ -77,22 +80,7 @@ public class BattleTest extends TestCase {
 		assertTrue(damage1 > damage2);
 	}
 
-	public void testTurn() throws Exception {
-		user.getTeam(0).getStats().fullHeal();
-		opp.getTeam(0).getStats().fullHeal();
-		int userHP = user.getTeam(0).getStats().getCurHp();
-		int oppHP = opp.getTeam(0).getStats().getCurHp();
-		Attacker.getTempBattleStats().setACCBoost(6);
-		Attacker.getTempBattleStats().setEVABoost(-6);
-		Defender.getTempBattleStats().setACCBoost(6);
-		Defender.getTempBattleStats().setEVABoost(-6);
-		battle.Turn();
-		assertTrue(userHP > battle.getUser().getTeam(0).getStats().getCurHp());
-		assertTrue(userHP > user.getTeam(0).getStats().getCurHp());
-		assertTrue(oppHP > opp.getTeam(0).getStats().getCurHp());
-		assertEquals(Attacker, user.getTeam(0));
-		assertEquals(user, battle.getUser());
-	}
+	
 
 	public void testAttack() throws Exception {
 		user.getTeam(0).getStats().fullHeal();
