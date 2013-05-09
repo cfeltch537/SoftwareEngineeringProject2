@@ -67,8 +67,6 @@ public class BattleView extends Composite {
 	Double hpRatio;
 
 	// ***************************************************************
-	// .getTeam(battle.getUser().getCurrentPokemonIndex()).getStats().getCurHp()
-	// = 180.0;
 
 	public BattleView() {
 
@@ -151,6 +149,7 @@ public class BattleView extends Composite {
 		updatePokemonLabels();
 		updatePokemonImages();
 		updatePokemonStatus();
+		updatePlayerHPLabel();
 	}
 
 	public void draw(Context2d context, Context2d front) {
@@ -357,12 +356,11 @@ public class BattleView extends Composite {
 				handleTurn3(); // Trigger turn 3 (Post Battle Damage and
 								// Announcements)
 				if (battle.getBattleMessage().size() != 0) {
-					//setBattleAnnouncement(battle.getBattleMessage(),messageIndex);
 					turnIndex = 2;
 				} else {
 					messageIndex = 0; // Reset message index
 					turnIndex = 0;
-					setBattleOptions(); // Return to Cattle Options for next
+					setBattleOptions(); // Return to Battle Options for next
 										// turn
 				}
 			}
@@ -395,7 +393,7 @@ public class BattleView extends Composite {
 		}
 	}
 
-	public void setBattleAnnouncement(ArrayList<String> announcement, int index) {
+	void setBattleAnnouncement(ArrayList<String> announcement, int index) {
 		if (index < announcement.size()) {
 			battleAnnouncementBox.setText(announcement.get(index));
 		}
@@ -599,6 +597,7 @@ public class BattleView extends Composite {
 		if (userChoice.equals(TurnChoice.SWITCH)) {
 			updatePokemonDisplayedInfo();
 		}
+		updatePokemonDisplayedInfo();
 	}
 
 	void handleTurn2() {
@@ -606,15 +605,16 @@ public class BattleView extends Composite {
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		messageIndex++;
+		updatePokemonDisplayedInfo();
 	}
 
 	void handleTurn3() {
 		battle.Turn(3);
 		updatePokemonStatus();
-		if (battle.getBattleMessage().size() != 0) {
+		if (battle.getBattleMessage().size() > 0) {
 			setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
+			messageIndex++;
 		}
-		messageIndex++;
 		updatePokemonDisplayedInfo();
 	}
 
@@ -628,11 +628,13 @@ public class BattleView extends Composite {
 			Game.getUser().getPlayerLocation().setAreaArrayIndex(0);
 			Game.getUser().getPlayerLocation().setX(27);
 			Game.getUser().getPlayerLocation().setY(15);
+			FokemonUI.endBattle(true);
 		}
 		if (battle.getBattleOver()) {
-			FokemonUI.endBattle();
+			FokemonUI.endBattle(false);
 		}
 	}
+	
 	int returnRandomMoveIndex(){
 		return rand.nextInt(
 				battle.getOpponent().getTeam(

@@ -175,13 +175,15 @@ public class FokemonUI {
 		}
 	}
 
-	public static void endBattle() {// Instantiates BattleView
+	public static void endBattle(Boolean refresh) {// Instantiates BattleView
 		if (pokedex != null) {
 			// Call joey's create battle function(s); creating instance of a
 			// battle
 			LoginUI.rootPanel.remove(battleView.battlePanel);
 			LoginUI.rootPanel.add(map.mapPanel);
+			if(refresh){
 			map.completeUpdate();
+			}
 			LoginUI.rootPanel.add(saveButton);
 			battleView.commandOptions.setFocus(true);
 			map.setFocusCanvas();
