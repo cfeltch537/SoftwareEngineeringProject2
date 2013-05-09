@@ -15,7 +15,9 @@ public enum Flooring {
 	Blocked_Sand(new Interaction[] { Interaction.MovementBlocked }, "Sand.png"),
 	// Water Types**************************************
 	FreshWater(new Interaction[] { Interaction.MovementBlocked },"FreshWater.png"), 
-	SaltWater(new Interaction[] { Interaction.MovementBlocked }, "SaltWater.png");
+	SaltWater(new Interaction[] { Interaction.MovementBlocked }, "SaltWater.png"), 
+	WoodFloor(new Interaction[] {}, "WoodFloor.png"), 
+	Nothing(new Interaction[] {}, "Nothing.png");
 
 	public LinkedList<Interaction> interactionList = new LinkedList<Interaction>();
 	public String imageSource;

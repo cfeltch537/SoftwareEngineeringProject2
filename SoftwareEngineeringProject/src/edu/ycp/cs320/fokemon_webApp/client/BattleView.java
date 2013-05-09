@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
@@ -24,6 +25,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.Battle.TurnChoice;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Status;
 
 public class BattleView extends Composite {
@@ -621,6 +623,16 @@ public class BattleView extends Composite {
 	}
 
 	void checkEndBattle() {
+		
+		if (!battle.getUserLost()&&battle.getBattleOver()&&battle.getOpponent().getName().equals("Jody Faloney")){
+			//You BEAT LANCE!!!!!
+			Window.alert("Congratulations You WIN!!!!" + "Developed by: Cody Fetlch, Joseph Maloney, Derrike Hill and Thomas Powell");
+		}
+		if (battle.getUserLost()){
+			Game.getUser().getPlayerLocation().setAreaArrayIndex(0);
+			Game.getUser().getPlayerLocation().setX(27);
+			Game.getUser().getPlayerLocation().setY(15);
+		}
 		if (battle.getBattleOver()) {
 			FokemonUI.endBattle();
 		}

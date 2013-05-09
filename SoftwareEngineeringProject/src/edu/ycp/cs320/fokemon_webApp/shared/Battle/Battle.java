@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectDataBase;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.EffectType;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.Move;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
 import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
-import edu.ycp.cs320.fokemon_webApp.shared.Player.PlayerType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeType;
 import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
@@ -27,8 +25,10 @@ public class Battle {
 	private Boolean battleOver;
 	private Boolean switchTeam;
 	private int runCount;
+	private Boolean userLost;
 
 	public Battle(Player user, Player opponent) {
+		userLost=false;
 		battleOver = false;
 		switchTeam = false;
 		confused = MoveDataBase.generateMove(MoveName.Confused);
@@ -407,12 +407,9 @@ public class Battle {
 			user.getPC().add(opponent.getTeam(opponent.getCurrentPokemonIndex()));
 		}
 		
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void CheckFaintedPokemon() {
-		// TODO Auto-generated method stub
 		boolean teamAlive = false;
 		if (user.getTeam(user.getCurrentPokemonIndex()).getStats().getStatus() == Status.FNT) {
 			user.getTeam(user.getCurrentPokemonIndex()).getInfo()
@@ -433,6 +430,7 @@ public class Battle {
 				battleMessage.add(user.getTeam(user.getCurrentPokemonIndex())
 						.getInfo().getNickname()
 						+ " has lost the battle.  ");
+				userLost=true;
 				battleOver = true;
 			}
 		}
@@ -453,6 +451,7 @@ public class Battle {
 					if (opponent.getTeam(pokeIndex).getStats().getStatus() != Status.FNT) {
 						teamAlive = false;
 						opponent.setCurrentPokemonIndex(pokeIndex);
+						opponent.getTeam(opponent.getCurrentPokemonIndex()).setTempBattleStats(new TempBattleStats());
 					}
 					pokeIndex++;
 				}
@@ -1036,6 +1035,14 @@ public class Battle {
 
 	public void setSwitchTeam(Boolean switchTeam) {
 		this.switchTeam = switchTeam;
+	}
+
+	public Boolean getUserLost() {
+		return userLost;
+	}
+
+	public void setUserLost(Boolean userLost) {
+		this.userLost = userLost;
 	}
 
 }

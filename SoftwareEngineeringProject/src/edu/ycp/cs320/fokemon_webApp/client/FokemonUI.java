@@ -92,39 +92,41 @@ public class FokemonUI {
 				setPokedex(result);
 				System.out.println("Pokedex is Ready");
 
+				map.completeUpdate();
+				
 				if(Game.getUser().getTeam().size() == 0){
 					//The following wall of text is to populate the player's array lists
-					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.SUPER_POTION,5));
+					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.SUPER_POTION,10));
 					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.HYPER_POTION,5));
-					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.REVIVE,5));
+					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.FULL_RESTORE,2));
 					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.MASTER_BALL,5));
-					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,5));
+					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,150));
 					
 					Pokemon Attacker = null;
 					switch(Random.nextInt(4)){
 					case 0:
-						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 75);
+						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 275);
 						Attacker.getInfo().setNickname("Charizard");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Flamethrower));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Dragon_Rage));
 						break;
 					case 1:
-						Attacker = Pokemon.GeneratePokemon(PokeID.Blastoise, 75);
+						Attacker = Pokemon.GeneratePokemon(PokeID.Blastoise, 275);
 						Attacker.getInfo().setNickname("Blastoise");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Hydro_Pump));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Waterfall));
 						break;
 					case 2:
-						Attacker = Pokemon.GeneratePokemon(PokeID.Venusaur, 75);
+						Attacker = Pokemon.GeneratePokemon(PokeID.Venusaur, 275);
 						Attacker.getInfo().setNickname("Venusaur");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.SolarBeam));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Razor_Leaf));
 						break;
 					case 3:
-						Attacker = Pokemon.GeneratePokemon(PokeID.Snorlax, 99);
+						Attacker = Pokemon.GeneratePokemon(PokeID.Snorlax, 299);
 						Attacker.getInfo().setNickname("JoMo");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Body_Slam));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Earthquake));
@@ -133,9 +135,11 @@ public class FokemonUI {
 					}
 					
 					Game.getUser().getTeam().add(Attacker);
+					Game.getUser().getPlayerLocation().setAreaArrayIndex(0);
+					Game.getUser().getPlayerLocation().setX(20);
+					Game.getUser().getPlayerLocation().setY(20);
 				}
 				//Wall of text over
-
 				battleView = new BattleView();
 
 			}
@@ -155,14 +159,14 @@ public class FokemonUI {
 		FokemonUI.pokedex = pokedex;
 	}
 
-	public static void startBattle() {// Instantiates BattleView
+	public static void startBattle(Battle battle) {// Instantiates BattleView
 		if (pokedex != null) {
 			// Call joey's create battle function(s); creating instance of a
 			// battle
 			if (battleView == null) {
 				battleView = new BattleView(); // Instantiate a BattleView
 			}
-			battleView.setBattle(Battle.wildPokemonBattle());
+			battleView.setBattle(battle);
 			LoginUI.rootPanel.remove(map.mapPanel);
 			LoginUI.rootPanel.remove(saveButton);
 			LoginUI.rootPanel.add(battleView.battlePanel);
@@ -176,6 +180,7 @@ public class FokemonUI {
 			// battle
 			LoginUI.rootPanel.remove(battleView.battlePanel);
 			LoginUI.rootPanel.add(map.mapPanel);
+			map.completeUpdate();
 			LoginUI.rootPanel.add(saveButton);
 			battleView.commandOptions.setFocus(true);
 			map.setFocusCanvas();

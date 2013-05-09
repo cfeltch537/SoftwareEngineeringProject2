@@ -37,12 +37,23 @@ public enum InteractableObject {
 	PokeCenter(new Interaction[] { Interaction.MovementBlocked },
 			"PokeCenter.png"),
 	HealingSpace(new Interaction[] { Interaction.HealAll },
-
 			"PinkFlowers.png"), //Created to prompt for healing of pokemon
 	PC(new Interaction[] { Interaction.MovementBlocked },
 					"PC.png"),
 	PCexchange(new Interaction[] { Interaction.EnterPCview },
 			"PinkFlowers.png"),
+	Boat(new Interaction[] { Interaction.MovementBlocked },
+					"Boat.png"),
+	PokeRing(new Interaction[] {},
+					"PokeRing.png"),
+	AreaIncrement(new Interaction[] { Interaction.IncrementAreaIndex },
+					"PurpleFlowers.png"),
+	AreaDecrement(new Interaction[] { Interaction.DecrementAreaIndex },
+					"PurpleFlowers.png"),
+	Lance(new Interaction[] { Interaction.MovementBlocked },
+					"Lance.png"),
+	EnterLanceBattle(new Interaction[] { Interaction.TrainerBattle },
+					"PinkFlowers.png"),
 	Trainer(new Interaction[] { Interaction.Battle_Wild }, null);
 	// InteractableFlooring*****************************
 

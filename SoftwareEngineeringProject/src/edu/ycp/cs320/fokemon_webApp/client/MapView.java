@@ -11,7 +11,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
+
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
+import edu.ycp.cs320.fokemon_webApp.shared.GUI.Flooring;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.InteractableObject;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
 
@@ -26,32 +29,39 @@ public class MapView extends Composite {
 	Image img;
 	static int height;
 	static int width;
+	int mapHeightMAX = 30;
+	int mapWidthMAX = 60;
 
 	Image playerImage;
 	Image playerImageCovered;
 
 	public MapView() {
-
-
 	}
+	
 	void initialize() {
 		
-		//Change
 		mapPanel = new AbsolutePanel();
-		playerImage = new Image("23x25_Trainer_Front.png");															// Cody
+		playerImage = new Image("23x25_Trainer_Front.png");	
 		playerImageCovered = new Image("23x25_Trainer_Front.png");		
 		areaList = new Area[2];
-		areaList[0] = new Area();
+		areaList[0] = new Area(mapWidthMAX, mapHeightMAX, Flooring.Grass);
 		areaList[0].createTallGrassSquare(5, 5, 10, 4);
 		areaList[0].createTallGrassSquare(5, 10, 10, 4);
 		areaList[0].createTallGrassSquare(5, 15, 10, 4);
-		areaList[0].placeStructure(25, 10, InteractableObject.PokeCenter);
+		areaList[0].setTerrain(40, 44, 0, 30, Flooring.Sand);
+		areaList[0].setTerrain(45, 60, 0, 30, Flooring.SaltWater);
+		areaList[0].placeStructure(25, 10, InteractableObject.PokeCenter, true);
+		areaList[0].placeStructure(38, 14, InteractableObject.PC, true);
+		areaList[0].placeStructure(45, 10, InteractableObject.Boat, true);
+		areaList[0].placeStructure(44, 13, InteractableObject.AreaIncrement, false);
+		areaList[1] = new Area(41, 21, Flooring.WoodFloor);
+		areaList[1].placeStructure(40, 11, InteractableObject.AreaDecrement, false);
+		areaList[1].placeStructure(15, 6, InteractableObject.PokeRing, false);
+		areaList[1].placeStructure(17, 8, InteractableObject.Lance, true);
+		areaList[1].placeStructure(19, 12, InteractableObject.EnterLanceBattle, false);
 
-		areaList[0].placeStructure(38, 14, InteractableObject.PC);
-
-
-		height = 16 * areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[0].length;
-		width = 16 * areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain.length;
+		height = 16 * mapHeightMAX;
+		width = 16 * mapWidthMAX;
 
 
 		canvas = Canvas.createIfSupported();
@@ -74,14 +84,13 @@ public class MapView extends Composite {
 		mapPanel.add(canvas);
 		mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 
-		doUpdate();
-		initHandlers();
-
 		// update the back canvas, set to front canvas
 		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 		drawFlooring(backBufferContext, context);
 		drawInteractableObjects(backBufferContext, context);
 		drawPlayer(backBufferContext, context);
+		doUpdate();
+		initHandlers();
 	}
 
 	void doUpdate() {
@@ -93,6 +102,13 @@ public class MapView extends Composite {
 	public void drawFlooring(Context2d context, Context2d front) {
 
 		context.save();
+
+		// Draw Nothing-ness
+		for (int height = 0; height < mapWidthMAX; height++) {
+			for (int width = 0; width < mapHeightMAX; width++) {					
+				context.drawImage((ImageElement) Flooring.Nothing.img.getElement().cast(), 16 * height, 16 * width);
+			}
+		}
 
 		// DrawFlooring
 		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
@@ -261,12 +277,37 @@ public class MapView extends Composite {
 		} //Healing Interaction
 		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isWildPokemon()
 				&&(Random.nextInt(100) <= 12)) { //12% change of entering battle
-			FokemonUI.startBattle();
+			FokemonUI.startBattle(Battle.wildPokemonBattle());
 		} //Enter Random Battle Interaction
-
-		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isEnterPCView()){ //12% change of entering battle
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isEnterPCView()){ 
 			FokemonUI.enterPCView();
 		} //Enter PC View
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isIncrementAreaIndex()){ 
+			Game.getUser().getPlayerLocation().setAreaArrayIndex(Game.getUser().getPlayerLocation().getAreaArrayIndex() +1);
+			Game.getUser().getPlayerLocation().setX(1);
+			Game.getUser().getPlayerLocation().setY(11);
+			drawFlooring(backBufferContext, context);
+			drawInteractableObjects(backBufferContext, context);
+			drawPlayer(backBufferContext, context);
+			
+			
+		} //Increment Area Index
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isDecrementAreaIndex()){ 
+			Game.getUser().getPlayerLocation().setAreaArrayIndex(Game.getUser().getPlayerLocation().getAreaArrayIndex() -1);
+			Game.getUser().getPlayerLocation().setX(43);
+			Game.getUser().getPlayerLocation().setY(13);
+			drawFlooring(backBufferContext, context);
+			drawInteractableObjects(backBufferContext, context);
+			drawPlayer(backBufferContext, context);
+		} //Decrement Area Index
+		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isTrainerBattle()){ 
+			FokemonUI.startBattle(Game.getBossBattle());
+		} //Trigger Trainer Battle
+	}
 
+	public void completeUpdate() {
+		drawFlooring(backBufferContext, context);
+		drawInteractableObjects(backBufferContext, context);
+		drawPlayer(backBufferContext, context);
 	}
 }

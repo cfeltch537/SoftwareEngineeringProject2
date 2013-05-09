@@ -93,4 +93,31 @@ public class Terrain {
 		}
 		return false;
 	}
+	public boolean isIncrementAreaIndex() {
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.IncrementAreaIndex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean isDecrementAreaIndex() {
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.DecrementAreaIndex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean isTrainerBattle() {
+		for (int i = 0; i < this.interactableObjectList.size(); i++) {
+			if (this.interactableObjectList.get(i).interactionList
+					.contains(Interaction.TrainerBattle)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
