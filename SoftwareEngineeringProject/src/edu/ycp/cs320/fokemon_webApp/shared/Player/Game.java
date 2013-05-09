@@ -5,6 +5,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import edu.ycp.cs320.fokemon_webApp.client.RPC;
+import edu.ycp.cs320.fokemon_webApp.shared.Battle.Battle;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
 import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
@@ -82,16 +83,16 @@ public class Game {
 	public static void setLogin(Login login) {
 		Game.login = login;
 	}
-
-
-//	public Battle getBattle() {
-//		return battle;
-//	}
-//
-//
-//	public void setBattle(Battle battle) {
-//		this.battle = battle;
-//	}
+	public static Battle getBossBattle(){
+		Location loc=new Location(0, 20, 20);
+		Player boss = new Player(200, "Jody Faloney", true, loc);
+		boss.getItems().add(ItemDatabase.generateItem(ItemName.SUPER_POTION,5));
+		boss.getItems().add(ItemDatabase.generateItem(ItemName.HYPER_POTION,5));
+		boss.getTeam().add(Pokemon.GeneratePokemon(PokeID.Dragonite, 99));
+		boss.getTeam().add(Pokemon.GeneratePokemon(PokeID.Mewtwo, 99));
+		boss.getTeam().add(Pokemon.GeneratePokemon(PokeID.Mew, 99));
+		return new Battle(user,boss);
+	}
 	
 	protected void saveProfile() {
 		RPC.loadProfile.saveProfile(login,user, new AsyncCallback<Player>() {

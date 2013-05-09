@@ -1,10 +1,153 @@
-----------------------------------------------------------------
-Wed May 08 09:48:47 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-013e-8466-c4d4-00000302e678 
-on database directory H:\fokemon  with class loader sun.misc.Launcher$AppClassLoader@19035ff9 
-Loaded from file:/H:/git/SoftwareEngineeringProject/SoftwareEngineeringProject/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_07-b11
-user.dir=H:\git\SoftwareEngineeringProject\SoftwareEngineeringProject
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+Wed May 08 09:56:00 EDT 2013 Thread[main,5,main] Cleanup action starting
+ERROR XBM0H: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService$9.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService.createServiceRoot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.createPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.createPersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.createDatabase(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.getConnection(DerbyDatabase.java:55)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.databaseRun(DerbyDatabase.java:77)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.createTables(DerbyDatabase.java:94)
+	at edu.ycp.cs320.fokemon_webApp.server.CreateTables.main(CreateTables.java:9)
+Cleanup action completed
+Wed May 08 09:56:00 EDT 2013 Thread[main,5,main] Cleanup action starting
+java.sql.SQLException: Failed to create database 'C:/Users/Cody/PokemonDatabase2', see the next exception for details.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.seeNextException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.createDatabase(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.getConnection(DerbyDatabase.java:55)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.databaseRun(DerbyDatabase.java:77)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.createTables(DerbyDatabase.java:94)
+	at edu.ycp.cs320.fokemon_webApp.server.CreateTables.main(CreateTables.java:9)
+Caused by: java.sql.SQLException: Failed to create database 'C:/Users/Cody/PokemonDatabase2', see the next exception for details.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 16 more
+Caused by: java.sql.SQLException: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+	... 13 more
+Caused by: ERROR XBM0H: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService$9.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService.createServiceRoot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.createPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.createPersistentService(Unknown Source)
+	... 13 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.createDatabase(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.getConnection(DerbyDatabase.java:55)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.databaseRun(DerbyDatabase.java:77)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.createTables(DerbyDatabase.java:94)
+	at edu.ycp.cs320.fokemon_webApp.server.CreateTables.main(CreateTables.java:9)
+Caused by: java.sql.SQLException: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 18 more
+Caused by: ERROR XBM0H: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService$9.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService.createServiceRoot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.createPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.createPersistentService(Unknown Source)
+	... 13 more
+============= end nested exception, level (1) ===========
+============= begin nested exception, level (2) ===========
+java.sql.SQLException: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.createDatabase(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.getConnection(DerbyDatabase.java:55)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.databaseRun(DerbyDatabase.java:77)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.createTables(DerbyDatabase.java:94)
+	at edu.ycp.cs320.fokemon_webApp.server.CreateTables.main(CreateTables.java:9)
+Caused by: ERROR XBM0H: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService$9.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService.createServiceRoot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.createPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.createPersistentService(Unknown Source)
+	... 13 more
+============= end nested exception, level (2) ===========
+============= begin nested exception, level (3) ===========
+ERROR XBM0H: Directory C:\Users\Cody\PokemonDatabase2 cannot be created.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService$9.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.services.monitor.StorageFactoryService.createServiceRoot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.createPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.createPersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.createDatabase(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.getConnection(DerbyDatabase.java:55)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.databaseRun(DerbyDatabase.java:77)
+	at edu.ycp.cs320.fokemon_webApp.server.DerbyDatabase.createTables(DerbyDatabase.java:94)
+	at edu.ycp.cs320.fokemon_webApp.server.CreateTables.main(CreateTables.java:9)
+============= end nested exception, level (3) ===========
+Cleanup action completed
