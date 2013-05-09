@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
+import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 public class PCStorageView extends Composite {
 	static final String holderId = "canvasholder";
@@ -18,8 +19,8 @@ public class PCStorageView extends Composite {
 	ListBox listBox_StoredPokemon;
 	Button addToParty;
 	Button addToPC;
-	Button increaseIndex;
-	Button decreaseIndex;
+	Button increaseTeamIndex;
+	Button decreaseTeamIndex;
 	Button closeView;
 	TextBox pcTextBox;
 	static int height;
@@ -76,6 +77,8 @@ public class PCStorageView extends Composite {
 		addToParty = new Button();
 		addToPC = new Button();
 		closeView = new Button();
+		decreaseTeamIndex = new Button();
+		increaseTeamIndex = new Button();
 		addToParty.setWidth(button_Width + "px");
 		addToParty.setHeight(button_Height + "px");
 		addToParty.setText("Move to Team");
@@ -84,10 +87,18 @@ public class PCStorageView extends Composite {
 		addToPC.setHeight(button_Height + "px");
 		addToPC.setText("Move to PC");
 		storagePanel.add(addToPC, width_offset + 2*listBox_Width, height_offset + +button_Height);
+		increaseTeamIndex.setWidth(button_Width + "px");
+		increaseTeamIndex.setHeight(button_Height + "px");
+		increaseTeamIndex.setText("Increase Position");
+		storagePanel.add(increaseTeamIndex, width_offset + 2*listBox_Width, height_offset + 2*button_Height);
+		decreaseTeamIndex.setWidth(button_Width + "px");
+		decreaseTeamIndex.setHeight(button_Height + "px");
+		decreaseTeamIndex.setText("Decrease Position");
+		storagePanel.add(decreaseTeamIndex, width_offset + 2*listBox_Width, height_offset + 3*button_Height);
 		closeView.setWidth(button_Width + "px");
 		closeView.setHeight(button_Height + "px");
 		closeView.setText("Close PC");
-		storagePanel.add(closeView, width_offset + 2*listBox_Width, height_offset + 2*button_Height);
+		storagePanel.add(closeView, width_offset + 2*listBox_Width, height_offset + 4*button_Height);
 		storagePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 		addToParty.addClickHandler(new ClickHandler() {
@@ -113,6 +124,31 @@ public class PCStorageView extends Composite {
 				FokemonUI.closePCview();
 			}
 		});	
+		increaseTeamIndex.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if(listBox_CurrentTeam.getSelectedIndex()>=1){
+					Pokemon tempPokemon = Game.getUser().getTeam().get(listBox_CurrentTeam.getSelectedIndex());
+					int tempIndex = listBox_CurrentTeam.getSelectedIndex();
+					Game.getUser().getTeam().remove(listBox_CurrentTeam.getSelectedIndex());
+					Game.getUser().getTeam().add(listBox_CurrentTeam.getSelectedIndex()-1, tempPokemon);
+					fillTextBoxs();
+					listBox_CurrentTeam.setItemSelected(tempIndex-1, true);
+				}
+				
+			}
+		});
+		decreaseTeamIndex.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if(listBox_CurrentTeam.getSelectedIndex()<=listBox_CurrentTeam.getItemCount()){
+					Pokemon tempPokemon = Game.getUser().getTeam().get(listBox_CurrentTeam.getSelectedIndex());
+					int tempIndex = listBox_CurrentTeam.getSelectedIndex();
+					Game.getUser().getTeam().remove(listBox_CurrentTeam.getSelectedIndex());
+					Game.getUser().getTeam().add(listBox_CurrentTeam.getSelectedIndex()+1, tempPokemon);
+					fillTextBoxs();
+					listBox_CurrentTeam.setItemSelected(tempIndex+1, true);
+				}
+			}
+		});
 	}
 
 
