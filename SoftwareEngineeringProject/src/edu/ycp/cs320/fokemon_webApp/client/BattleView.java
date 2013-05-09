@@ -39,6 +39,7 @@ public class BattleView extends Composite {
 	// Widgets
 	ListBox commandOptions;
 	TextBox battleAnnouncementBox;
+	TextBox test;
 	Label userHPvMax;
 	Label playerPokemonName;
 	Label opponentPokemonName;
@@ -130,6 +131,10 @@ public class BattleView extends Composite {
 		battleBackBufferContext.setFillStyle(CssColor.make("rgba(224,224,224,0.1)"));
 		initHandlers();
 
+		test = new TextBox();
+		test.setWidth(1000 + "px");
+		test.setHeight(50 + "px");
+		LoginUI.rootPanel.add(test);
 	}
 
 	void setBattle(Battle battle) {
@@ -335,10 +340,11 @@ public class BattleView extends Composite {
 				handleTurn1(index, userTurnChoice);
 				switchToNextScreen();
 			}
-			if (messageIndex < battle.getBattleMessage().size()) { // While there is still a message to be displayed
+			if (messageIndex < battle.getBattleMessage().size()-1) { // While there is still a message to be displayed
 				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
-			} else { // When no more messages to be displayed
+			}else { // When no more messages to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex = 0; // reset message index
 				checkEndBattle();
 				handleTurn2(); // Trigger turn 2 (Slower Pokemon)
@@ -351,18 +357,12 @@ public class BattleView extends Composite {
 				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			} else { // When no more messages to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex = 0; // Reset message index
 				checkEndBattle();
-				handleTurn3(); // Trigger turn 3 (Post Battle Damage and
-								// Announcements)
-				if (battle.getBattleMessage().size() != 0) {
-					turnIndex = 2;
-				} else {
-					messageIndex = 0; // Reset message index
-					turnIndex = 0;
-					setBattleOptions(); // Return to Battle Options for next
-										// turn
-				}
+				handleTurn3(); // Trigger turn 3 (Post Battle Damage and Announcements)
+				switchToNextScreen();
+				turnIndex = 2;
 			}
 			break;
 		case 2: // Turn 3 Case
@@ -370,6 +370,7 @@ public class BattleView extends Composite {
 				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			} else { // When no more messages to be displayed
+				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex = 0; // reset message index
 				setBattleOptions(); // Return to Cattle Options for next turn
 				checkEndBattle();
@@ -592,6 +593,7 @@ public class BattleView extends Composite {
 		battle.getUser().setChoice(userChoice);
 		battle.getOpponent().setChoice(TurnChoice.MOVE);
 		battle.Turn(1);
+		test.setText(battle.getBattleMessage().toString() + "*TURN 1*");
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		if (userChoice.equals(TurnChoice.SWITCH)) {
@@ -602,6 +604,7 @@ public class BattleView extends Composite {
 
 	void handleTurn2() {
 		battle.Turn(2);
+		test.setText(battle.getBattleMessage().toString() + "*TURN 2*");
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		messageIndex++;
@@ -610,11 +613,10 @@ public class BattleView extends Composite {
 
 	void handleTurn3() {
 		battle.Turn(3);
+		test.setText(battle.getBattleMessage().toString() + "*TURN 3*");
 		updatePokemonStatus();
-		if (battle.getBattleMessage().size() > 0) {
-			setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
-			messageIndex++;
-		}
+		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
+		messageIndex++;
 		updatePokemonDisplayedInfo();
 	}
 
