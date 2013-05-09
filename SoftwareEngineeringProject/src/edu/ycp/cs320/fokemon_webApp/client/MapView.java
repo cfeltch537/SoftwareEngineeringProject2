@@ -86,9 +86,9 @@ public class MapView extends Composite {
 
 		// update the back canvas, set to front canvas
 		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
-		drawFlooring(backBufferContext, context);
-		drawInteractableObjects(backBufferContext, context);
-		drawPlayer(backBufferContext, context);
+//		drawFlooring(backBufferContext, context);
+//		drawInteractableObjects(backBufferContext, context);
+//		drawPlayer(backBufferContext, context);
 		doUpdate();
 		initHandlers();
 	}
