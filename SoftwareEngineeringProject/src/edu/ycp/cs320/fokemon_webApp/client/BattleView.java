@@ -340,7 +340,7 @@ public class BattleView extends Composite {
 				handleTurn1(index, userTurnChoice);
 				switchToNextScreen();
 			}
-			if (messageIndex < battle.getBattleMessage().size()-1) { // While there is still a message to be displayed
+			if (messageIndex < battle.getBattleMessage().size()) { // While there is still a message to be displayed
 				setBattleAnnouncement(battle.getBattleMessage(), messageIndex); // Display message
 				messageIndex++; // Move on too next message
 			}else { // When no more messages to be displayed
