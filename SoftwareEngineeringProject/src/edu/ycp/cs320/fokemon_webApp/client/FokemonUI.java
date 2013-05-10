@@ -104,7 +104,7 @@ public class FokemonUI {
 					Game.getUser().getItems().add(ItemDatabase.generateItem(ItemName.POKE_BALL,30));
 					
 					Pokemon Attacker = null;
-					switch(Random.nextInt(4)){
+					switch(Game.getTypeChoice()){
 					case 0:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 275);
 						Attacker.getInfo().setNickname("Charizard");

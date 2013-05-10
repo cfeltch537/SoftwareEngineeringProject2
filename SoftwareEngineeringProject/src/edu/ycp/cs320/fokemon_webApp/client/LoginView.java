@@ -45,11 +45,16 @@ public class LoginView extends Composite {
 	Button btnStartYourAdventure;
 	Button btnRegister;
 	Button btnSignIn;
+	Label lblChoice;
+	RadioButton rdbtnFire;
+	RadioButton rdbtnWater;
+	RadioButton rdbtnGrass;
+	int typeChoice;
 
 	public LoginView() {
 		loginPanel = new AbsolutePanel();
 		initWidget(loginPanel);
-		loginPanel.setSize("587px", "242px");
+		loginPanel.setSize("572px", "307px");
 		model = new Login();
 		validLogin = false;
 		player1 = new Player();
@@ -208,6 +213,26 @@ public class LoginView extends Composite {
 		rdbtnGirl = new RadioButton("new name", "Girl");
 		flexTable.setWidget(5, 2, rdbtnGirl);
 		rdbtnGirl.setVisible(false);
+		
+		lblChoice = new Label("Choose your Pokemon ");
+		flexTable.setWidget(6, 0, lblChoice);
+		lblChoice.setVisible(false);
+
+		rdbtnFire = new RadioButton("type", "Charmander");
+		rdbtnFire.setValue(true);
+		flexTable.setWidget(7, 0, rdbtnFire);
+		rdbtnFire.setVisible(false);
+
+
+		rdbtnWater = new RadioButton("type", "Squirtle");
+		flexTable.setWidget(7, 1, rdbtnWater);
+		rdbtnWater.setVisible(false);
+
+
+		rdbtnGrass = new RadioButton("type", "Bulbasaur");
+		flexTable.setWidget(7, 2, rdbtnGrass);
+		rdbtnGrass.setVisible(false);
+
 
 		btnStartYourAdventure = new Button("Start your adventure!");
 		flexTable.setWidget(6, 1, btnStartYourAdventure);
@@ -220,7 +245,7 @@ public class LoginView extends Composite {
 				{
 					Window.alert("You have a name, don't you?"); 
 				} else {
-					player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,0,0));
+					player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,20,20));
 					createProfile();
 				}
 
@@ -278,6 +303,10 @@ public class LoginView extends Composite {
 					lblName.setVisible(true);
 					rdbtnBoy.setVisible(true);
 					rdbtnGirl.setVisible(true);
+					lblChoice.setVisible(true);
+					rdbtnFire.setVisible(true);
+					rdbtnWater.setVisible(true);
+					rdbtnGrass.setVisible(true);
 					btnStartYourAdventure.setVisible(true);
 					lblLoginToYour.setVisible(false);
 					lblUsername.setVisible(false);
@@ -289,6 +318,7 @@ public class LoginView extends Composite {
 					btnRegister.setVisible(false);
 					btnSignIn.setVisible(false);
 					textBoxName.setFocus(true);
+					
 //					if (model.getPassword().length()>=3){
 //						if (model.getPassword().substring(0,3).equals("lol"))
 //							model.setRole("admin");
@@ -320,7 +350,7 @@ public class LoginView extends Composite {
 				if (result != null) {
 					GWT.log("Load succeeded!");
 					Window.alert("Welcome " + result.getName());
-					new Game(result, model);
+					new Game(result, model, typeChoice);
 
 					//saveProfile();
 					LoginUI.removePanel();
@@ -404,6 +434,12 @@ public class LoginView extends Composite {
 
 					model.setId(result.getId());
 					//Window.alert("Player Name: " + result.getName());
+					if (rdbtnFire.getValue()) 
+						typeChoice = 0;
+					else if (rdbtnWater.getValue()) 
+						typeChoice = 1;
+					else if (rdbtnGrass.getValue()) 
+						typeChoice = 2;
 					loadProfile();
 				} else {
 					GWT.log("Create Fail");
