@@ -45,6 +45,7 @@ public class Battle {
 		opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo()
 				.setUsedInBattle(true);
 		battleMessage = new ArrayList<String>();
+		//battleMessage.add("print");
 		if (opponent.getTeam(opponent.getCurrentPokemonIndex()).getInfo()
 				.getIsWild()) {
 			battleMessage.add("A wild " + opponent.getName() + " appeared");
@@ -253,6 +254,7 @@ public class Battle {
 
 	public void Turn(int turnNumber) {
 		battleMessage = new ArrayList<String>();
+		//battleMessage.add("print");
 		boolean canAttack = false;
 		Player turnPlayer, otherPlayer;
 
@@ -341,6 +343,7 @@ public class Battle {
 						.setTempBattleStats(new TempBattleStats());
 				turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex())
 						.getInfo().setUsedInBattle(true);
+				battleMessage.add(turnPlayer.getName()+" send out "+turnPlayer.getTeam(turnPlayer.getCurrentPokemonIndex()).getInfo().getNickname());
 				break;
 			case RUN:
 
@@ -423,6 +426,7 @@ public class Battle {
 			if (teamAlive) {
 				switchTeam = true;
 				setInitialCurrentPokemon(user, 0);
+				user.getTeam(user.getCurrentPokemonIndex()).getInfo().setUsedInBattle(true);
 				battleMessage.add(user.getTeam(user.getCurrentPokemonIndex()).getInfo().getNickname()+" was sent out");
 				//battleMessage.add("Switch to a non-fainted pokemon");
 
@@ -530,6 +534,7 @@ public class Battle {
 	public boolean CheckAttackStatus(Pokemon poke) {
 		Random rand = new Random();
 		int Chance = rand.nextInt(100);
+		//battleMessage.add(" debug. ");
 		// if battle is over.
 		if (battleOver)
 			return false;

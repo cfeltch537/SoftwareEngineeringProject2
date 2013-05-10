@@ -33,6 +33,15 @@
 	<url-pattern>/loginui/loadProfile</url-pattern>  
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>Trainers</servlet-name>
+    <servlet-class>edu.ycp.cs320.fokemon_webApp.server.Trainers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Trainers</servlet-name>
+    <url-pattern>/trainers/*</url-pattern>
+  </servlet-mapping>
+  
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>FokemonUI.html</welcome-file>

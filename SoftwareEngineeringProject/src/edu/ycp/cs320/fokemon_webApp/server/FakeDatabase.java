@@ -67,4 +67,10 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Player retrieveTrainer(String info) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

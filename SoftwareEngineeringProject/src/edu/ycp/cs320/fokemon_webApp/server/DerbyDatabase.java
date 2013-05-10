@@ -445,7 +445,36 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public Player retrieveTrainer(final String _info) throws SQLException {
+		return databaseRun(new ITransaction<Player>() {
+			@Override
+			public Player run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
+
+				try {
+					stmt = conn.prepareStatement("select users.playerData from users where users.username = ?");
+
+					stmt.setString(1, _info.substring(1));
+
+					resultSet = stmt.executeQuery();
+
+					if (!resultSet.next()) {
+						return null; // no such user
+					}
+
+					Player player1 = new Player();
+					return loadProfileFromResultSet(player1, resultSet);
+
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
 
 }
 
