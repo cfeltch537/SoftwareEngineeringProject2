@@ -137,7 +137,7 @@ public class DerbyDatabase implements IDatabase {
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					ObjectOutputStream oos = null;
 
-					Player player2 = new Player(2222,"Jody Faloney",false, new Location(0,0,0));
+					Player player2 = new Player(2222,"Jody Faloney",false, new Location(0,20,20));
 					
 					
 					try {

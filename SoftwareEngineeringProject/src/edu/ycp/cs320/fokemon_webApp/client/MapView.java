@@ -37,12 +37,12 @@ public class MapView extends Composite {
 
 	public MapView() {
 	}
-	
 	void initialize() {
 		
 		mapPanel = new AbsolutePanel();
 		playerImage = new Image("23x25_Trainer_Front.png");	
-		playerImageCovered = new Image("23x25_Trainer_Front.png");		
+		playerImageCovered = new Image("23x25_Trainer_Front.png");
+		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 		areaList = new Area[2];
 		areaList[0] = new Area(mapWidthMAX, mapHeightMAX, Flooring.Grass);
 		areaList[0].createTallGrassSquare(5, 5, 10, 4);
@@ -85,28 +85,25 @@ public class MapView extends Composite {
 		mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 
 		// update the back canvas, set to front canvas
-		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 //		drawFlooring(backBufferContext, context);
 //		drawInteractableObjects(backBufferContext, context);
 //		drawPlayer(backBufferContext, context);
-		doUpdate();
+//		movementUpdate();
 		initHandlers();
 	}
-
-	void doUpdate() {
+	void movementUpdate() {
 		// update the back canvas, set to fron canvas
-		drawPlayer(backBufferContext, context);
+		drawPlayer();
 		checkForInteractions();
 	}
-
-	public void drawFlooring(Context2d context, Context2d front) {
+	void drawFlooring() {
 
 		context.save();
 
 		// Draw Nothing-ness
 		for (int height = 0; height < mapWidthMAX; height++) {
 			for (int width = 0; width < mapHeightMAX; width++) {					
-				context.drawImage((ImageElement) Flooring.Nothing.img.getElement().cast(), 16 * height, 16 * width);
+				backBufferContext.drawImage((ImageElement) Flooring.Nothing.img.getElement().cast(), 16 * height, 16 * width);
 			}
 		}
 
@@ -118,18 +115,18 @@ public class MapView extends Composite {
 				if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[height][width].flooring.img != null) {
 					img = areaList[Game.getUser().getPlayerLocation()
 							.getAreaArrayIndex()].terrain[height][width].flooring.img;
-					context.drawImage((ImageElement) img.getElement().cast(),
+					backBufferContext.drawImage((ImageElement) img.getElement().cast(),
 							16 * height, 16 * width);
 				}
 			}
 		}
 
-		context.restore();
-		front.drawImage(context.getCanvas(), 0, 0);
+		backBufferContext.restore();
+		context.drawImage(backBufferContext.getCanvas(), 0, 0);
 	}		
-	public void drawInteractableObjects(Context2d context, Context2d front) {
+	void drawInteractableObjects() {
 
-		context.save();	
+		backBufferContext.save();	
 		// InteractableObjects
 		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
 				.getAreaArrayIndex()].terrain.length; height++) {
@@ -147,7 +144,7 @@ public class MapView extends Composite {
 							img = areaList[Game.getUser().getPlayerLocation()
 									.getAreaArrayIndex()].terrain[height][width].interactableObjectList
 									.get(objectIndex).img;
-							context.drawImage((ImageElement) img.getElement()
+							backBufferContext.drawImage((ImageElement) img.getElement()
 									.cast(), 16 * height, 16 * width);
 						}
 					}
@@ -155,13 +152,12 @@ public class MapView extends Composite {
 			}
 		}
 
-		context.restore();
-		front.drawImage(context.getCanvas(), 0, 0);
+		backBufferContext.restore();
+		context.drawImage(backBufferContext.getCanvas(), 0, 0);
 	}
+	public void drawPlayer() {
 
-	public void drawPlayer(Context2d context, Context2d front) {
-
-		context.save();	
+		backBufferContext.save();	
 		// Player
 		for (int height = 0; height < areaList[Game.getUser().getPlayerLocation()
 				.getAreaArrayIndex()].terrain.length; height++) {
@@ -190,11 +186,9 @@ public class MapView extends Composite {
 				}
 			}
 		}
-		context.restore();
-		front.drawImage(context.getCanvas(), 0, 0);
+		backBufferContext.restore();
+		context.drawImage(backBufferContext.getCanvas(), 0, 0);
 	}
-
-
 	void initHandlers() {
 		KeyPressHandler wasdHandler = new KeyPressHandler() {
 			@Override
@@ -227,14 +221,12 @@ public class MapView extends Composite {
 					break;
 				}
 				//System.out.println(key); // For Debug
-				doUpdate();
+				movementUpdate();
 			}
 		};
 		canvas.addDomHandler(wasdHandler, KeyPressEvent.getType());
 		canvas.setFocus(true);
 	}
-
-
 	public void setFocusCanvas() {
 		canvas.setFocus(true);
 	}
@@ -286,28 +278,21 @@ public class MapView extends Composite {
 			Game.getUser().getPlayerLocation().setAreaArrayIndex(Game.getUser().getPlayerLocation().getAreaArrayIndex() +1);
 			Game.getUser().getPlayerLocation().setX(1);
 			Game.getUser().getPlayerLocation().setY(11);
-			drawFlooring(backBufferContext, context);
-			drawInteractableObjects(backBufferContext, context);
-			drawPlayer(backBufferContext, context);
-			
-			
+			completeUpdate();
 		} //Increment Area Index
 		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isDecrementAreaIndex()){ 
 			Game.getUser().getPlayerLocation().setAreaArrayIndex(Game.getUser().getPlayerLocation().getAreaArrayIndex() -1);
 			Game.getUser().getPlayerLocation().setX(43);
 			Game.getUser().getPlayerLocation().setY(13);
-			drawFlooring(backBufferContext, context);
-			drawInteractableObjects(backBufferContext, context);
-			drawPlayer(backBufferContext, context);
+			completeUpdate();
 		} //Decrement Area Index
 		if (areaList[Game.getUser().getPlayerLocation().getAreaArrayIndex()].terrain[Game.getUser().getPlayerLocation().getX()][Game.getUser().getPlayerLocation().getY()].isTrainerBattle()){ 
 			FokemonUI.startBattle(Game.getBossBattle());
 		} //Trigger Trainer Battle
 	}
-
 	public void completeUpdate() {
-		drawFlooring(backBufferContext, context);
-		drawInteractableObjects(backBufferContext, context);
-		drawPlayer(backBufferContext, context);
+		drawFlooring();
+		drawInteractableObjects();
+		drawPlayer();
 	}
 }

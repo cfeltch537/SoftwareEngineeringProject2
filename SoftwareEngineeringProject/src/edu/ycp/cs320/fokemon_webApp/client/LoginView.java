@@ -190,7 +190,7 @@ public class LoginView extends Composite {
 					{
 						Window.alert("You have a name, don't you?"); 
 					} else {
-						player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,0,0));
+						player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,20,20));
 						createProfile();
 					}
 				}
