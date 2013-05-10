@@ -174,14 +174,16 @@ public class FokemonUI {
 		}
 	}
 
-	public static void endBattle(Boolean refresh) {// Instantiates BattleView
+	public static void endBattle(Boolean completeRefresh) {// Instantiates BattleView
 		if (pokedex != null) {
 			// Call joey's create battle function(s); creating instance of a
 			// battle
 			LoginUI.rootPanel.remove(battleView.battlePanel);
 			LoginUI.rootPanel.add(map.mapPanel);
-			if(refresh){
-			map.completeUpdate();
+			if(completeRefresh){
+				map.completeUpdate();
+			}else{
+				map.drawPlayer();
 			}
 			LoginUI.rootPanel.add(saveButton);
 			battleView.commandOptions.setFocus(true);
@@ -202,7 +204,6 @@ public class FokemonUI {
 					GWT.log("Save Current Fail");
 					Window.alert("Save Current Fail");
 				}
-
 			}
 
 			@Override

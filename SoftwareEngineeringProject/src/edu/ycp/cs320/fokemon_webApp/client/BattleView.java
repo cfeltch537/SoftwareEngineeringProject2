@@ -634,6 +634,8 @@ public class BattleView extends Composite {
 		}
 		if (battle.getBattleOver()) {
 			FokemonUI.endBattle(false);
+			turnIndex = 0;
+			messageIndex = 0;
 		}
 	}
 	
