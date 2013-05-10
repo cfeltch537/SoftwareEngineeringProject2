@@ -330,12 +330,11 @@ public class Battle {
 						battleMessage.add("You can't catch another trainers pokemon. ");
 					}
 					
+				}	
+				else{
+					battleMessage.addAll(EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect()));
 				}
 				if(turnPlayer.getItems(turnPlayer.getMoveIndex()).getQuantity()<1)turnPlayer.getItems().remove(turnPlayer.getMoveIndex());
-				
-				else{
-					EffectDataBase.moveEffect(userPoke, oppPoke,turnPlayer.getItems(turnPlayer.getMoveIndex()).getItemEffect());
-				}
 				break;
 			case SWITCH:
 				turnPlayer.setCurrentPokemonIndex(turnPlayer.getMoveIndex());
@@ -501,7 +500,7 @@ public class Battle {
 				team.get(i).getInfo().setXp(xp + team.get(i).getInfo().getXp());
 				battleMessage.add(team.get(i).getInfo().getNickname()
 						+ " has gained " + xp + " experience points.  ");
-				team.get(i).CheckLevelUp();
+				battleMessage.addAll(team.get(i).CheckLevelUp());
 			}
 			team.get(i).getInfo().setUsedInBattle(false);
 		}
