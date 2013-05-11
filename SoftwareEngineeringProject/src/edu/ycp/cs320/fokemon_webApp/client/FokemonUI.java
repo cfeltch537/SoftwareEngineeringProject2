@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.media.client.Audio;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
@@ -41,6 +42,8 @@ public class FokemonUI {
 	private PokedexReaderServiceAsync pokedexReaderSvc = GWT
 			.create(PokedexReaderService.class);
 	static final int refreshRate = 25;
+	private static Audio sound;
+	//private SoundController soundController = new SoundController();
 
 	public void initialize() {
 
@@ -50,6 +53,7 @@ public class FokemonUI {
 				saveCurrentProfile();
 			}
 		});
+		sound=Audio.createIfSupported();
 		createPokedexReader();
 		map.initialize(); //This MUST go after map initializer
 		pcView = new PCStorageView();
@@ -93,6 +97,7 @@ public class FokemonUI {
 				System.out.println("Pokedex is Ready");
 
 				map.completeUpdate();
+				playMapMusic();
 				
 				if(Game.getUser().getTeam().size() == 0){
 					//The following wall of text is to populate the player's array lists
@@ -106,6 +111,19 @@ public class FokemonUI {
 					Pokemon Attacker = null;
 					switch(Game.getTypeChoice()){
 					case 0:
+						Attacker=Pokemon.GeneratePokemon(PokeID.Charmander, 75);
+						break;
+					case 1:
+						Attacker=Pokemon.GeneratePokemon(PokeID.Squirtle, 75);
+						break;
+					case 2:
+						Attacker=Pokemon.GeneratePokemon(PokeID.Bulbasaur, 75);
+						break;
+						default:
+							Attacker = Pokemon.GeneratePokemon(PokeID.Snorlax, 299);
+							Attacker.getInfo().setNickname("JoMo");
+							break;
+					/*case 0:
 						Attacker = Pokemon.GeneratePokemon(PokeID.Charizard, 275);
 						Attacker.getInfo().setNickname("Charizard");
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Spore));
@@ -133,6 +151,7 @@ public class FokemonUI {
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Earthquake));
 						Attacker.getMoves().add(MoveDataBase.generateMove(MoveName.Mega_Punch));
 						break;
+						*/
 					}
 					
 					Game.getUser().getTeam().add(Attacker);
@@ -167,6 +186,7 @@ public class FokemonUI {
 			if (battleView == null) {
 				battleView = new BattleView(); // Instantiate a BattleView
 			}
+			playBattleMusic();
 			battleView.setBattle(battle);
 			LoginUI.rootPanel.remove(map.mapPanel);
 			LoginUI.rootPanel.remove(saveButton);
@@ -186,6 +206,7 @@ public class FokemonUI {
 			}else{
 				map.drawPlayer();
 			}
+			playMapMusic();
 			LoginUI.rootPanel.add(saveButton);
 			battleView.commandOptions.setFocus(true);
 			map.setFocusCanvas();
@@ -230,5 +251,29 @@ public class FokemonUI {
 		map.mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		LoginUI.rootPanel.add(saveButton);
 	}
-
+	public static void playMapMusic(){
+		//sound=Audio.createIfSupported();
+		sound.setSrc("Music/MapMusic.wav");
+	    sound.play();
+	}
+	public static void playBattleMusic(){
+		//sound=Audio.createIfSupported();
+		sound.setSrc("Music/BattleMusic.wav");
+	    sound.play();
+	}
+	public static void playWinMusic(){
+		//sound=Audio.createIfSupported();
+		sound.setSrc("Music/WinGame.wav");
+	    sound.play();
+	}
+	public static void playFinalRoadMusic(){
+		//sound=Audio.createIfSupported();
+		sound.setSrc("Music/FinalRoad.wav");
+	    sound.play();
+	}
+	public static void playRecoveryMusic(){
+		//sound=Audio.createIfSupported();
+		sound.setSrc("Music/Recovery.wav");
+	    sound.play();
+	}
 }

@@ -33,16 +33,16 @@ public class MoveTest {
 
 	@Test
 	public void testGetCurPP() {
-		assertEquals(30, moveA.getCurPP());
-		assertEquals(15, moveB.getCurPP());
-		assertEquals(15, moveC.getCurPP());
+		assertEquals(35, moveA.getCurPP());
+		assertEquals(25, moveB.getCurPP());
+		assertEquals(25, moveC.getCurPP());
 	}
 
 	@Test
 	public void testGetMaxPP() {
-		assertEquals(30, moveA.getMaxPP());
-		assertEquals(15, moveB.getMaxPP());
-		assertEquals(15, moveC.getMaxPP());
+		assertEquals(35, moveA.getMaxPP());
+		assertEquals(25, moveB.getMaxPP());
+		assertEquals(25, moveC.getMaxPP());
 	}
 
 	@Test
@@ -54,9 +54,9 @@ public class MoveTest {
 
 	@Test
 	public void testGetAccuracy() {
-		assertEquals(90, moveA.getAccuracy());
-		assertEquals(85, moveB.getAccuracy());
-		assertEquals(85, moveC.getAccuracy());
+		assertEquals(100, moveA.getAccuracy());
+		assertEquals(100, moveB.getAccuracy());
+		assertEquals(100, moveC.getAccuracy());
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class MoveTest {
 
 	@Test
 	public void testGetDamage() {
-		assertEquals(20, moveA.getDamage());
+		assertEquals(50, moveA.getDamage());
 		assertEquals(60, moveB.getDamage());
 		assertEquals(40, moveC.getDamage());
 	}
@@ -76,7 +76,7 @@ public class MoveTest {
 	@Test
 	public void testGetPokeType() {
 		assertEquals(PokeType.NORMAL, moveA.getPokeType());
-		assertEquals(PokeType.NORMAL, moveB.getPokeType());
+		assertEquals(PokeType.DARK, moveB.getPokeType());
 		assertEquals(PokeType.FIRE, moveC.getPokeType());
 	}
 

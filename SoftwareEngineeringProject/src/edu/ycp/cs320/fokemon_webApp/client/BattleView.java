@@ -39,7 +39,6 @@ public class BattleView extends Composite {
 	// Widgets
 	ListBox commandOptions;
 	TextBox battleAnnouncementBox;
-	TextBox test;
 	Label userHPvMax;
 	Label playerPokemonName;
 	Label opponentPokemonName;
@@ -131,10 +130,6 @@ public class BattleView extends Composite {
 		battleBackBufferContext.setFillStyle(CssColor.make("rgba(224,224,224,0.1)"));
 		initHandlers();
 
-		test = new TextBox();
-		test.setWidth(1000 + "px");
-		test.setHeight(50 + "px");
-		LoginUI.rootPanel.add(test);
 	}
 
 	void setBattle(Battle battle) {
@@ -593,7 +588,6 @@ public class BattleView extends Composite {
 		battle.getUser().setChoice(userChoice);
 		battle.getOpponent().setChoice(TurnChoice.MOVE);
 		battle.Turn(1);
-		test.setText(battle.getBattleMessage().toString() + "*TURN 1*");
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		if (userChoice.equals(TurnChoice.SWITCH)) {
@@ -604,7 +598,6 @@ public class BattleView extends Composite {
 
 	void handleTurn2() {
 		battle.Turn(2);
-		test.setText(battle.getBattleMessage().toString() + "*TURN 2*");
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		messageIndex++;
@@ -613,7 +606,6 @@ public class BattleView extends Composite {
 
 	void handleTurn3() {
 		battle.Turn(3);
-		test.setText(battle.getBattleMessage().toString() + "*TURN 3*");
 		updatePokemonStatus();
 		setBattleAnnouncement(battle.getBattleMessage(), messageIndex);
 		messageIndex++;
