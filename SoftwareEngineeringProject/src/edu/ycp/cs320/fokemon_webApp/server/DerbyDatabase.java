@@ -5,32 +5,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import javax.sql.rowset.serial.SerialBlob;
-
-import com.google.gwt.user.cellview.client.Column;
-
-import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemDatabase;
-import edu.ycp.cs320.fokemon_webApp.shared.ItemClasses.ItemName;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveDataBase;
-import edu.ycp.cs320.fokemon_webApp.shared.MoveClasses.MoveName;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Location;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
-import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.PokeID;
-import edu.ycp.cs320.fokemon_webApp.shared.PokemonClasses.Pokemon;
 
 public class DerbyDatabase implements IDatabase {
 
-	//private static final String DATASTORE = "C:/Users/Cody/PokemonDatabase2";
-	private static final String DATASTORE = "H:/fokemon";
+	private static final String DATASTORE = "C:/Users/Cody/PokemonDatabase";
+	//private static final String DATASTORE = "H:/fokemon";
 
 
 	static {

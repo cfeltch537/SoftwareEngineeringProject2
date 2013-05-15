@@ -17,6 +17,7 @@ import edu.ycp.cs320.fokemon_webApp.shared.GUI.Area;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.Flooring;
 import edu.ycp.cs320.fokemon_webApp.shared.GUI.InteractableObject;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Game;
+import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 
 public class MapView extends Composite {
 	static final String holderId = "canvasholder";
@@ -25,7 +26,7 @@ public class MapView extends Composite {
 	Canvas canvas;
 	Context2d context;
 	Context2d backBufferContext;
-	Area[] areaList;
+	public Area[] areaList;
 	Image img;
 	static int height;
 	static int width;
@@ -40,15 +41,20 @@ public class MapView extends Composite {
 	void initialize() {
 		
 		mapPanel = new AbsolutePanel();
-		playerImage = new Image("23x25_Trainer_Front.png");	
-		playerImageCovered = new Image("23x25_Trainer_Front.png");
+		if(Game.getUser().getGender()){
+			playerImage = new Image("Trainer_Male.png");	
+			playerImageCovered = new Image("Trainer_Male.png");
+		}else{
+			playerImage = new Image("Trainer_Female.png");	
+			playerImageCovered = new Image("Trainer_Female.png");	
+		}
 		playerImageCovered.setVisibleRect(0, 0, playerImageCovered.getWidth(), playerImageCovered.getHeight()*2/3);
 		areaList = new Area[2];
 		areaList[0] = new Area(mapWidthMAX, mapHeightMAX, Flooring.Grass);
 		areaList[0].createTallGrassSquare(5, 5, 10, 4);
 		areaList[0].createTallGrassSquare(5, 10, 10, 4);
 		areaList[0].createTallGrassSquare(5, 15, 10, 4);
-		areaList[0].setTerrain(40, 44, 0, 30, Flooring.Sand);
+		areaList[0].setTerrain(40, 45, 0, 30, Flooring.Sand);
 		areaList[0].setTerrain(45, 60, 0, 30, Flooring.SaltWater);
 		areaList[0].placeStructure(25, 10, InteractableObject.PokeCenter, true);
 		areaList[0].placeStructure(38, 14, InteractableObject.PC, true);

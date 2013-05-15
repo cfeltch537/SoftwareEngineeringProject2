@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import edu.ycp.cs320.fokemon_webApp.shared.Player.Player;
 import edu.ycp.cs320.fokemon_webApp.shared.Login.Login;
 
-@RemoteServiceRelativePath("loadProfile")
+@RemoteServiceRelativePath("load")
 public interface LoadProfileService extends RemoteService {
 	/**
 	 * 

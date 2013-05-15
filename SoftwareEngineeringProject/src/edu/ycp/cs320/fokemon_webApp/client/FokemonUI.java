@@ -57,10 +57,7 @@ public class FokemonUI {
 		createPokedexReader();
 		map.initialize(); //This MUST go after map initializer
 		pcView = new PCStorageView();
-		LoginUI.rootPanel.add(map.mapPanel); 
-		LoginUI.rootPanel.add(saveButton);
-		map.setFocusCanvas();
-		//tempView = new CirculatingImagesView();
+		enterMapView();
 
 		final Timer timer = new Timer() {
 			@Override
@@ -158,6 +155,7 @@ public class FokemonUI {
 					Game.getUser().getPlayerLocation().setAreaArrayIndex(0);
 					Game.getUser().getPlayerLocation().setX(20);
 					Game.getUser().getPlayerLocation().setY(20);
+					saveCurrentProfile();
 				}
 				//Wall of text over
 				battleView = new BattleView();
@@ -188,10 +186,7 @@ public class FokemonUI {
 			}
 			playBattleMusic();
 			battleView.setBattle(battle);
-			LoginUI.rootPanel.remove(map.mapPanel);
-			LoginUI.rootPanel.remove(saveButton);
-			LoginUI.rootPanel.add(battleView.battlePanel);
-			battleView.commandOptions.setFocus(true);
+			enterBattleView();
 		}
 	}
 
@@ -214,12 +209,12 @@ public class FokemonUI {
 	}
 
 	protected void saveCurrentProfile() {
-		RPC.loadProfile.saveProfile(Game.getLogin(),Game.getUser(), new AsyncCallback<Player>() {
+		RPC.load.saveProfile(Game.getLogin(),Game.getUser(), new AsyncCallback<Player>() {
 			@Override
 			public void onSuccess(Player result) {
 				if (result != null) {
 					GWT.log("Save Current succeeded!");
-					Window.alert("Save Current Success");
+					Window.alert("Game Saved!");
 
 					//Window.alert("Player Name: " + result.getName());
 				} else {
@@ -236,7 +231,22 @@ public class FokemonUI {
 
 			}
 		});
+		map.setFocusCanvas();
 	}
+
+	public static void enterMapView() {
+		LoginUI.rootPanel.add(map.mapPanel); 
+		LoginUI.rootPanel.add(saveButton);
+		map.setFocusCanvas();
+	}
+
+	public static void enterBattleView() {
+		LoginUI.rootPanel.remove(map.mapPanel);
+		LoginUI.rootPanel.remove(saveButton);
+		LoginUI.rootPanel.add(battleView.battlePanel);
+		battleView.commandOptions.setFocus(true);
+	}
+
 
 	public static void enterPCView() {
 		LoginUI.rootPanel.remove(map.mapPanel);
@@ -250,6 +260,7 @@ public class FokemonUI {
 		LoginUI.rootPanel.add(map.mapPanel);
 		map.mapPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		LoginUI.rootPanel.add(saveButton);
+		map.setFocusCanvas();
 	}
 	public static void playMapMusic(){
 		//sound=Audio.createIfSupported();

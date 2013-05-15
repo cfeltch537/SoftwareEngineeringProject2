@@ -111,7 +111,7 @@ public class Game {
 	}
 	
 	protected void saveProfile() {
-		RPC.loadProfile.saveProfile(login,user, new AsyncCallback<Player>() {
+		RPC.load.saveProfile(login,user, new AsyncCallback<Player>() {
 			@Override
 			public void onSuccess(Player result) {
 				if (result != null) {

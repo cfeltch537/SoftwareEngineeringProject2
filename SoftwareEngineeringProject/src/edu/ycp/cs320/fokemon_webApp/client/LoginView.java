@@ -196,6 +196,8 @@ public class LoginView extends Composite {
 						Window.alert("You have a name, don't you?"); 
 					} else {
 						player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,20,20));
+						model.setUsername(textBoxUsername.getText());
+						model.setPassword(textBoxPassword.getText());
 						createProfile();
 					}
 				}
@@ -246,6 +248,8 @@ public class LoginView extends Composite {
 					Window.alert("You have a name, don't you?"); 
 				} else {
 					player1 = new Player(Random.nextInt(99999),textBoxName.getText(),rdbtnBoy.getValue(),new Location(0,20,20));
+					model.setUsername(textBoxUsername.getText());
+					model.setPassword(textBoxPassword.getText());
 					createProfile();
 				}
 
@@ -294,7 +298,7 @@ public class LoginView extends Composite {
 			public void onSuccess(Login result) {
 				if (result != null) {
 					GWT.log("Username okay!");
-					//Window.alert("Success");
+					//Window.alert("Username okay!");
 					// Switch to some other view
 
 					lblGender.setVisible(true);
@@ -344,7 +348,7 @@ public class LoginView extends Composite {
 	}
 
 	protected void loadProfile() {
-		RPC.loadProfile.retrieveProfile(model, new AsyncCallback<Player>() {
+		RPC.load.retrieveProfile(model, new AsyncCallback<Player>() {
 			@Override
 			public void onSuccess(Player result) {
 				if (result != null) {
@@ -374,7 +378,7 @@ public class LoginView extends Composite {
 		});
 	}
 	protected static void saveProfile() {
-		RPC.loadProfile.saveProfile(Game.getLogin(),Game.getUser(), new AsyncCallback<Player>() {
+		RPC.load.saveProfile(Game.getLogin(),Game.getUser(), new AsyncCallback<Player>() {
 			@Override
 			public void onSuccess(Player result) {
 				if (result != null) {
@@ -400,7 +404,7 @@ public class LoginView extends Composite {
 	}
 
 	protected void saveCurrentProfile(Login _login, Player _player) {
-		RPC.loadProfile.saveProfile(_login,_player, new AsyncCallback<Player>() {
+		RPC.load.saveProfile(_login,_player, new AsyncCallback<Player>() {
 			@Override
 			public void onSuccess(Player result) {
 				if (result != null) {
@@ -425,7 +429,7 @@ public class LoginView extends Composite {
 		});
 	}
 	protected void createProfile() {
-		RPC.loadProfile.createProfile(model, player1, new AsyncCallback<Login>() {
+		RPC.load.createProfile(model, player1, new AsyncCallback<Login>() {
 			@Override
 			public void onSuccess(Login result) {
 				if (result != null) {
